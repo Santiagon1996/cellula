@@ -88,7 +88,7 @@ export function HomeIdentity() {
         </div>
       </div>
       <div ref={symbolRef} className="home-identity__symbol" aria-hidden="true">
-        <Image src="/home/celula-symbol.png" alt="" width={378} height={280} sizes="90px" />
+        <Image src="/home/celula-symbol.png" alt="" width={378} height={280} sizes="90px" loading="eager" />
       </div>
     </div>
   );
