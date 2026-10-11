@@ -1,12 +1,10 @@
 # Recursos visuales de CÉLULA
 
-Los recursos originales de la clienta deben situarse en esta carpeta:
+Los recursos originales usados por Home se mantienen en esta carpeta:
 
 - `celula-wordmark.png`: logotipo tipográfico.
 - `celula-symbol.png`: símbolo reducido.
-- `hand-gradient.png`: composición visual de mano y degradados.
-- `scroll-reference.png`: referencia visual para la transición durante el scroll (no se sirve en la página).
 
-Los archivos son aportados por la clienta y se mantienen sin modificar. El código actual de Home hace referencia a los tres primeros archivos desde `/home/`.
+Los archivos son aportados por la clienta y se mantienen sin modificar. Home utiliza estos dos recursos desde `/home/` para la identidad animada con GSAP.
 
-Las imágenes binarias deberán incorporarse a Git junto con la rama `feature/home` desde una copia local del repositorio.
+El fondo se genera con `LiquidGradient`, Three.js y un fragment shader GLSL. Las imágenes `hand-gradient.png`, `hand-isolated.png` y `scroll-reference.png` son referencias de diseño locales; no se cargan en la página.

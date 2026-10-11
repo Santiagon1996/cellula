@@ -1,26 +1,13 @@
-/* Home — primera implementación responsive basada en el lenguaje visual de Figma.
-   Imágenes y wordmark originales pendientes de incorporación a /public. */
+/* Home layout. HomeAtmosphere owns the hero's liquid background. */
 .home-page { overflow: clip; }
 .home-nav { position: fixed; z-index: 80; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem clamp(1rem, 4vw, 3rem); color: var(--color-cream); }
-.home-nav__brand { position: relative; z-index: 85; color: #5b5e74; text-decoration: none; font-size: 1rem; font-weight: 800; letter-spacing: -.07em; }
 .home-nav__toggle { position: relative; z-index: 86; border: 0; color: var(--color-cream); background: var(--color-pink); padding: .15rem .4rem; font-family: monospace; font-size: .9rem; letter-spacing: -.05em; cursor: pointer; }
 .home-nav__panel { position: fixed; inset: 0; z-index: 81; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(.8rem, 3vh, 2rem); min-height: 100svh; padding: 7rem 1.5rem 3rem; background: radial-gradient(ellipse at 15% 16%, rgba(247, 167, 209, .85), transparent 62%), radial-gradient(ellipse at 85% 26%, rgba(138, 216, 230, .88), transparent 65%), linear-gradient(145deg, #ede8e0, #e1d9ec 65%, #d3eaeb); color: #5b5e74; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .5s ease, visibility .5s ease; }
 .home-nav__panel.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
 .home-nav__panel a { font-family: monospace; font-size: clamp(1.05rem, 2.3vw, 1.45rem); line-height: 1.4; letter-spacing: -.045em; text-align: center; text-transform: uppercase; text-decoration: none; }
 .home-nav__panel a:hover, .home-nav__panel a:focus-visible { color: #e965ad; }
-/* Figma mobile: milk-white background, pink column on the left, cool aqua on the right.
-   The image of the hand is a separate fixed underlay, while the gradient veils move in front. */
 .home-hero { position: relative; isolation: isolate; min-height: 100svh; display: grid; place-items: center; overflow: hidden; background: #e9e7e5; color: #5b5e74; }
-.home-hero__ambient { position: absolute; z-index: 1; inset: 0; overflow: hidden; background: linear-gradient(105deg, #f0cbd9 0%, #ecdde5 28%, #dce8ea 52%, #b9e2e9 78%, #d8dce8 100%); }
-.home-hero__ambient::before, .home-hero__ambient::after { content: ''; position: absolute; inset: -25%; pointer-events: none; will-change: transform, opacity; filter: blur(clamp(48px, 9vw, 125px)); }
-.home-hero__ambient::before { background: radial-gradient(ellipse 28% 75% at 27% 45%, rgba(245, 144, 198, .88), transparent 83%), radial-gradient(ellipse 26% 72% at 77% 50%, rgba(126, 208, 230, .93), transparent 88%); animation: home-glow-blue 13s ease-in-out infinite alternate; }
-.home-hero__ambient::after { background: radial-gradient(ellipse 26% 65% at 53% 50%, rgba(255, 247, 235, .96), transparent 88%), radial-gradient(ellipse 28% 65% at 67% 32%, rgba(200, 164, 223, .72), transparent 86%); animation: home-glow-pink 19s ease-in-out infinite alternate; }
-.home-hero__hand { position: absolute; z-index: 2; inset: 0; background: url('/images/celula-hero-hand.png') center 52% / cover no-repeat; opacity: .78; mix-blend-mode: multiply; pointer-events: none; }
-.home-hero__veil { position: absolute; z-index: 3; inset: -18%; pointer-events: none; background: radial-gradient(ellipse 37% 48% at 22% 48%, rgba(249, 194, 219, .96), transparent 85%), radial-gradient(ellipse 37% 60% at 80% 46%, rgba(164, 222, 233, .95), transparent 90%), radial-gradient(ellipse 24% 52% at 48% 50%, rgba(246, 238, 234, .9), transparent 94%); filter: blur(clamp(55px, 10vw, 145px)); will-change: transform; animation: home-veil-cross 17s ease-in-out infinite alternate; }
-.home-hero__wordmark { position: relative; z-index: 60; }
-.home-hero__wordmark { position: relative; z-index: 10; padding: 0 1.25rem; text-align: center; }
-.home-hero__eyebrow, .home-hero__scroll, .home-about__kicker, .home-featured__eyebrow { font-family: monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
-.home-hero__wordmark h1 { font-size: clamp(5.3rem, 21vw, 21rem); font-weight: 800; line-height: .95; letter-spacing: -.105em; mix-blend-mode: multiply; }
+.home-hero__scroll, .home-about__kicker, .home-featured__eyebrow { font-family: monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
 .home-hero__scroll { z-index: 10; position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: max-content; max-width: 95%; text-decoration: none; }
 .home-hero__scroll span { padding-left: .6rem; }
 .home-about { min-height: 120svh; position: relative; padding: 18vh 1.25rem 14vh; background: linear-gradient(180deg, #c7e4e8 0%, #e2e4e8 15%, #eddce7 32%, var(--color-cream) 55%, var(--color-cream) 100%); }
@@ -37,13 +24,5 @@
 .home-link--light:hover { background: var(--color-blue); }
 .home-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding: 2.5rem 1.5rem; background: var(--color-cream); color: var(--color-slate); font-family: monospace; font-size: .75rem; }
 .home-footer a { color: inherit; }
-@keyframes home-glow-blue { 0% { transform: translate3d(-4%, 2%, 0) rotate(-7deg) scale(1); } 50% { transform: translate3d(7%, -5%, 0) rotate(4deg) scale(1.07); } 100% { transform: translate3d(-1%, 7%, 0) rotate(11deg) scale(1.14); } }
-@keyframes home-glow-pink { 0% { transform: translate3d(6%, -5%, 0) rotate(8deg) scale(1.08); } 50% { transform: translate3d(-6%, 4%, 0) rotate(-5deg) scale(1); } 100% { transform: translate3d(4%, 9%, 0) rotate(-12deg) scale(1.12); } }
 @media (min-width: 768px) { .home-nav__panel { padding: 9rem 4rem 4rem; } .home-about { padding-left: 4rem; padding-right: 4rem; } .home-footer { padding-left: 3rem; padding-right: 3rem; } }
-@keyframes home-veil-cross { 0% { transform: translate3d(-24%, 1%, 0) rotate(-4deg); } 50% { transform: translate3d(16%, -4%, 0) rotate(4deg); } 100% { transform: translate3d(28%, 3%, 0) rotate(-2deg); } }
-@media (prefers-reduced-motion: reduce) { .home-hero__ambient::before, .home-hero__ambient::after, .home-hero__veil { animation: none; will-change: auto; } .home-nav__panel { transition: none; } }
-
-/* Future original hand PNG/SVG slot: hand stays still behind moving translucent veils.
-   Add asset at /public/home/hand.png and enable the .home-hero__hand layer once exported from Figma. */
-.home-hero__hand { position: absolute; z-index: 2; inset: 0; pointer-events: none; background: url('/home/hand.png') center 55% / min(85vw, 680px) auto no-repeat; opacity: .45; mix-blend-mode: multiply; }
-@media (max-width: 600px) { .home-hero__hand { background-size: 115vw auto; } }
+@media (prefers-reduced-motion: reduce) { .home-nav__panel { transition: none; } }

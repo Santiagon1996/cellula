@@ -1,6 +1,6 @@
 import { FluidGradientCanvas } from './fluid-gradient-canvas';
 
-/** GPU fluid backdrop with a CSS pastel fallback; no hand or static photograph. */
+/** Decorative Three.js liquid gradient below the persistent GSAP identity. */
 export function HomeAtmosphere() {
   return (
     <div className="home-atmosphere" aria-hidden="true">
