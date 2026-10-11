@@ -34,7 +34,7 @@ export function HomeIdentity() {
     const timeline = gsap.timeline({
       defaults: { ease: 'none' },
       scrollTrigger: {
-        trigger: '#inicio',
+        trigger: document.getElementById('inicio'),
         start: 'top top',
         end: () => '+=' + Math.round(window.innerHeight * 0.78),
         scrub: 0.8,
