@@ -1,2 +1,2 @@
-// Componentes y lógica de exposiciones se implementarán en feature/exhibitions.
-export {};
+export { ExhibitionSlider } from './components/exhibition-slider';
+export type { ExhibitionArtwork } from './types';

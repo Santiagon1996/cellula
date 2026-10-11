@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="cream" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#eee5d7"/>
+      <stop offset="1" stop-color="#ded3bf"/>
+    </linearGradient>
+    <linearGradient id="peach" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#e5c4b8"/>
+      <stop offset="1" stop-color="#d8ad9f"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".68" numOctaves="3" seed="23" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".045"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path fill="url(#cream)" d="M0 0h800v1000H0z"/>
+    <path fill="#aaaeb0" d="M-62 616c34-174 205-117 222-257 18-144 210-225 305-92 105 147-34 209 15 310 61 123 179 134 252 230l86 225H-62z"/>
+    <path fill="url(#peach)" d="M455-36c121-17 229 53 249 179 22 134-118 193-170 289-45 84 43 120 114 153 144 66 159 180 94 297-78 140-232 108-305 32-75-78-45-199-78-290-44-123-177-136-165-284 15-172 130-357 261-376z"/>
+    <path fill="#f1e7d8" d="M-19 705c184-64 169-185 340-199 133-11 134 116 168 197 36 86 192 117 316 53v259H-19z"/>
+    <path fill="#bfc6bc" d="M-46 835c123-73 183-33 258 27 119 96 263 21 362 51 81 24 115 64 209 44v78H-46z"/>
+    <path fill="none" stroke="#eed4c7" stroke-width="2" d="M479 52c106 91 115 159 41 269-77 116-108 210 22 300"/>
+    <ellipse cx="153" cy="146" rx="43" ry="60" fill="#c4b3c5" transform="rotate(-25 153 146)"/>
+  </g>
+</svg>
