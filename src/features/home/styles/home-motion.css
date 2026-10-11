@@ -1,0 +1,36 @@
+/* Phase 1 — CÉLULA original identity and art-directed gradient.
+   The original hand is baked into the provided photographic artwork.
+   The artwork never moves: translucent gradients float above it. */
+
+.home-nav { z-index: 100; pointer-events: none; }
+.home-nav__toggle { pointer-events: auto; z-index: 102; }
+.home-nav__brand-spacer { width: 4.5rem; }
+.home-nav__panel { z-index: 101; pointer-events: none; }
+.home-nav__panel.is-open { pointer-events: auto; }
+
+/* Identity stays above the menu and every gradient, even during scroll. */
+.home-identity { position: fixed; z-index: 110; inset: 0; pointer-events: none; isolation: isolate; }
+.home-identity__wordmark { position: absolute; top: 50%; left: 50%; width: min(76vw, 700px); transform: translate(-50%, -50%); transform-origin: center; will-change: transform, opacity; }
+.home-identity__heading { margin: 0; }
+.home-identity__heading img { width: 100%; height: auto; display: block; }
+.home-identity__symbol { position: absolute; top: max(1.25rem, env(safe-area-inset-top)); left: clamp(1rem, 4vw, 3rem); width: clamp(3.25rem, 6.6vw, 5.5rem); opacity: 0; transform-origin: left center; will-change: opacity, transform; }
+.home-identity__symbol img { width: 100%; height: auto; display: block; }
+.home-hero { isolation: isolate; background: #e9e1df; }
+.home-hero__scroll { z-index: 20; color: #5b5e74; text-shadow: 0 1px 12px #ffffffaa; }
+.home-atmosphere { position: absolute; z-index: 1; inset: 0; overflow: hidden; background: #ede8e0; }
+.home-atmosphere__artwork { position: absolute; inset: 0; background-image: url('/home/hand-gradient.png'); background-position: center 45%; background-size: cover; background-repeat: no-repeat; }
+/* Veils: broad soft boundaries and mostly transparent centers to reveal the hand. */
+.home-atmosphere__veil { position: absolute; inset: -30%; pointer-events: none; border-radius: 45%; will-change: transform; }
+.home-atmosphere__veil--rose { z-index: 3; background: radial-gradient(ellipse 32% 42% at 35% 45%, rgba(255, 145, 206, .66), rgba(250, 197, 219, .24) 54%, transparent 82%); filter: blur(62px); animation: cellula-rose 23s ease-in-out infinite alternate; }
+.home-atmosphere__veil--aqua { z-index: 4; background: radial-gradient(ellipse 38% 46% at 68% 42%, rgba(142, 212, 220, .69), rgba(188, 231, 227, .27) 55%, transparent 85%); filter: blur(62px); animation: cellula-aqua 31s ease-in-out infinite alternate; }
+.home-atmosphere__veil--milk { z-index: 5; background: radial-gradient(ellipse 29% 41% at 47% 60%, rgba(249, 239, 231, .86), rgba(249, 239, 231, .24) 50%, transparent 79%); filter: blur(48px); animation: cellula-milk 28s ease-in-out infinite alternate; }
+@keyframes cellula-rose { from { transform: translate3d(-13%, -4%, 0) rotate(-8deg) scale(.94); } to { transform: translate3d(14%, 8%, 0) rotate(9deg) scale(1.2); } }
+@keyframes cellula-aqua { from { transform: translate3d(13%, -8%, 0) rotate(7deg) scale(1.15); } to { transform: translate3d(-15%, 6%, 0) rotate(-10deg) scale(.96); } }
+@keyframes cellula-milk { from { transform: translate3d(-8%, 12%, 0) rotate(-12deg) scale(.92); } to { transform: translate3d(9%, -11%, 0) rotate(8deg) scale(1.2); } }
+@media (min-width: 800px) { .home-atmosphere__artwork { background-size: cover; background-position: center 54%; } }
+@media (prefers-reduced-motion: reduce) {
+  .home-atmosphere__veil { animation: none; will-change: auto; }
+  .home-identity__wordmark, .home-identity__symbol { will-change: auto; }
+  .home-identity__wordmark { opacity: 0; }
+  .home-identity__symbol { opacity: 1; }
+}
