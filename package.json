@@ -10,22 +10,22 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^15.5.0",
+    "@gsap/react": "^2.1.2",
+    "gsap": "^3.13.0",
+    "next": "^16.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "gsap": "^3.13.0",
-    "@gsap/react": "^2.1.2",
     "zod": "^4.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.0",
+    "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.0",
-    "@tailwindcss/postcss": "^4.0.0",
-    "postcss": "^8.0.0",
     "eslint": "^9.0.0",
-    "eslint-config-next": "^15.5.0"
+    "eslint-config-next": "^16.4.0",
+    "postcss": "^8.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.0.0"
   }
 }
