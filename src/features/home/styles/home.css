@@ -2,7 +2,7 @@
    Imágenes y wordmark originales pendientes de incorporación a /public. */
 .home-page { overflow: clip; }
 .home-nav { position: fixed; z-index: 80; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem clamp(1rem, 4vw, 3rem); color: var(--color-cream); }
-.home-nav__brand { position: relative; z-index: 85; text-decoration: none; font-size: 1rem; font-weight: 800; letter-spacing: -.07em; }
+.home-nav__brand { position: relative; z-index: 85; color: #5b5e74; text-decoration: none; font-size: 1rem; font-weight: 800; letter-spacing: -.07em; }
 .home-nav__toggle { position: relative; z-index: 86; border: 0; color: var(--color-cream); background: var(--color-pink); padding: .15rem .4rem; font-family: monospace; font-size: .9rem; letter-spacing: -.05em; cursor: pointer; }
 .home-nav__panel { position: fixed; inset: 0; z-index: 81; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(.8rem, 3vh, 2rem); min-height: 100svh; padding: 7rem 1.5rem 3rem; background: radial-gradient(ellipse at 15% 16%, rgba(247, 167, 209, .85), transparent 62%), radial-gradient(ellipse at 85% 26%, rgba(138, 216, 230, .88), transparent 65%), linear-gradient(145deg, #ede8e0, #e1d9ec 65%, #d3eaeb); color: #5b5e74; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .5s ease, visibility .5s ease; }
 .home-nav__panel.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
