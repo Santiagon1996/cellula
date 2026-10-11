@@ -16,7 +16,7 @@ export function HomeNavigation() {
 
   return (
     <header className="home-nav">
-      <a className="home-nav__brand" href="#inicio" aria-label="CÉLULA — volver al inicio">CÉLULA</a>
+      <div className="home-nav__brand-spacer" aria-hidden="true" />
       <button
         type="button"
         className="home-nav__toggle"
