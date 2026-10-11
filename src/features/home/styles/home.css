@@ -1,0 +1,21 @@
+/* Home layout. HomeAtmosphere owns the hero's liquid background. */
+.home-page { overflow: clip; }
+.home-hero { position: relative; isolation: isolate; min-height: 100svh; display: grid; place-items: center; overflow: hidden; background: #e9e7e5; color: #5b5e74; }
+.home-hero__scroll, .home-about__kicker, .home-featured__eyebrow { font-family: monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.home-hero__scroll { z-index: 10; position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: max-content; max-width: 95%; text-decoration: none; }
+.home-hero__scroll span { padding-left: .6rem; }
+.home-about { min-height: 120svh; position: relative; padding: 18vh 1.25rem 14vh; background: linear-gradient(180deg, #c7e4e8 0%, #e2e4e8 15%, #eddce7 32%, var(--color-cream) 55%, var(--color-cream) 100%); }
+.home-about__statement { max-width: 75rem; margin: 0 auto 15vh; color: var(--color-slate); font-size: clamp(2.6rem, 7vw, 8rem); font-weight: 700; letter-spacing: -.075em; line-height: .9; }
+.home-about__content { max-width: 42rem; margin: auto; text-align: center; }
+.home-about__kicker { margin-bottom: 2rem; }
+.home-about h2 { font-size: clamp(3.6rem, 11vw, 8rem); font-weight: 800; letter-spacing: -.075em; line-height: .93; color: var(--color-blue); }
+.home-about h2 em { font-style: normal; color: var(--color-slate); }
+.home-about__content > p:not(.home-about__kicker) { max-width: 22rem; margin: 3rem auto 2.5rem; font-family: monospace; font-size: .85rem; text-transform: uppercase; line-height: 1.55; }
+.home-link { display: inline-block; padding: .3rem .5rem; background: var(--color-pink); color: var(--color-cream); font-family: monospace; font-size: .95rem; text-decoration: none; }
+.home-link:hover { background: var(--color-slate); }
+.home-featured { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 7rem 1.25rem; background: radial-gradient(ellipse at 20% 70%, #ab91aa, transparent 50%), radial-gradient(ellipse at 80% 20%, #78a7bc, transparent 55%), var(--color-slate); color: var(--color-cream); text-align: center; }
+.home-featured h2 { font-size: clamp(4rem, 12vw, 10rem); font-weight: 800; line-height: .9; letter-spacing: -.08em; }
+.home-link--light:hover { background: var(--color-blue); }
+.home-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding: 2.5rem 1.5rem; background: var(--color-cream); color: var(--color-slate); font-family: monospace; font-size: .75rem; }
+.home-footer a { color: inherit; }
+@media (min-width: 768px) { .home-about { padding-left: 4rem; padding-right: 4rem; } .home-footer { padding-left: 3rem; padding-right: 3rem; } }
