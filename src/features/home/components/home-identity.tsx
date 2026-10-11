@@ -8,10 +8,14 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+function clamp01(value: number) {
+  return Math.min(1, Math.max(0, value));
+}
+
 /**
- * Scroll-linked identity transition: original wordmark travels toward the
- * navigation corner, scales down and gives way to CÉLULA's original symbol.
- * The mark stays above the gradients and is never recreated with a font.
+ * One persistent identity whose visual state is derived only from scroll progress.
+ * At the top, show the complete wordmark; as the hero scrolls away, move it
+ * toward the nav corner and progressively reveal the original compact symbol.
  */
 export function HomeIdentity() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -24,51 +28,42 @@ export function HomeIdentity() {
     const hero = document.querySelector<HTMLElement>('.home-hero');
     if (!wordmark || !symbol || !hero) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (prefersReducedMotion.matches) {
-      gsap.set(wordmark, { autoAlpha: 0 });
-      gsap.set(symbol, { autoAlpha: 1, scale: 1 });
-      return;
-    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Keep the hero mark visible on first paint, symbol hidden until scrolling.
-    gsap.set(wordmark, { autoAlpha: 1 });
-    gsap.set(symbol, { autoAlpha: 0 });
-
-    // Delta from the wordmark's centered bounding box to symbol's nav position.
-    const offsetX = () => {
+    const render = (progress: number) => {
+      const t = clamp01(progress / 0.94);
       const symbolRect = symbol.getBoundingClientRect();
-      return symbolRect.left + symbolRect.width / 2 - window.innerWidth / 2;
-    };
-    const offsetY = () => {
-      const symbolRect = symbol.getBoundingClientRect();
-      return symbolRect.top + symbolRect.height / 2 - window.innerHeight / 2;
+      const wordmarkWidth = wordmark.offsetWidth;
+      const targetX = symbolRect.left + symbolRect.width / 2 - window.innerWidth / 2;
+      const targetY = symbolRect.top + symbolRect.height / 2 - window.innerHeight / 2;
+      const targetScale = symbolRect.width / Math.max(1, wordmarkWidth);
+      const fadeWordmark = clamp01((t - 0.55) / 0.35);
+      const fadeSymbol = clamp01((t - 0.55) / 0.35);
+
+      gsap.set(wordmark, {
+        x: targetX * t,
+        y: targetY * t,
+        scale: 1 - (1 - targetScale) * t,
+        autoAlpha: reducedMotion ? (t < 0.5 ? 1 : 0) : 1 - fadeWordmark,
+      });
+      gsap.set(symbol, {
+        scale: reducedMotion ? 1 : 0.86 + 0.14 * fadeSymbol,
+        autoAlpha: reducedMotion ? (t >= 0.5 ? 1 : 0) : fadeSymbol,
+      });
     };
 
-    const timeline = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: {
-        trigger: hero,
-        start: 'top top',
-        end: () => '+=' + Math.round(window.innerHeight * 0.82),
-        scrub: 0.65,
-        invalidateOnRefresh: true,
-      },
+    // Explicitly initialize the correct state instead of relying on the
+    // starting position of a paused timeline / the browser's restored scroll.
+    const trigger = ScrollTrigger.create({
+      trigger: hero,
+      start: 'top top',
+      end: () => '+=' + Math.round(window.innerHeight * 0.82),
+      invalidateOnRefresh: true,
+      onUpdate: (self) => render(self.progress),
+      onRefresh: (self) => render(self.progress),
     });
 
-    timeline
-      .to(wordmark, {
-        x: offsetX,
-        y: offsetY,
-        scale: 0.15,
-        duration: 0.78,
-      }, 0)
-      .to(wordmark, { autoAlpha: 0, duration: 0.29 }, 0.59)
-      .fromTo(symbol,
-        { autoAlpha: 0, scale: 0.72 },
-        { autoAlpha: 1, scale: 1, duration: 0.41, immediateRender: false },
-        0.51,
-      );
+    render(trigger.progress);
   }, { scope: rootRef });
 
   return (
@@ -82,13 +77,20 @@ export function HomeIdentity() {
               width={558}
               height={162}
               priority
-              sizes="(max-width: 700px) 78vw, 700px"
+              sizes="(max-width: 700px) 82vw, 670px"
             />
           </h1>
         </div>
       </div>
       <div ref={symbolRef} className="home-identity__symbol" aria-hidden="true">
-        <Image src="/home/celula-symbol.png" alt="" width={378} height={280} sizes="90px" loading="eager" />
+        <Image
+          src="/home/celula-symbol.png"
+          alt=""
+          width={378}
+          height={280}
+          sizes="90px"
+          loading="eager"
+        />
       </div>
     </div>
   );
