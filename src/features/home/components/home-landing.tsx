@@ -7,6 +7,8 @@ export function HomeLanding() {
       <main id="inicio" className="home-page">
         <section className="home-hero" aria-labelledby="home-title">
           <div aria-hidden="true" className="home-hero__ambient" />
+          <div aria-hidden="true" className="home-hero__hand" />
+          <div aria-hidden="true" className="home-hero__veil" />
           <div className="home-hero__wordmark">
             <p className="home-hero__eyebrow">Espacio de arte y experimentación</p>
             <h1 id="home-title">CÉLULA</h1>
