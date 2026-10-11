@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+:root { --color-slate: #5b5e74; --color-cream: #ede8e0; --color-pink: #ff66cc; --color-blue: #72a1b2; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--color-cream); color: var(--color-slate); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
