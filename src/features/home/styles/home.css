@@ -23,8 +23,8 @@
 .home-hero__wordmark h1 { font-size: clamp(5.3rem, 21vw, 21rem); font-weight: 800; line-height: .95; letter-spacing: -.105em; mix-blend-mode: multiply; }
 .home-hero__scroll { z-index: 10; position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: max-content; max-width: 95%; text-decoration: none; }
 .home-hero__scroll span { padding-left: .6rem; }
-.home-about { min-height: 120svh; position: relative; padding: 18vh 1.25rem 14vh; background: linear-gradient(180deg, var(--color-slate) 0%, var(--color-cream) 36%, var(--color-cream) 100%); }
-.home-about__statement { max-width: 75rem; margin: 0 auto 15vh; color: var(--color-cream); font-size: clamp(2.6rem, 7vw, 8rem); font-weight: 700; letter-spacing: -.075em; line-height: .9; }
+.home-about { min-height: 120svh; position: relative; padding: 18vh 1.25rem 14vh; background: linear-gradient(180deg, #c7e4e8 0%, #e2e4e8 15%, #eddce7 32%, var(--color-cream) 55%, var(--color-cream) 100%); }
+.home-about__statement { max-width: 75rem; margin: 0 auto 15vh; color: var(--color-slate); font-size: clamp(2.6rem, 7vw, 8rem); font-weight: 700; letter-spacing: -.075em; line-height: .9; }
 .home-about__content { max-width: 42rem; margin: auto; text-align: center; }
 .home-about__kicker { margin-bottom: 2rem; }
 .home-about h2 { font-size: clamp(3.6rem, 11vw, 8rem); font-weight: 800; letter-spacing: -.075em; line-height: .93; color: var(--color-blue); }
