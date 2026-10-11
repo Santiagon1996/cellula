@@ -1,11 +1,5 @@
 /* CÉLULA Home — liquid gradient and persistent brand identity.
    Original artwork is used only for the wordmark and compact symbol. */
-.home-nav { z-index: 100; pointer-events: none; }
-.home-nav__toggle { z-index: 102; pointer-events: auto; }
-.home-nav__brand-spacer { width: 4.5rem; }
-.home-nav__panel { z-index: 101; pointer-events: none; }
-.home-nav__panel.is-open { pointer-events: auto; }
-
 /* Stable layout box: center the original image independently of GSAP transforms. */
 .home-identity { position: fixed; inset: 0; z-index: 110; pointer-events: none; }
 .home-identity__wordmark-anchor { position: absolute; inset: 0; display: grid; place-items: center; }

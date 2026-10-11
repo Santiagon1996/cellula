@@ -1,11 +1,5 @@
 /* Home layout. HomeAtmosphere owns the hero's liquid background. */
 .home-page { overflow: clip; }
-.home-nav { position: fixed; z-index: 80; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem clamp(1rem, 4vw, 3rem); color: var(--color-cream); }
-.home-nav__toggle { position: relative; z-index: 86; border: 0; color: var(--color-cream); background: var(--color-pink); padding: .15rem .4rem; font-family: monospace; font-size: .9rem; letter-spacing: -.05em; cursor: pointer; }
-.home-nav__panel { position: fixed; inset: 0; z-index: 81; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: clamp(.8rem, 3vh, 2rem); min-height: 100svh; padding: 7rem 1.5rem 3rem; background: radial-gradient(ellipse at 15% 16%, rgba(247, 167, 209, .85), transparent 62%), radial-gradient(ellipse at 85% 26%, rgba(138, 216, 230, .88), transparent 65%), linear-gradient(145deg, #ede8e0, #e1d9ec 65%, #d3eaeb); color: #5b5e74; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .5s ease, visibility .5s ease; }
-.home-nav__panel.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
-.home-nav__panel a { font-family: monospace; font-size: clamp(1.05rem, 2.3vw, 1.45rem); line-height: 1.4; letter-spacing: -.045em; text-align: center; text-transform: uppercase; text-decoration: none; }
-.home-nav__panel a:hover, .home-nav__panel a:focus-visible { color: #e965ad; }
 .home-hero { position: relative; isolation: isolate; min-height: 100svh; display: grid; place-items: center; overflow: hidden; background: #e9e7e5; color: #5b5e74; }
 .home-hero__scroll, .home-about__kicker, .home-featured__eyebrow { font-family: monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
 .home-hero__scroll { z-index: 10; position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: max-content; max-width: 95%; text-decoration: none; }
@@ -24,5 +18,4 @@
 .home-link--light:hover { background: var(--color-blue); }
 .home-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding: 2.5rem 1.5rem; background: var(--color-cream); color: var(--color-slate); font-family: monospace; font-size: .75rem; }
 .home-footer a { color: inherit; }
-@media (min-width: 768px) { .home-nav__panel { padding: 9rem 4rem 4rem; } .home-about { padding-left: 4rem; padding-right: 4rem; } .home-footer { padding-left: 3rem; padding-right: 3rem; } }
-@media (prefers-reduced-motion: reduce) { .home-nav__panel { transition: none; } }
+@media (min-width: 768px) { .home-about { padding-left: 4rem; padding-right: 4rem; } .home-footer { padding-left: 3rem; padding-right: 3rem; } }
