@@ -18,47 +18,91 @@
 /* Only colors: no hand image, image backgrounds, or texture overlays. */
 .home-hero { isolation: isolate; background: #ede8e0; }
 .home-hero__scroll { z-index: 20; color: #5b5e74; text-shadow: 0 1px 12px rgba(255,255,255,.7); }
+/* Large, visible moving colour ribbons: organic, lava-lamp-like motion. */
 .home-atmosphere {
-  position: absolute; inset: 0; z-index: 1; overflow: hidden;
-  background: linear-gradient(113deg, #f9d9e9 0%, #f3d7e6 26%, #f2e8e4 48%, #c4e8e9 76%, #b5e0e8 100%);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(115deg, #f9e1e9 0%, #f3e8e9 43%, #d9ebed 100%);
 }
 .home-atmosphere__veil {
-  position: absolute; inset: -32%; pointer-events: none;
-  border-radius: 48%; will-change: transform, opacity;
+  position: absolute;
+  pointer-events: none;
+  will-change: transform;
+  border-radius: 43% 57% 61% 39% / 52% 39% 61% 48%;
+  /* The smaller blur keeps contours visible while remaining soft. */
+  filter: blur(clamp(16px, 2.8vw, 38px));
+  transform-origin: center;
+}
+.home-atmosphere__veil::before {
+  content: '';
+  position: absolute;
+  inset: 8% 19% 7% -14%;
+  border-radius: 62% 38% 34% 66% / 34% 59% 41% 66%;
+  background: inherit;
+  transform: rotate(-35deg);
 }
 .home-atmosphere__veil--rose {
-  background: radial-gradient(ellipse 39% 49% at 32% 46%, rgba(255, 144, 207, .87) 0%, rgba(251, 185, 217, .68) 40%, rgba(252, 210, 230, .18) 70%, transparent 88%);
-  filter: blur(68px);
-  animation: celula-drift-rose 26s ease-in-out infinite alternate;
+  z-index: 2;
+  top: -31%;
+  left: -36%;
+  width: 87%;
+  height: 136%;
+  background: radial-gradient(ellipse at 43% 48%,
+    rgba(255, 113, 194, .9) 0%,
+    rgba(255, 155, 205, .85) 39%,
+    rgba(251, 194, 219, .44) 67%,
+    rgba(251, 194, 219, 0) 84%);
+  animation: celula-lava-rose 14s ease-in-out infinite alternate;
 }
 .home-atmosphere__veil--aqua {
-  background: radial-gradient(ellipse 40% 54% at 67% 42%, rgba(152, 216, 231, .88) 0%, rgba(184, 226, 233, .68) 39%, rgba(204, 234, 232, .16) 73%, transparent 90%);
-  filter: blur(70px);
-  animation: celula-drift-aqua 32s ease-in-out infinite alternate;
+  z-index: 3;
+  top: -27%;
+  right: -39%;
+  width: 96%;
+  height: 141%;
+  background: radial-gradient(ellipse at 49% 50%,
+    rgba(104, 203, 223, .91) 0%,
+    rgba(150, 220, 231, .84) 42%,
+    rgba(190, 233, 232, .43) 69%,
+    rgba(190, 233, 232, 0) 86%);
+  animation: celula-lava-aqua 18s ease-in-out infinite alternate;
 }
 .home-atmosphere__veil--milk {
-  background: radial-gradient(ellipse 34% 47% at 51% 54%, rgba(252, 244, 230, .94) 0%, rgba(247, 235, 235, .51) 43%, transparent 85%);
-  filter: blur(65px);
-  animation: celula-drift-milk 29s ease-in-out infinite alternate;
+  z-index: 4;
+  top: 21%;
+  left: 24%;
+  width: 63%;
+  height: 92%;
+  background: radial-gradient(ellipse at 50% 48%,
+    rgba(252, 243, 227, .94) 0%,
+    rgba(249, 230, 231, .82) 39%,
+    rgba(249, 230, 231, .31) 66%,
+    rgba(249, 230, 231, 0) 83%);
+  animation: celula-lava-milk 12s ease-in-out infinite alternate;
 }
-@keyframes celula-drift-rose {
-  0% { transform: translate3d(-11%, -6%, 0) rotate(-6deg) scale(1.03); opacity: .86; }
-  50% { transform: translate3d(8%, 7%, 0) rotate(5deg) scale(1.16); opacity: .68; }
-  100% { transform: translate3d(15%, -1%, 0) rotate(9deg) scale(1.02); opacity: .92; }
+@keyframes celula-lava-rose {
+  0% { transform: translate3d(-12%, -13%, 0) rotate(-19deg) scale(.93); border-radius: 43% 57% 61% 39% / 52% 39% 61% 48%; }
+  45% { transform: translate3d(30%, 15%, 0) rotate(12deg) scale(1.2); border-radius: 62% 38% 39% 61% / 42% 58% 42% 58%; }
+  100% { transform: translate3d(61%, -4%, 0) rotate(37deg) scale(.98); border-radius: 38% 62% 57% 43% / 59% 39% 61% 41%; }
 }
-@keyframes celula-drift-aqua {
-  0% { transform: translate3d(13%, -7%, 0) rotate(8deg) scale(1.12); opacity: .88; }
-  50% { transform: translate3d(-8%, 6%, 0) rotate(-3deg) scale(1.02); opacity: .7; }
-  100% { transform: translate3d(-16%, 4%, 0) rotate(-10deg) scale(1.14); opacity: .93; }
+@keyframes celula-lava-aqua {
+  0% { transform: translate3d(13%, 13%, 0) rotate(21deg) scale(1.05); border-radius: 55% 45% 37% 63% / 41% 62% 38% 59%; }
+  49% { transform: translate3d(-31%, -16%, 0) rotate(-13deg) scale(.96); border-radius: 39% 61% 58% 42% / 59% 42% 58% 41%; }
+  100% { transform: translate3d(-57%, 11%, 0) rotate(-32deg) scale(1.21); border-radius: 65% 35% 41% 59% / 39% 58% 42% 61%; }
 }
-@keyframes celula-drift-milk {
-  0% { transform: translate3d(-10%, 10%, 0) rotate(-8deg) scale(.97); opacity: .8; }
-  50% { transform: translate3d(7%, -9%, 0) rotate(3deg) scale(1.15); opacity: .93; }
-  100% { transform: translate3d(12%, 8%, 0) rotate(7deg) scale(1.04); opacity: .69; }
+@keyframes celula-lava-milk {
+  0% { transform: translate3d(-25%, 22%, 0) rotate(-32deg) scale(.87); border-radius: 44% 56% 37% 63% / 65% 43% 57% 35%; }
+  50% { transform: translate3d(15%, -28%, 0) rotate(5deg) scale(1.2); border-radius: 61% 39% 57% 43% / 42% 59% 41% 58%; }
+  100% { transform: translate3d(33%, 13%, 0) rotate(32deg) scale(.99); border-radius: 40% 60% 64% 36% / 57% 42% 58% 43%; }
 }
 @media (max-width: 640px) {
   .home-identity__wordmark { width: min(82vw, 390px); }
-  .home-atmosphere__veil { inset: -40%; }
+  .home-atmosphere__veil--rose { width: 132%; left: -65%; }
+  .home-atmosphere__veil--aqua { width: 140%; right: -75%; }
+  .home-atmosphere__veil--milk { width: 100%; left: 5%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .home-atmosphere__veil { animation: none; will-change: auto; }
