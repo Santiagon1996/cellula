@@ -36,7 +36,7 @@ export function HomeIdentity() {
       scrollTrigger: {
         trigger: '#inicio',
         start: 'top top',
-        end: '+=75%',
+        end: () => '+=' + Math.round(window.innerHeight * 0.78),
         scrub: 0.8,
         invalidateOnRefresh: true,
       },
