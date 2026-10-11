@@ -150,10 +150,11 @@ export function FluidGradientCanvas() {
     const render = (now: number) => {
       if (!running) return;
       raf = window.requestAnimationFrame(render);
-      if (!visible || document.hidden || now - lastDraw < 33) {
-        previous = now;
+      if (!visible || document.hidden) {
+        previous = 0;
         return;
       }
+      if (now - lastDraw < 33) return;
       elapsed += previous === 0 ? 0 : Math.min(0.05, (now - previous) / 1000);
       previous = now;
       lastDraw = now;
@@ -161,7 +162,7 @@ export function FluidGradientCanvas() {
       gl.uniform2f(sizeLocation, canvas.width, canvas.height);
       gl.uniform1f(timeLocation, elapsed);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      canvas.style.opacity = '1';
+      if (canvas.style.opacity !== '1') canvas.style.opacity = '1';
     };
 
     const observer = new IntersectionObserver(([entry]) => {
