@@ -18,93 +18,29 @@
 /* Only colors: no hand image, image backgrounds, or texture overlays. */
 .home-hero { isolation: isolate; background: #ede8e0; }
 .home-hero__scroll { z-index: 20; color: #5b5e74; text-shadow: 0 1px 12px rgba(255,255,255,.7); }
-/* Large, visible moving colour ribbons: organic, lava-lamp-like motion. */
+/* WebGL fluid ribbons are drawn into this canvas. The CSS base remains a
+   bright fallback when WebGL is unavailable or reduced motion is preferred. */
 .home-atmosphere {
   position: absolute;
   inset: 0;
   z-index: 1;
   overflow: hidden;
-  isolation: isolate;
-  background: linear-gradient(115deg, #f9e1e9 0%, #f3e8e9 43%, #d9ebed 100%);
+  background:
+    radial-gradient(ellipse at 23% 30%, #f6c3dc 0%, transparent 60%),
+    radial-gradient(ellipse at 78% 67%, #bce6e9 0%, transparent 65%),
+    linear-gradient(115deg, #f9dce9, #f0e8e7 49%, #cee8e9);
 }
-.home-atmosphere__veil {
-  position: absolute;
-  pointer-events: none;
-  will-change: transform;
-  border-radius: 43% 57% 61% 39% / 52% 39% 61% 48%;
-  /* The smaller blur keeps contours visible while remaining soft. */
-  filter: blur(clamp(16px, 2.8vw, 38px));
-  transform-origin: center;
-}
-.home-atmosphere__veil::before {
-  content: '';
-  position: absolute;
-  inset: 8% 19% 7% -14%;
-  border-radius: 62% 38% 34% 66% / 34% 59% 41% 66%;
-  background: inherit;
-  transform: rotate(-35deg);
-}
-.home-atmosphere__veil--rose {
-  z-index: 2;
-  top: -31%;
-  left: -36%;
-  width: 87%;
-  height: 136%;
-  background: radial-gradient(ellipse at 43% 48%,
-    rgba(255, 113, 194, .9) 0%,
-    rgba(255, 155, 205, .85) 39%,
-    rgba(251, 194, 219, .44) 67%,
-    rgba(251, 194, 219, 0) 84%);
-  animation: celula-lava-rose 14s ease-in-out infinite alternate;
-}
-.home-atmosphere__veil--aqua {
-  z-index: 3;
-  top: -27%;
-  right: -39%;
-  width: 96%;
-  height: 141%;
-  background: radial-gradient(ellipse at 49% 50%,
-    rgba(104, 203, 223, .91) 0%,
-    rgba(150, 220, 231, .84) 42%,
-    rgba(190, 233, 232, .43) 69%,
-    rgba(190, 233, 232, 0) 86%);
-  animation: celula-lava-aqua 18s ease-in-out infinite alternate;
-}
-.home-atmosphere__veil--milk {
-  z-index: 4;
-  top: 21%;
-  left: 24%;
-  width: 63%;
-  height: 92%;
-  background: radial-gradient(ellipse at 50% 48%,
-    rgba(252, 243, 227, .94) 0%,
-    rgba(249, 230, 231, .82) 39%,
-    rgba(249, 230, 231, .31) 66%,
-    rgba(249, 230, 231, 0) 83%);
-  animation: celula-lava-milk 12s ease-in-out infinite alternate;
-}
-@keyframes celula-lava-rose {
-  0% { transform: translate3d(-12%, -13%, 0) rotate(-19deg) scale(.93); border-radius: 43% 57% 61% 39% / 52% 39% 61% 48%; }
-  45% { transform: translate3d(30%, 15%, 0) rotate(12deg) scale(1.2); border-radius: 62% 38% 39% 61% / 42% 58% 42% 58%; }
-  100% { transform: translate3d(61%, -4%, 0) rotate(37deg) scale(.98); border-radius: 38% 62% 57% 43% / 59% 39% 61% 41%; }
-}
-@keyframes celula-lava-aqua {
-  0% { transform: translate3d(13%, 13%, 0) rotate(21deg) scale(1.05); border-radius: 55% 45% 37% 63% / 41% 62% 38% 59%; }
-  49% { transform: translate3d(-31%, -16%, 0) rotate(-13deg) scale(.96); border-radius: 39% 61% 58% 42% / 59% 42% 58% 41%; }
-  100% { transform: translate3d(-57%, 11%, 0) rotate(-32deg) scale(1.21); border-radius: 65% 35% 41% 59% / 39% 58% 42% 61%; }
-}
-@keyframes celula-lava-milk {
-  0% { transform: translate3d(-25%, 22%, 0) rotate(-32deg) scale(.87); border-radius: 44% 56% 37% 63% / 65% 43% 57% 35%; }
-  50% { transform: translate3d(15%, -28%, 0) rotate(5deg) scale(1.2); border-radius: 61% 39% 57% 43% / 42% 59% 41% 58%; }
-  100% { transform: translate3d(33%, 13%, 0) rotate(32deg) scale(.99); border-radius: 40% 60% 64% 36% / 57% 42% 58% 43%; }
+.home-atmosphere__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 450ms ease;
 }
 @media (max-width: 640px) {
   .home-identity__wordmark { width: min(82vw, 390px); }
-  .home-atmosphere__veil--rose { width: 132%; left: -65%; }
-  .home-atmosphere__veil--aqua { width: 140%; right: -75%; }
-  .home-atmosphere__veil--milk { width: 100%; left: 5%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .home-atmosphere__veil { animation: none; will-change: auto; }
+  .home-atmosphere__canvas { display: none; }
   .home-identity__wordmark, .home-identity__symbol { will-change: auto; }
 }
