@@ -30,7 +30,7 @@ export function HomeLanding() {
         </section>
         <footer id="contacto" className="home-footer">
           <span>CÉLULA © {new Date().getFullYear()}</span>
-          <a href="mailto:hola@celula.example">CONTACTO</a>
+          <span>CONTACTO · PRÓXIMAMENTE</span>
           <span id="nosotros">ARTE / CULTURA / EXPERIMENTACIÓN</span>
         </footer>
       </main>
