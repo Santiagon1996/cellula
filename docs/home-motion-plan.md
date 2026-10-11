@@ -23,3 +23,12 @@
 - Probar apertura/cierre del menú y enlaces.
 - Una vez exportados los recursos: verificar archivos locales, encuadre, proporción, `mix-blend-mode` y contraste del wordmark.
 - Ejecutar `npm run test:run && npm run typecheck && npm run lint && npm run build` antes del PR.
+
+## Segunda iteración — mano aislada y transición (2026-10-11)
+
+- Los degradados de Home se generan íntegramente mediante CSS en `home-motion.css`; no se utiliza una fotografía como fondo.
+- Mano aislada a partir del arte aportado por la clienta: `/public/home/hand-isolated.png` (PNG transparente). La separación automática conserva un borde suave; comprobar calidad visual y refinar si fuera necesario.
+- La mano se mantiene estática; tres velos CSS se animan delante de ella con distinta posición/opacidad, generando aparición y desaparición.
+- El wordmark y símbolo originales son PNG independientes, superpuestos por encima del resto; ScrollTrigger mueve/reduce el primero y revela el segundo a lo largo del primer ~82% de la altura de viewport.
+- Pendiente de validación local, test y build tras la actualización.
+- El recurso `hand-isolated.png` se entrega como ZIP para su extracción local: **no está versionado en GitHub hasta que se confirme el push del usuario**.
