@@ -1,18 +1,15 @@
 import { HomeNavigation } from './home-navigation';
+import { HomeIdentity } from './home-identity';
+import { HomeAtmosphere } from './home-atmosphere';
 
 export function HomeLanding() {
   return (
     <>
       <HomeNavigation />
+      <HomeIdentity />
       <main id="inicio" className="home-page">
-        <section className="home-hero" aria-labelledby="home-title">
-          <div aria-hidden="true" className="home-hero__ambient" />
-          <div aria-hidden="true" className="home-hero__hand" />
-          <div aria-hidden="true" className="home-hero__veil" />
-          <div className="home-hero__wordmark">
-            <p className="home-hero__eyebrow">Espacio de arte y experimentación</p>
-            <h1 id="home-title">CÉLULA</h1>
-          </div>
+        <section className="home-hero" aria-label="Portada de Célula">
+          <HomeAtmosphere />
           <a href="#laboratorio" className="home-hero__scroll">DESLIZA PARA DESCUBRIR <span aria-hidden="true">↓</span></a>
         </section>
         <section id="laboratorio" className="home-about" aria-labelledby="home-about-title">
