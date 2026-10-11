@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="lilac" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#cdc8de"/>
+      <stop offset="1" stop-color="#b5adcc"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ecc2d0"/>
+      <stop offset="1" stop-color="#d993b6"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#a4c4ce"/>
+      <stop offset="1" stop-color="#81aab9"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".73" numOctaves="3" seed="31" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".045"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path fill="url(#lilac)" d="M0 0h800v1000H0z"/>
+    <path fill="url(#pink)" d="M427 139c190-21 339 101 317 287-16 135-107 183-100 296 10 158-173 212-288 148C224 797 193 696 93 613-12 526 29 372 151 343c104-25 143-189 276-204z"/>
+    <path fill="#f0e6d9" d="M428 242c139-19 231 78 210 197-22 124-134 126-110 243 22 108-92 114-163 65-103-71-103-165-182-203-68-34-63-97 10-138 132-74 116-148 235-164z"/>
+    <path fill="url(#blue)" d="M422 351c87-17 132 43 109 112-24 72-100 85-77 146 22 59-26 92-69 57-77-63-56-125-106-158-48-33-21-81 24-93 55-15 60-51 119-64z"/>
+    <path fill="#f5ebe1" d="M411 436c32-12 63 5 55 33-8 27-47 29-40 51 8 25-16 34-34 17-29-28-22-55-15-70 7-16 17-25 34-31z"/>
+    <path fill="none" stroke="#f1d4db" stroke-width="2" d="M426 194c163-21 270 88 242 231-26 134-123 159-95 278 29 121-126 151-208 72"/>
+    <circle cx="148" cy="153" r="27" fill="#e9dccc"/>
+    <circle cx="694" cy="879" r="13" fill="#e9dccc"/>
+  </g>
+</svg>
