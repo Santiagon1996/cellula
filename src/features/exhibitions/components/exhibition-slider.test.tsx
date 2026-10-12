@@ -248,6 +248,45 @@ describe('ExhibitionSlider', () => {
     expect(slides[0]).toHaveAttribute('data-revealed', 'true');
   });
 
+  it('keeps the requested artwork when smooth scrolling pauses before halfway', () => {
+    const { viewport, slides } = renderSlider();
+    const scrollTo = vi.spyOn(viewport, 'scrollTo').mockImplementation(() => {});
+
+    fireEvent.click(screen.getByRole('button', { name: 'Obra siguiente' }));
+    scrollToPosition(viewport, 32);
+    act(() => vi.advanceTimersByTime(181));
+
+    expect(scrollTo).toHaveBeenLastCalledWith({ left: slideSpacing, behavior: 'smooth' });
+    expect(slides[1]).toHaveAttribute('data-active', 'true');
+    expect(slides[1]).toHaveAttribute('data-revealed', 'false');
+
+    scrollToPosition(viewport, slideSpacing);
+    settle();
+
+    expect(slides[1]).toHaveAttribute('data-revealed', 'true');
+    expect(screen.getByText('Obra 2 de 3: Corriente azul')).toBeInTheDocument();
+  });
+
+  it('lets a touch gesture replace an unfinished button destination', () => {
+    const { viewport, slides } = renderSlider();
+    vi.spyOn(viewport, 'scrollTo').mockImplementationOnce(() => {});
+
+    fireEvent.click(screen.getByRole('button', { name: 'Obra siguiente' }));
+    scrollToPosition(viewport, 32);
+    fireEvent.touchStart(viewport, { touches: [{ identifier: 1 }] });
+    scrollToPosition(viewport, slideSpacing * 2);
+    settle();
+    expect(slides[2]).toHaveAttribute('data-revealed', 'false');
+
+    fireEvent.touchEnd(viewport, { touches: [] });
+    settle();
+
+    expect(viewport.scrollLeft).toBe(slideSpacing * 2);
+    expect(slides[2]).toHaveAttribute('data-active', 'true');
+    expect(slides[2]).toHaveAttribute('data-revealed', 'true');
+    expect(screen.getByText('Obra 3 de 3: Silencio lavanda')).toBeInTheDocument();
+  });
+
   it('drags with the mouse, settles centrally, and suppresses the click produced by a drag', () => {
     const { viewport, slides } = renderSlider();
 

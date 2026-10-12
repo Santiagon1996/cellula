@@ -26,6 +26,7 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
     let timer: ReturnType<typeof setTimeout> | undefined;
     let suppressClick = false;
     let touching = false;
+    let pendingIndex: number | null = null;
     let drag: {
       id: number;
       startX: number;
@@ -68,7 +69,8 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
 
     const settle = () => {
       if (drag || touching) return;
-      const index = nearestTo();
+      // Keep the requested artwork when smooth scrolling pauses between frames.
+      const index = pendingIndex ?? nearestTo();
       activate(index);
       const target = targetFor(index);
       if (Math.abs(viewport.scrollLeft - target) > 1) {
@@ -76,11 +78,13 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
         scheduleSettle();
         return;
       }
+      pendingIndex = null;
       setSettled(true);
     };
 
     const navigate = (index: number) => {
       const next = Math.max(0, Math.min(slides.length - 1, index));
+      pendingIndex = next;
       activate(next);
       setSettled(false);
       viewport.scrollTo({ left: targetFor(next), behavior: motion.matches ? 'instant' : 'smooth' });
@@ -95,12 +99,16 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
     };
 
     const onTouchStart = () => {
+      pendingIndex = null;
       touching = true;
       clearTimeout(timer);
     };
     const onTouchEnd = (event: TouchEvent) => {
       touching = event.touches.length > 0;
       if (!touching) scheduleSettle();
+    };
+    const onWheel = () => {
+      pendingIndex = null;
     };
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -120,6 +128,7 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
     const onPointerDown = (event: PointerEvent) => {
       if (event.pointerType === 'touch' || event.button !== 0 || !event.isPrimary || drag) return;
       if (event.target instanceof Element && event.target.closest('a, button')) return;
+      pendingIndex = null;
       suppressClick = false;
       clearTimeout(timer);
       // Stop any pending smooth navigation at the position where the user grabs it.
@@ -188,7 +197,7 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
       if (drag) return;
       // Keep both endpoint artworks centered at every viewport width.
       viewport.style.setProperty('--gallery-inset', `${Math.max(0, (viewport.clientWidth - slides[0].getBoundingClientRect().width) / 2)}px`);
-      viewport.scrollTo({ left: targetFor(Math.min(activeRef.current, slides.length - 1)), behavior: 'instant' });
+      viewport.scrollTo({ left: targetFor(pendingIndex ?? Math.min(activeRef.current, slides.length - 1)), behavior: 'instant' });
       scheduleSettle();
     };
     const resizeObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(onResize);
@@ -196,6 +205,7 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
     resizeObserver?.observe(slides[0]);
 
     viewport.addEventListener('scroll', onScroll, { passive: true });
+    viewport.addEventListener('wheel', onWheel, { passive: true });
     viewport.addEventListener('touchstart', onTouchStart, { passive: true });
     viewport.addEventListener('touchend', onTouchEnd, { passive: true });
     viewport.addEventListener('touchcancel', onTouchEnd, { passive: true });
@@ -216,6 +226,7 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
       clearTimeout(timer);
       resizeObserver?.disconnect();
       viewport.removeEventListener('scroll', onScroll);
+      viewport.removeEventListener('wheel', onWheel);
       viewport.removeEventListener('touchstart', onTouchStart);
       viewport.removeEventListener('touchend', onTouchEnd);
       viewport.removeEventListener('touchcancel', onTouchEnd);

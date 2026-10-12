@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { ExhibitionSlider } from '@/features/exhibitions';
+import { demoArtworks } from '@/features/exhibitions/data/demo-artworks';
+import '@/features/exhibitions/styles/exhibition.css';
 import { HomeNavigation } from './home-navigation';
 import { HomeIdentity } from './home-identity';
 import { HomeAtmosphere } from './home-atmosphere';
-
 export function HomeLanding() {
   return (
     <>
@@ -25,7 +27,7 @@ export function HomeLanding() {
         <section id="exposiciones" className="home-featured" aria-labelledby="home-featured-title">
           <p className="home-featured__eyebrow">EXPOSICIONES / ARTISTAS</p>
           <h2 id="home-featured-title">DESTACADO<br />DEL MES</h2>
-          <p>Próximamente</p>
+          <ExhibitionSlider artworks={demoArtworks} />
           <Link className="home-link home-link--light" href="/exposiciones">VER MÁS <span aria-hidden="true">↗</span></Link>
         </section>
         <footer id="contacto" className="home-footer">
