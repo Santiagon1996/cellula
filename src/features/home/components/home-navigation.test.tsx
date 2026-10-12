@@ -37,6 +37,7 @@ function renderHome() {
         <button type="button">Acción de la home</button>
         <section id="laboratorio">Sobre Célula</section>
         <section id="exposiciones">Obras destacadas</section>
+        <section id="laboratorios">Laboratorios</section>
         <footer id="contacto">Contacto</footer>
       </main>
     </>,
@@ -114,18 +115,18 @@ describe('HomeNavigation', () => {
 
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(dialog).not.toHaveAttribute('inert');
-    expect(within(navigation).getAllByRole('link')).toHaveLength(4);
+    expect(within(navigation).getAllByRole('link')).toHaveLength(5);
     for (const [label, href] of [
       ['HOME', '#inicio'],
       ['QUÉ ES CÉLULA', '#laboratorio'],
       ['EXPOSICIONES', '#exposiciones'],
+      ['LAB', '#laboratorios'],
       ['CONTACTO', '#contacto'],
     ]) {
       expect(within(navigation).getByRole('link', { name: label })).toHaveAttribute('href', href);
     }
-    expect(within(navigation).getByText('LAB').closest('[aria-disabled="true"]')).not.toBeNull();
     expect(within(navigation).getByText('QUÉ HACEMOS').closest('[aria-disabled="true"]')).not.toBeNull();
-    expect(within(navigation).getAllByText('PRÓXIMAMENTE')).toHaveLength(2);
+    expect(within(navigation).getAllByText('PRÓXIMAMENTE')).toHaveLength(1);
   });
 
   it('moves focus into the links only when the opening animation has finished', () => {
@@ -202,6 +203,24 @@ describe('HomeNavigation', () => {
 
     screen.getByRole('button', { name: 'Abrir menú' }).focus();
     expect(destination).not.toHaveAttribute('tabindex');
+  });
+
+  it('defers LAB navigation until the menu closes without changing the existing about destination', () => {
+    const { container } = renderHome();
+    openMenu();
+    fireEvent.click(screen.getByRole('link', { name: 'LAB' }));
+
+    expect(window.location.hash).toBe('');
+    expect(scrollIntoView).not.toHaveBeenCalled();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    finishMotion('closed');
+    const destination = container.querySelector('#laboratorios');
+    expect(window.location.hash).toBe('#laboratorios');
+    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+    expect(destination).toHaveFocus();
+    expect(container.querySelector('#laboratorio')).not.toHaveFocus();
+    expect(document.body.style.overflow).toBe('');
   });
 
   it('preserves a destination’s existing tabindex and permits modified link clicks', () => {

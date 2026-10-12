@@ -1,2 +1,2 @@
-// Componentes y lógica del laboratorio se implementarán en feature/laboratory.
-export {};
+export { LaboratorySection } from './components/laboratory-section';
+export type { Laboratory, LaboratoryImage } from './types';
