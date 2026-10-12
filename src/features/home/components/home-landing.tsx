@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { HomeNavigation } from './home-navigation';
 import { HomeIdentity } from './home-identity';
 import { HomeAtmosphere } from './home-atmosphere';
@@ -25,7 +26,7 @@ export function HomeLanding() {
           <p className="home-featured__eyebrow">EXPOSICIONES / ARTISTAS</p>
           <h2 id="home-featured-title">DESTACADO<br />DEL MES</h2>
           <p>Próximamente</p>
-          <a className="home-link home-link--light" href="#contacto">VER MÁS <span aria-hidden="true">↗</span></a>
+          <Link className="home-link home-link--light" href="/exposiciones">VER MÁS <span aria-hidden="true">↗</span></Link>
         </section>
         <footer id="contacto" className="home-footer">
           <span>CÉLULA © {new Date().getFullYear()}</span>
