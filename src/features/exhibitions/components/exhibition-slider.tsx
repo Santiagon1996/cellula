@@ -250,7 +250,7 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
 
   return (
     <section className="exhibition-slider" aria-label="Selección de obras" aria-roledescription="carrusel">
-      <p id={`${id}-instructions`} className="exhibition-slider__hint">Desliza o arrastra para explorar. Detente para descubrir cada obra.</p>
+      <p id={`${id}-instructions`} className="exhibition-slider__hint font-mono font-normal">Desliza o arrastra para explorar. Detente para descubrir cada obra.</p>
       <div
         ref={viewportRef}
         id={`${id}-viewport`}
@@ -285,7 +285,7 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
                     draggable={false}
                   />
                   <div className="exhibition-slider__detail" aria-hidden={!revealed}>
-                    <p className="exhibition-slider__technique">{artwork.technique}</p>
+                    <p className="exhibition-slider__technique font-mono font-normal">{artwork.technique}</p>
                     <h2>{artwork.title}</h2>
                     <p>{artwork.description}</p>
                   </div>
@@ -295,14 +295,14 @@ export function ExhibitionSlider({ artworks }: ExhibitionSliderProps) {
           })}
         </div>
       </div>
-      <footer className="exhibition-slider__controls">
+      <footer className="exhibition-slider__controls font-mono font-normal">
         <span className="exhibition-slider__counter" aria-hidden="true">{String(current + 1).padStart(2, '0')} / {String(artworks.length).padStart(2, '0')}</span>
-        <div className="exhibition-slider__navigation">
+        <div className="exhibition-slider__navigation font-sans font-normal">
           <button type="button" aria-label="Obra anterior" aria-controls={`${id}-viewport`} disabled={current === 0} onClick={() => navigateRef.current(current - 1)}>←</button>
           <button type="button" aria-label="Obra siguiente" aria-controls={`${id}-viewport`} disabled={current === artworks.length - 1} onClick={() => navigateRef.current(current + 1)}>→</button>
         </div>
       </footer>
-      <p className="exhibition-slider__status" aria-live="polite" aria-atomic="true">{settled && !dragging ? `Obra ${current + 1} de ${artworks.length}: ${artworks[current].title}` : ''}</p>
+      <p className="exhibition-slider__status font-mono font-normal" aria-live="polite" aria-atomic="true">{settled && !dragging ? `Obra ${current + 1} de ${artworks.length}: ${artworks[current].title}` : ''}</p>
     </section>
   );
 }

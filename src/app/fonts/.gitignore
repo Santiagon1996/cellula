@@ -1,0 +1,5 @@
+# Keep proprietary font files out of Git until their web license is verified.
+*.otf
+*.woff
+*.woff2
+*.ttf

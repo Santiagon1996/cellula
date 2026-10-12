@@ -183,7 +183,7 @@ export function HomeNavigation() {
       <button
         ref={buttonRef}
         type="button"
-        className={styles.toggle}
+        className={`${styles.toggle} font-mono font-medium`}
         data-open={expanded}
         aria-expanded={expanded}
         aria-controls="home-navigation-panel"

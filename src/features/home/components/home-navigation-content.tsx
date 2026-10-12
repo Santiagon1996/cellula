@@ -26,7 +26,7 @@ export function HomeNavigationContent({ onNavigate }: {
           height={280}
           sizes="(max-width: 800px) 80px, 272px"
         />
-        <p className={styles.kicker}>ARTE / CULTURA / EXPERIMENTACIÓN</p>
+        <p className={`${styles.kicker} font-mono font-normal`}>ARTE / CULTURA / EXPERIMENTACIÓN</p>
         <p className={styles.note}>Una plataforma en movimiento.</p>
       </div>
       <nav aria-label="Navegación principal">
@@ -34,8 +34,8 @@ export function HomeNavigationContent({ onNavigate }: {
           {homeSections.map((item, index) => {
             const label = (
               <>
-                <span className={styles.number} aria-hidden="true">0{index + 1}</span>
-                <span className={styles.label}>{item.label}</span>
+                <span className={`${styles.number} font-mono font-normal`} aria-hidden="true">0{index + 1}</span>
+                <span className={`${styles.label} font-medium`}>{item.label}</span>
               </>
             );
             return (
@@ -46,7 +46,7 @@ export function HomeNavigationContent({ onNavigate }: {
                   </a>
                 ) : (
                   <span className={styles.link} aria-disabled="true">
-                    {label}<span className={styles.pending}>PRÓXIMAMENTE</span>
+                    {label}<span className={`${styles.pending} font-mono font-normal`}>PRÓXIMAMENTE</span>
                   </span>
                 )}
               </li>
@@ -54,7 +54,7 @@ export function HomeNavigationContent({ onNavigate }: {
           })}
         </ol>
       </nav>
-      <div className={styles.footer} data-nav-reveal>
+      <div className={`${styles.footer} font-mono font-normal`} data-nav-reveal>
         <span>DESDE EL MOVIMIENTO</span>
         <span>CÉLULA © {new Date().getFullYear()}</span>
       </div>

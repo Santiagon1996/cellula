@@ -17,7 +17,7 @@ export default function ExhibitionsPage() {
         <Link href="/" className="exhibition-brand" aria-label="Célula, volver al inicio">
           Cél·ula
         </Link>
-        <nav className="exhibition-header__navigation" aria-label="Navegación principal">
+        <nav className="exhibition-header__navigation font-medium" aria-label="Navegación principal">
           <Link href="/">Inicio</Link>
           <span aria-hidden="true">/</span>
           <span aria-current="page">Exposiciones</span>
@@ -26,7 +26,7 @@ export default function ExhibitionsPage() {
 
       <section className="exhibition-intro" aria-labelledby="exhibition-heading">
         <div>
-          <p className="exhibition-eyebrow">
+          <p className="exhibition-eyebrow font-mono font-normal">
             <span aria-hidden="true" className="exhibition-eyebrow__dot" />
             Selección de estudio
           </p>
@@ -43,7 +43,7 @@ export default function ExhibitionsPage() {
 
       <ExhibitionSlider artworks={demoArtworks} />
 
-      <footer className="exhibition-footer">
+      <footer className="exhibition-footer font-mono font-normal">
         <span>Obras de demostración</span>
         <span>Un espacio para la creación, el arte y la experimentación.</span>
       </footer>
