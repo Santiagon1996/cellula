@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { AboutSection } from '@/features/about';
 import { ExhibitionSlider } from '@/features/exhibitions';
 import { demoArtworks } from '@/features/exhibitions/data/demo-artworks';
 import '@/features/exhibitions/styles/exhibition.css';
@@ -19,15 +20,7 @@ export function HomeLanding() {
           <HomeAtmosphere />
           <a href="#laboratorio" className="home-hero__scroll font-mono font-normal">DESLIZA PARA DESCUBRIR <span aria-hidden="true">↓</span></a>
         </section>
-        <section id="laboratorio" className="home-about" aria-labelledby="home-about-title">
-          <div className="home-about__statement font-bold" aria-hidden="true">CREAR · EXPLORAR · CONECTAR</div>
-          <div className="home-about__content">
-            <p className="home-about__kicker font-mono font-normal">UNA PLATAFORMA EN MOVIMIENTO</p>
-            <h2 id="home-about-title">¿QUÉ ES<br /><em>CÉLULA?</em></h2>
-            <p>Un espacio para la creación, el arte y la experimentación.</p>
-            <a className="home-link font-mono font-normal" href="#nosotros">DESCUBRE CÉLULA <span aria-hidden="true">↗</span></a>
-          </div>
-        </section>
+        <AboutSection />
         <section id="exposiciones" className="home-featured" aria-labelledby="home-featured-title">
           <p className="home-featured__eyebrow font-mono font-normal">EXPOSICIONES / ARTISTAS</p>
           <h2 id="home-featured-title">DESTACADO<br />DEL MES</h2>

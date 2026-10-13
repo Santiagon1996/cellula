@@ -1,0 +1,103 @@
+.section {
+  position: relative;
+  color: var(--color-slate);
+  background: var(--color-cream);
+  scroll-margin-top: 0;
+}
+
+.section * { box-sizing: border-box; }
+.section h2, .section h3, .section p { margin: 0; }
+.visuallyHidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+.intro, .ecosystem, .finale { position: relative; isolation: isolate; padding-inline: clamp(1.25rem, 4vw, 4rem); }
+.intro { overflow: clip; padding-top: max(5.5rem, 14svh); background: linear-gradient(180deg, #c7e4e8 0%, #e2e4e8 15%, var(--color-cream) 28%, var(--color-cream) 100%); }
+.introWash { position: absolute; z-index: -1; inset: 28% 0 0; background: var(--color-pink); opacity: 0; pointer-events: none; }
+.actLabel { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .65rem 1.25rem; max-width: 90rem; margin-inline: auto; padding-block: 1rem; border-top: 1px solid currentColor; font-family: var(--font-basis-mono); font-size: .62rem; font-weight: 400; line-height: 1.5; }
+.actLabel > span:last-child { max-width: 18rem; }
+.questionStage { position: relative; display: flex; flex-direction: column; justify-content: center; min-height: 72svh; max-width: 90rem; margin-inline: auto; padding-block: 3.5rem 2rem; }
+.introAnnotation, .scrollNote, .declarationIndex, .pendingNotice, .ecosystemHint, .conceptNumber, .nodeNumber, .organismCaption, .finaleKicker { font-family: var(--font-basis-mono); font-size: .62rem; font-weight: 400; line-height: 1.6; }
+.introAnnotation { margin-bottom: 2rem !important; }
+.question { font-size: clamp(3.5rem, 15.4vw, 13rem); font-weight: 700; line-height: .88; letter-spacing: -.065em; }
+.questionVisual { display: block; }
+.questionRow { display: flex; align-items: baseline; gap: .13em; }
+.fragment { display: inline-block; transform-origin: 50% 70%; }
+.fragmentSmall { font-size: .7em; }
+.fragmentCell { display: block; margin-top: .08em; }
+.introFootnote { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.75rem; margin-top: 3rem; }
+.introFootnote > p { max-width: 18rem; font-size: .9rem; line-height: 1.6; }
+.scrollNote { display: flex; align-items: center; gap: 1rem; }
+.scrollNote > span { font-family: var(--font-acid); font-size: 2rem; }
+.declarationStage { position: relative; display: flex; flex-direction: column; justify-content: center; min-height: 58svh; max-width: 90rem; margin-inline: auto; padding-block: 4rem 5rem; }
+.declarationIndex { display: block; margin-bottom: 1.75rem; }
+.declaration { font-size: clamp(2.25rem, 9.8vw, 8rem); font-weight: 500; line-height: 1; letter-spacing: -.05em; }
+.declaration > span { display: block; }
+.declaration em { font-style: normal; font-weight: 700; }
+.decomposeDescription { max-width: 25rem; margin-top: 2rem !important; font-size: 1rem; line-height: 1.6; }
+.pendingNotice { margin-top: 1.75rem !important; font-size: .58rem; }
+
+.ecosystem { padding-block: 4rem 5rem; background: var(--color-cream); }
+.ecosystemHeader { max-width: 90rem; margin: 2.25rem auto 1.5rem; }
+.ecosystemHeading { max-width: 13ch; font-size: clamp(2.5rem, 9vw, 6rem); font-weight: 500; letter-spacing: -.05em; line-height: 1; }
+.ecosystemHint { margin-top: 1.5rem !important; }
+.organism { position: relative; width: min(100%, 32rem); aspect-ratio: 400 / 360; margin: 2rem auto 0; }
+.connectionSvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.connectionPath { stroke: var(--color-slate); stroke-width: 1.5; stroke-dasharray: 3 5; vector-effect: non-scaling-stroke; }
+.node { position: absolute; z-index: 1; display: grid; place-items: center; width: 37%; aspect-ratio: 1; padding: 0; border: 0; color: var(--color-slate); background: transparent; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.node[data-about-node='crear'] { left: 7%; top: 10%; }
+.node[data-about-node='explorar'] { left: 57%; top: 15%; }
+.node[data-about-node='conectar'] { left: 29%; top: 57%; }
+.nodeShape { position: absolute; inset: 0; z-index: -1; background: var(--color-pink); border: 1px solid var(--color-slate); border-radius: 47% 53% 63% 37% / 44% 61% 39% 56%; }
+.node[data-about-node='explorar'] .nodeShape { background: var(--color-blue); border-radius: 64% 36% 39% 61% / 56% 39% 61% 44%; }
+.node[data-about-node='conectar'] .nodeShape { background: var(--color-cream); border-radius: 41% 59% 56% 44% / 59% 41% 59% 41%; }
+.node[aria-pressed='true'] .nodeShape { border-width: 2px; }
+.nodeLabel { position: relative; padding: .3rem .45rem; background: var(--color-cream); font-size: clamp(.85rem, 4vw, 1.65rem); font-weight: 500; letter-spacing: -.025em; }
+.nodeNumber { position: absolute; top: 21%; left: 50%; transform: translateX(-50%); padding-inline: .2rem; background: var(--color-cream); font-size: .6rem; }
+.node:focus-visible { outline: 3px solid var(--color-slate); outline-offset: 7px; border-radius: 50%; }
+.ecosystemEditorial { position: relative; max-width: 34rem; min-height: 13.5rem; margin: 2.5rem auto 0; padding: 1.25rem 0 0; border-top: 1px solid var(--color-slate); }
+.conceptNumber { display: block; margin-bottom: .75rem; }
+.conceptTitle { font-size: clamp(1.85rem, 6.5vw, 3rem); line-height: 1.05; font-weight: 500; letter-spacing: -.03em; }
+.conceptDescription { max-width: 31rem; margin-top: 1rem !important; font-size: 1rem; line-height: 1.65; }
+
+.finale { overflow: clip; padding-block: 4rem 2rem; background: var(--color-slate); color: var(--color-cream); }
+.finaleComposition { max-width: 90rem; margin: 1.5rem auto 3.5rem; }
+.finaleOrganism { position: relative; width: min(100%, 28rem); aspect-ratio: 400 / 360; margin: 0 auto 3.5rem; }
+.finaleConnections { position: absolute; inset: 0; width: 100%; height: 100%; stroke: var(--color-cream); stroke-width: 1; opacity: .65; }
+.finalShape { position: absolute; width: 38%; aspect-ratio: 1; background: var(--color-pink); border-radius: 50% 50% 61% 39% / 48% 38% 62% 52%; }
+.finalShape:nth-of-type(1) { top: 8%; left: 4%; }
+.finalShape:nth-of-type(2) { top: 15%; right: 3%; background: var(--color-blue); border-radius: 61% 39% 51% 49% / 37% 56% 44% 63%; }
+.finalShape:nth-of-type(3) { bottom: 5%; left: 32%; background: var(--color-cream); border-radius: 39% 61% 50% 50% / 63% 44% 56% 37%; }
+.finalOrbit { position: absolute; inset: 24%; border: 1px solid var(--color-cream); border-radius: 50%; opacity: .65; }
+.organismCaption { position: absolute; bottom: -1.75rem; left: 0; width: 100%; text-align: center; }
+.finaleKicker { margin-bottom: 1.5rem !important; }
+.finaleStatement { font-size: clamp(2rem, 8.9vw, 6.3rem); font-weight: 500; line-height: 1.04; letter-spacing: -.045em; }
+.finaleStatement > span { display: block; }
+.finaleStatement em { font-style: normal; font-weight: 700; text-decoration: underline; text-decoration-color: var(--color-pink); text-decoration-thickness: .04em; text-underline-offset: .09em; }
+.finaleDescription { max-width: 28rem; margin-top: 2rem !important; font-size: 1rem; line-height: 1.65; }
+.exhibitionLink { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 64px; max-width: 90rem; margin-inline: auto; padding-block: 1rem; border-top: 1px solid var(--color-cream); color: inherit; font-family: var(--font-basis-mono); font-size: .68rem; font-weight: 400; line-height: 1.6; text-decoration: none; }
+.exhibitionLink > span:last-child { font-family: var(--font-acid); font-size: 2rem; }
+.exhibitionLink:hover { color: var(--color-pink); }
+.exhibitionLink:focus-visible { outline: 3px solid var(--color-pink); outline-offset: 6px; }
+
+@media (min-width: 768px) {
+  .introFootnote > p { font-size: 1.1rem; max-width: 25rem; }
+  .declarationStage { min-height: 70svh; padding-block: 6rem; }
+  .ecosystem { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0 3rem; }
+  .ecosystem > .actLabel, .ecosystemHeader { grid-column: 1 / -1; width: 100%; }
+  .organism { grid-column: 1; margin-block: 2rem; }
+  .ecosystemEditorial { grid-column: 2; align-self: center; width: 100%; margin-block: 2rem; }
+  .finaleComposition { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 3rem; align-items: center; padding-block: 3rem 2rem; }
+  .finaleOrganism { margin-block: 0; }
+  .finaleStatement { font-size: clamp(2.5rem, 5.35vw, 6.3rem); }
+  .nodeLabel { font-size: clamp(1rem, 2vw, 1.65rem); }
+}
+
+@media (min-width: 1440px) { .ecosystem { gap: 0 6rem; } }
+@media (max-height: 500px) and (orientation: landscape) {
+  .questionStage { min-height: 85svh; }
+  .question { font-size: clamp(3.5rem, 12vw, 8rem); }
+  .finaleOrganism { width: min(65%, 20rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .introWash { opacity: .14; }
+  .fragment, .node, .nodeShape, .finalShape { will-change: auto; }
+}
