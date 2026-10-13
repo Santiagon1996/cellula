@@ -7,7 +7,7 @@ const homeSections = [
   { label: 'HOME', href: '#inicio' },
   { label: 'QUÉ ES CÉLULA', href: '#laboratorio' },
   { label: 'EXPOSICIONES', href: '#exposiciones' },
-  { label: 'LAB', href: null },
+  { label: 'LAB', href: '#laboratorios' },
   { label: 'QUÉ HACEMOS', href: null },
   { label: 'CONTACTO', href: '#contacto' },
 ] as const;

@@ -2,6 +2,10 @@ import Link from 'next/link';
 import { ExhibitionSlider } from '@/features/exhibitions';
 import { demoArtworks } from '@/features/exhibitions/data/demo-artworks';
 import '@/features/exhibitions/styles/exhibition.css';
+import { LaboratorySection } from '@/features/laboratory';
+import '@/features/laboratory/styles/laboratory.css';
+import '@/features/laboratory/styles/laboratory-carousel.css';
+import '@/features/laboratory/styles/laboratory-detail.css';
 import { HomeNavigation } from './home-navigation';
 import { HomeIdentity } from './home-identity';
 import { HomeAtmosphere } from './home-atmosphere';
@@ -30,6 +34,7 @@ export function HomeLanding() {
           <ExhibitionSlider artworks={demoArtworks} />
           <Link className="home-link home-link--light font-mono font-normal" href="/exposiciones">VER MÁS <span aria-hidden="true">↗</span></Link>
         </section>
+        <LaboratorySection />
         <footer id="contacto" className="home-footer font-mono font-normal">
           <span>CÉLULA © {new Date().getFullYear()}</span>
           <span>CONTACTO · PRÓXIMAMENTE</span>

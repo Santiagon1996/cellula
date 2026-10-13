@@ -1,0 +1,65 @@
+.laboratory-section {
+  padding: 7rem 3rem 5rem;
+  background: var(--color-cream);
+  color: var(--color-slate);
+  scroll-margin-top: 0;
+}
+
+.laboratory-section__header,
+.laboratory-section__body {
+  max-width: 90rem;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+  gap: 4rem;
+}
+
+.laboratory-section__header {
+  align-items: end;
+  padding-block: 1.5rem 2.5rem;
+  border-top: 1px solid rgb(91 94 116 / 24%);
+}
+
+.laboratory-section__eyebrow {
+  margin: 0 0 1rem;
+  font-size: .7rem;
+  line-height: 1.5;
+}
+
+.laboratory-section__header h2 {
+  margin: 0;
+  font-size: 64px;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.laboratory-section__intro {
+  max-width: 24rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.laboratory-section__body { align-items: center; }
+.laboratory-section__statement { max-width: 30rem; }
+.laboratory-section__mark { display: block; width: 3rem; height: .3rem; margin-bottom: 2rem; background: var(--color-pink); }
+.laboratory-section__statement h3 { margin: 0; font-size: 42px; line-height: 1.12; }
+.laboratory-section__statement p { max-width: 20rem; margin-top: 2rem; font-size: .95rem; line-height: 1.65; }
+
+@media (max-width: 1000px) {
+  .laboratory-section { padding-inline: 1.5rem; }
+  .laboratory-section__header, .laboratory-section__body { gap: 2rem; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); }
+  .laboratory-section__header h2 { font-size: 48px; }
+  .laboratory-section__statement h3 { font-size: 32px; }
+}
+
+@media (max-width: 800px) {
+  .laboratory-section { padding-inline: 1.25rem; }
+  .laboratory-section__header, .laboratory-section__body { grid-template-columns: minmax(0, 1fr); }
+  .laboratory-section__header { gap: 1rem; }
+  .laboratory-section__header h2 { font-size: 40px; }
+  .laboratory-section__body { gap: 2.5rem; }
+  .laboratory-section__statement h3 { font-size: 28px; }
+  .laboratory-section__statement p { margin-block: 1rem 0; }
+  .laboratory-section__mark { margin-bottom: 1rem; }
+}
