@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { AboutSection } from '@/features/about';
+import { ContactSection } from '@/features/contact';
 import { ExhibitionSlider } from '@/features/exhibitions';
 import { demoArtworks } from '@/features/exhibitions/data/demo-artworks';
 import '@/features/exhibitions/styles/exhibition.css';
@@ -28,9 +29,10 @@ export function HomeLanding() {
           <Link className="home-link home-link--light font-mono font-normal" href="/exposiciones">VER MÁS <span aria-hidden="true">↗</span></Link>
         </section>
         <LaboratorySection />
-        <footer id="contacto" className="home-footer font-mono font-normal">
+        <ContactSection />
+        <footer className="home-footer font-mono font-normal">
           <span>CÉLULA © {new Date().getFullYear()}</span>
-          <span>CONTACTO · PRÓXIMAMENTE</span>
+          <a href="#contacto">ACTIVAR UNA CONEXIÓN ↗</a>
           <span id="nosotros">ARTE / CULTURA / EXPERIMENTACIÓN</span>
         </footer>
       </main>

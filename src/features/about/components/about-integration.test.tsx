@@ -6,6 +6,7 @@ import { aboutConcepts, aboutCopy } from '../data/about-content';
 
 vi.mock('../hooks/use-about-scroll', () => ({ useAboutScroll: vi.fn() }));
 vi.mock('../hooks/use-ecosystem-motion', () => ({ useEcosystemMotion: vi.fn() }));
+vi.mock('@/features/contact/hooks/use-contact-motion', () => ({ useContactMotion: vi.fn() }));
 vi.mock('@/features/home/components/home-navigation', () => ({ HomeNavigation: () => <nav aria-label="Menú de prueba" /> }));
 vi.mock('@/features/home/components/home-identity', () => ({ HomeIdentity: () => <h1>CÉLULA</h1> }));
 vi.mock('@/features/home/components/home-atmosphere', () => ({ HomeAtmosphere: () => <div data-testid="atmosphere" /> }));
