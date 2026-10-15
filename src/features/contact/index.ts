@@ -1,2 +1,1 @@
-// Componentes y lógica de contacto se implementarán en feature/contact.
-export {};
+export { ContactSection } from './components/contact-section';
