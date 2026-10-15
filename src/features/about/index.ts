@@ -1,2 +1,2 @@
-// Componentes y lógica de presentación se implementarán en feature/about.
-export {};
+export { AboutSection } from './components/about-section';
+export type { AboutConcept, AboutConceptId } from './types';

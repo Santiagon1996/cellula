@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="lavender" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#d9d0e5"/>
+      <stop offset="1" stop-color="#b8aecf"/>
+    </linearGradient>
+    <linearGradient id="arch" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#9795b9"/>
+      <stop offset="1" stop-color="#b1abca"/>
+    </linearGradient>
+    <radialGradient id="rose">
+      <stop stop-color="#f3d6d3"/>
+      <stop offset="1" stop-color="#e4afc2"/>
+    </radialGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="3" seed="11" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".05"/></feComponentTransfer>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+  </defs>
+  <g filter="url(#grain)">
+    <path fill="url(#lavender)" d="M0 0h800v1000H0z"/>
+    <path fill="#e7dfde" d="M0 636l800-234v598H0z"/>
+    <path fill="url(#arch)" d="M154 853V397c0-156 91-252 215-252s215 96 215 252v330l-126 45V402c0-71-39-121-89-121s-89 50-89 121v407z"/>
+    <path fill="#c1bad4" d="M584 727l102 45V434c0-184-94-298-259-317 91 31 157 139 157 280z"/>
+    <path fill="#ada6c4" d="M154 853l102 47 430-128-102-45z"/>
+    <circle cx="548" cy="252" r="102" fill="url(#rose)"/>
+    <path fill="#aec7cc" d="M-39 922c124-122 231-36 330-65 120-36 197-67 268 28 48 64 150 45 273-9v170H-39z"/>
+    <path fill="none" stroke="#f4e8df" stroke-width="2" d="M80 179V672"/>
+    <path fill="none" stroke="#b6abc7" stroke-width="2" d="M674 57v371"/>
+    <circle cx="80" cy="132" r="8" fill="#f4e8df"/>
+  </g>
+</svg>

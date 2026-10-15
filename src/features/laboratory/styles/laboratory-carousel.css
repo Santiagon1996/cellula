@@ -1,0 +1,185 @@
+.laboratory-carousel {
+  --laboratory-width: min(440px, 84vw);
+  --laboratory-height: calc(var(--laboratory-width) * 1.25);
+  --laboratory-gap: 24px;
+  width: var(--laboratory-width);
+  max-width: 100%;
+  color: var(--color-slate);
+}
+
+.laboratory-carousel__viewport {
+  position: relative;
+  width: 100%;
+  /* Three cards cover the lane while each wraps outside its visible bounds. */
+  height: min(720px, calc(100svh - 150px), calc((var(--laboratory-height) + var(--laboratory-gap)) * 2));
+  /* Clip does not create a scroll container that native keyboard focus can shift. */
+  overflow: clip;
+  cursor: grab;
+  touch-action: pan-x pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
+  outline-offset: 5px;
+}
+
+.laboratory-carousel__viewport[data-dragging='true'],
+.laboratory-carousel__viewport[data-dragging='true'] .laboratory-card__button {
+  cursor: grabbing;
+}
+
+.laboratory-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  will-change: transform;
+}
+
+.laboratory-card__button {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--color-blue);
+  color: var(--color-cream);
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.laboratory-card__media,
+.laboratory-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.laboratory-card__image {
+  object-fit: cover;
+  transition: transform .65s ease;
+  pointer-events: none;
+}
+
+.laboratory-card__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  gap: .45rem;
+  padding: 1.25rem;
+  background: var(--color-slate);
+  color: var(--color-cream);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+
+.laboratory-card__category,
+.laboratory-card__open {
+  font-size: .65rem;
+  line-height: 1.4;
+}
+
+.laboratory-card__category {
+  text-transform: uppercase;
+}
+
+.laboratory-card__title {
+  font-size: 1.75rem;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.laboratory-card__description {
+  max-width: 30ch;
+  font-size: .8rem;
+  line-height: 1.45;
+}
+
+.laboratory-card__open {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: .5rem;
+}
+
+.laboratory-card:hover .laboratory-card__caption,
+.laboratory-card:focus-within .laboratory-card__caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.laboratory-card:hover .laboratory-card__image,
+.laboratory-card:focus-within .laboratory-card__image {
+  transform: scale(1.025);
+}
+
+.laboratory-card__button:focus-visible {
+  outline: 3px solid var(--color-pink);
+  outline-offset: -5px;
+}
+
+.laboratory-carousel__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 60px;
+  font-size: .65rem;
+}
+
+.laboratory-carousel__actions {
+  display: flex;
+  gap: .4rem;
+}
+
+.laboratory-carousel__actions button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.laboratory-carousel__actions button:hover:not(:disabled) {
+  background: var(--color-slate);
+  color: var(--color-cream);
+}
+
+.laboratory-carousel__actions button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.laboratory-carousel__actions button:focus-visible,
+.laboratory-carousel__viewport:focus-visible {
+  outline: 2px solid var(--color-pink);
+}
+
+.laboratory-empty {
+  max-width: 30ch;
+  text-align: center;
+}
+
+@media (hover: none) {
+  .laboratory-card__caption { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .laboratory-card__image,
+  .laboratory-card__caption { transition: none; }
+  .laboratory-card:hover .laboratory-card__image,
+  .laboratory-card:focus-within .laboratory-card__image { transform: none; }
+}

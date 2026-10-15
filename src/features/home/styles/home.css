@@ -1,0 +1,18 @@
+/* Home layout. HomeAtmosphere owns the hero's liquid background. */
+.home-page { overflow: clip; }
+.home-hero { position: relative; isolation: isolate; min-height: 100svh; display: grid; place-items: center; overflow: hidden; background: #e9e7e5; color: #5b5e74; }
+.home-hero__scroll, .home-featured__eyebrow { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.home-hero__scroll { z-index: 10; position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); width: max-content; max-width: 95%; text-decoration: none; }
+.home-hero__scroll span { padding-left: .6rem; }
+.home-link { display: inline-block; padding: .3rem .5rem; background: var(--color-pink); color: var(--color-cream); font-size: .95rem; text-decoration: none; }
+.home-link:hover { background: var(--color-slate); }
+.home-featured { --exhibition-ink: var(--color-cream); --exhibition-muted: var(--color-cream); --exhibition-line: rgb(237 232 224 / 30%); min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 7rem 1.25rem; background: radial-gradient(ellipse at 20% 70%, #ab91aa, transparent 50%), radial-gradient(ellipse at 80% 20%, #78a7bc, transparent 55%), var(--color-slate); color: var(--color-cream); text-align: center; }
+.home-featured > h2 { font-size: clamp(4rem, 12vw, 10rem); line-height: .9; letter-spacing: -.08em; }
+.home-featured .exhibition-slider { text-align: left; }
+.home-featured .exhibition-slider__detail { color: var(--color-slate); }
+.home-featured .exhibition-slider__navigation button:hover:not(:disabled) { color: var(--color-slate); }
+@media (max-width: 700px) { .home-featured > h2 { font-size: 3rem; } }
+.home-link--light:hover { background: var(--color-blue); }
+.home-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding: 2.5rem 1.5rem; background: var(--color-cream); color: var(--color-slate); font-size: .75rem; }
+.home-footer a { color: inherit; }
+@media (min-width: 768px) { .home-footer { padding-left: 3rem; padding-right: 3rem; } }
