@@ -21,7 +21,8 @@ LAB mantiene `#laboratorios`; `#nosotros` continúa en el footer. Se retiraron
   el cursor mueve un hijo decorativo separado del transform del botón.
 - `data/about-content.ts` / `types.ts`: contenido provisional y contrato tipado.
 - `styles/about.module.css`: composición mobile first, sin estilos filtrados a
-  otras features, con Acid Grotesk y Basis Mono globales.
+  otras features, con Space Grotesk y DM Mono globales; la configuración está en
+  [el README de fuentes](../../app/fonts/README.md).
 
 ## Accesibilidad y movimiento
 

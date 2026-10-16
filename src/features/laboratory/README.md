@@ -60,7 +60,8 @@ reanudar el estado previo del carrusel. Una pausa manual se conserva. Se respeta
 cambios de preferencia durante una transicion. Listeners, ticker, observadores
 y animaciones se limpian al desmontar.
 
-Acid Grotesk y Basis Mono se heredan del sistema global. Se usan los tokens
+Space Grotesk y DM Mono se heredan del
+[sistema global de fuentes](../../app/fonts/README.md). Se usan los tokens
 cromaticos existentes. Wordmark, simbolo, HomeIdentity, Liquid Gradient,
 timelines del menu y logica de Exhibition no se modifican.
 

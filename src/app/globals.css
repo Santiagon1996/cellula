@@ -3,6 +3,7 @@
 :root { --color-slate: #5b5e74; --color-cream: #ede8e0; --color-pink: #ff66cc; --color-blue: #72a1b2; }
 
 @theme inline {
+  /* Compatibility aliases: Space Grotesk (sans) and DM Mono (mono). */
   --font-sans: var(--font-acid);
   --font-mono: var(--font-basis-mono);
 }

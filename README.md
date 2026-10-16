@@ -16,4 +16,11 @@ Next.js (App Router), React, TypeScript, Tailwind CSS, GSAP/ScrollTrigger, Zod. 
 
 ## Estado
 
-Repositorio inicializado. Pendiente de generar el proyecto Next.js y validar el primer build.
+Aplicación Next.js implementada. Los comandos disponibles de desarrollo y
+validación están en `package.json`.
+
+## Tipografías
+
+Space Grotesk y DM Mono se integran con `next/font/google`: se descargan durante
+el build y se sirven desde el despliegue. No hacen falta los OTF propietarios
+locales. Consulta la [configuración y licencias](src/app/fonts/README.md).

@@ -1,5 +1,10 @@
 # CELULA: auditoria de archivos tipograficos originales
 
+> Registro histórico de la integración de Acid Grotesk y Basis Grotesque Mono.
+> Desde el 2026-10-16 se usan Space Grotesk y DM Mono; los OTF aquí auditados ya
+> no se cargan ni son necesarios para compilar. Consulte la
+> [configuración actual de fuentes](../src/app/fonts/README.md).
+
 Fecha: 2026-10-12. Origen autorizado por el usuario:
 `C:/Users/Usuario/Downloads/celulaFonts/`.
 

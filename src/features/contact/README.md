@@ -15,7 +15,7 @@ IDs duplicados ni una segunda sección provisional de contacto.
 
 ## Composición e interacción
 
-Titular Acid Grotesk revelado por grupos de palabras, sobre Slate. Una ventana
+Titular Space Grotesk revelado por grupos de palabras, sobre Slate. Una ventana
 Cream presenta CONVERSEMOS, COLABOREMOS y CONECTEMOS. Las formas geométricas Pink
 y Blue son decoración propia de esta sección; no sustituyen al símbolo original.
 El cierre editorial continúa hacia el footer existente.
