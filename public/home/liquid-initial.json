@@ -1,0 +1,31 @@
+{
+  "generator": "scripts/generate-liquid-poster.mjs",
+  "time": 0,
+  "palette": [
+    "#f7b3d4",
+    "#a1d6e4",
+    "#fff1d7",
+    "#c8b4e5"
+  ],
+  "threeRevision": "186",
+  "colorSpace": "srgb",
+  "shaderSha256": "ec1dbc283fe0e6b71adc3288fbf896445a0f999765f183d9f2e3a7535d8f59b3",
+  "portrait": {
+    "src": "/home/liquid-initial-portrait.webp",
+    "width": 384,
+    "height": 1536,
+    "bytes": 15542,
+    "thumbnailWidth": 32,
+    "thumbnailHeight": 128,
+    "placeholderBytes": 948
+  },
+  "landscape": {
+    "src": "/home/liquid-initial-landscape.webp",
+    "width": 2048,
+    "height": 512,
+    "bytes": 21186,
+    "thumbnailWidth": 128,
+    "thumbnailHeight": 32,
+    "placeholderBytes": 1006
+  }
+}

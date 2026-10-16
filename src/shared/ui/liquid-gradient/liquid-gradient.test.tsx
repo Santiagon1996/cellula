@@ -1,4 +1,6 @@
 import { act, cleanup, render } from '@testing-library/react';
+import { StrictMode } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LiquidGradient } from './liquid-gradient';
 
@@ -50,8 +52,8 @@ vi.mock('three', () => {
     }
 
     setSize(width: number, height: number, updateStyle?: boolean) {
-      this.domElement.width = Math.round(width * this.pixelRatio);
-      this.domElement.height = Math.round(height * this.pixelRatio);
+      this.domElement.width = Math.floor(width * this.pixelRatio);
+      this.domElement.height = Math.floor(height * this.pixelRatio);
       three.setSize(width, height, updateStyle);
     }
 
@@ -120,6 +122,8 @@ describe('LiquidGradient', () => {
   let reducedMotion: boolean;
   let width: number;
   let height: number;
+  let top: number;
+  let left: number;
   const frames = { get size() { return three.animationLoop ? 1 : 0; } };
   let mediaListeners: Set<(event: MediaQueryListEvent) => void>;
   let intersections: MockIntersectionObserver[];
@@ -197,6 +201,8 @@ describe('LiquidGradient', () => {
     reducedMotion = false;
     width = 1200;
     height = 800;
+    top = 0;
+    left = 0;
     mediaListeners = new Set();
     intersections = [];
     resizes = [];
@@ -204,6 +210,8 @@ describe('LiquidGradient', () => {
     vi.spyOn(document, 'hidden', 'get').mockImplementation(() => hidden);
     vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockImplementation(() => width);
     vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockImplementation(() => height);
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(() => new DOMRect(left, top, width, height));
+    vi.stubGlobal('devicePixelRatio', 1);
     vi.stubGlobal('IntersectionObserver', MockIntersectionObserver);
     vi.stubGlobal('ResizeObserver', MockResizeObserver);
     vi.stubGlobal('matchMedia', vi.fn(() => ({
@@ -224,8 +232,94 @@ describe('LiquidGradient', () => {
     vi.unstubAllGlobals();
   });
 
+  it('includes the decorative shader poster in server HTML before hydration', () => {
+    const html = renderToStaticMarkup(<LiquidGradient priority />);
+    const document = new DOMParser().parseFromString(html, 'text/html');
+    const root = document.body.firstElementChild!;
+
+    expect(root.getAttribute('data-renderer')).toBe('fallback');
+    expect(root.getAttribute('aria-hidden')).toBe('true');
+    expect(root.querySelector('[data-liquid-poster]')).not.toBeNull();
+    expect(root.querySelector('canvas')?.style.opacity).not.toBe('1');
+    expect(three.createRenderer).not.toHaveBeenCalled();
+  });
+
+  it('retains the initial poster and hides the canvas before the first successful render', () => {
+    const { container } = render(<LiquidGradient />);
+
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'fallback');
+    expect(container.querySelector('[data-liquid-poster]')).not.toBeNull();
+    expect(container.querySelector('canvas')!.style.opacity).not.toBe('1');
+    expect(three.render).not.toHaveBeenCalled();
+  });
+
+  it('keeps a palette-matched poster when default colours are supplied explicitly', () => {
+    const { container } = render(<LiquidGradient palette={['#f7b3d4', '#a1d6e4', '#fff1d7', '#c8b4e5']} />);
+
+    expect(container.querySelector('[data-liquid-poster]')).not.toBeNull();
+  });
+
+  it('uses the custom CSS palette without showing an unrelated default poster', () => {
+    const { container } = render(<LiquidGradient palette={['#111111', '#222222', '#333333', '#444444']} />);
+    const root = container.firstElementChild as HTMLElement;
+
+    expect(root).toHaveAttribute('data-renderer', 'fallback');
+    expect(container.querySelector('[data-liquid-poster]')).toBeNull();
+    expect(root.style.getPropertyValue('--liquid-pink')).toBe('#111111');
+    expect(root.style.getPropertyValue('--liquid-blue')).toBe('#222222');
+    expect(root.style.getPropertyValue('--liquid-cream')).toBe('#333333');
+    expect(root.style.getPropertyValue('--liquid-lavender')).toBe('#444444');
+  });
+
+  it('starts a visible priority background without waiting for IntersectionObserver', async () => {
+    const { container } = render(<LiquidGradient priority />);
+    await act(async () => { await vi.dynamicImportSettled(); });
+
+    expect(three.createRenderer).toHaveBeenCalledOnce();
+    expect(three.render).toHaveBeenCalled();
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'webgl');
+
+    act(() => intersections[0].emit(false));
+    expect(frames.size).toBe(0);
+  });
+
+  it.each(['below', 'above', 'right', 'left', 'empty'] as const)('defers a priority background that is %s the viewport', async (position) => {
+    if (position === 'below') top = window.innerHeight + 1;
+    if (position === 'above') top = -height - 1;
+    if (position === 'right') left = window.innerWidth + 1;
+    if (position === 'left') left = -width - 1;
+    if (position === 'empty') width = 0;
+    const { container } = render(<LiquidGradient priority />);
+    await act(async () => { await vi.dynamicImportSettled(); });
+
+    expect(three.createRenderer).not.toHaveBeenCalled();
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'fallback');
+    expect(frames.size).toBe(0);
+
+    width = 1200;
+    await initialize();
+    expect(three.createRenderer).toHaveBeenCalledOnce();
+  });
+
+  it('initializes without IntersectionObserver support and still follows page visibility', async () => {
+    vi.stubGlobal('IntersectionObserver', undefined);
+    const { container } = render(<LiquidGradient />);
+    await act(async () => { await vi.dynamicImportSettled(); });
+
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'webgl');
+    expect(three.createRenderer).toHaveBeenCalledOnce();
+    setHidden(true);
+    expect(frames.size).toBe(0);
+    setHidden(false);
+    expect(frames.size).toBe(1);
+  });
+
   it('paints the decorative canvas as soon as visible, without waiting for scroll', async () => {
     const { container } = render(<LiquidGradient className="custom-background" />);
+    three.render.mockImplementationOnce(() => {
+      expect(container.firstElementChild).toHaveAttribute('data-renderer', 'fallback');
+      expect(container.querySelector('canvas')!.style.opacity).not.toBe('1');
+    });
     await initialize();
     const root = container.firstElementChild!;
     const canvas = container.querySelector('canvas')!;
@@ -376,8 +470,93 @@ describe('LiquidGradient', () => {
     expect(canvas.width).toBeLessThan(initialWidth);
     expect(canvas.height).toBeGreaterThan(canvas.width);
     const resolution = three.uniforms?.u_resolution.value as { x: number; y: number };
-    expect(resolution.x).toBe(canvas.width);
-    expect(resolution.y).toBe(canvas.height);
+    expect(resolution.x).toBe(width);
+    expect(resolution.y).toBe(height);
+  });
+
+  it('does not reset or repaint the drawing buffer for repeated identical resize notifications', async () => {
+    render(<LiquidGradient />);
+    await initialize();
+    const sizeCount = three.setSize.mock.calls.length;
+    const drawCount = three.render.mock.calls.length;
+
+    act(() => {
+      resizes[0].emit();
+      resizes[0].emit();
+      window.dispatchEvent(new Event('resize'));
+    });
+
+    expect(three.setSize).toHaveBeenCalledTimes(sizeCount);
+    expect(three.render).toHaveBeenCalledTimes(drawCount);
+  });
+
+  it.each([
+    [320, 568, 1],
+    [375, 812, 2],
+    [390, 844, 3],
+    [430, 932, 3],
+    [768, 1024, 2],
+    [1024, 768, 2],
+    [1440, 900, 2],
+    [3840, 2160, 2],
+  ])('bounds GPU pixels at %i by %i and DPR %i without changing shader aspect', async (testWidth, testHeight, dpr) => {
+    width = testWidth;
+    height = testHeight;
+    vi.stubGlobal('devicePixelRatio', dpr);
+    const { container } = render(<LiquidGradient />);
+    await initialize();
+    const canvas = container.querySelector('canvas')!;
+    const ratio = three.setPixelRatio.mock.lastCall?.[0] as number;
+    const resolution = three.uniforms?.u_resolution.value as { x: number; y: number };
+
+    expect(ratio).toBeGreaterThan(0);
+    expect(ratio).toBeLessThanOrEqual(dpr);
+    expect(ratio).toBeLessThanOrEqual(1.4);
+    expect(canvas.width * canvas.height).toBeLessThanOrEqual(1_800_000);
+    expect(resolution.x).toBe(testWidth);
+    expect(resolution.y).toBe(testHeight);
+    expect(resolution.x / resolution.y).toBe(testWidth / testHeight);
+  });
+
+  it('updates the drawing buffer when DPR changes without changing shader coordinates', async () => {
+    width = 390;
+    height = 844;
+    const { container } = render(<LiquidGradient />);
+    await initialize();
+    const canvas = container.querySelector('canvas')!;
+    const initialWidth = canvas.width;
+    const initialSizeCount = three.setSize.mock.calls.length;
+    vi.stubGlobal('devicePixelRatio', 3);
+
+    act(() => {
+      window.dispatchEvent(new Event('resize'));
+      resizes[0].emit();
+    });
+
+    expect(canvas.width).toBeGreaterThan(initialWidth);
+    expect(three.setSize).toHaveBeenCalledTimes(initialSizeCount + 1);
+    const resolution = three.uniforms?.u_resolution.value as { x: number; y: number };
+    expect(resolution.x).toBe(width);
+    expect(resolution.y).toBe(height);
+  });
+
+  it('applies container changes on resume without drawing while the page is hidden', async () => {
+    const { container } = render(<LiquidGradient />);
+    await initialize();
+    setHidden(true);
+    const initialSizeCount = three.setSize.mock.calls.length;
+    const drawCount = three.render.mock.calls.length;
+    width = 430;
+    height = 932;
+
+    act(() => resizes[0].emit());
+    expect(three.setSize).toHaveBeenCalledTimes(initialSizeCount);
+    expect(three.render).toHaveBeenCalledTimes(drawCount);
+
+    setHidden(false);
+    expect(three.setSize).toHaveBeenCalledTimes(initialSizeCount + 1);
+    expect(container.querySelector('canvas')!.height).toBeGreaterThan(container.querySelector('canvas')!.width);
+    expect(three.render.mock.calls.length).toBeGreaterThan(drawCount);
   });
 
   it('retains the visible fallback if WebGL initialization fails', async () => {
@@ -402,6 +581,32 @@ describe('LiquidGradient', () => {
     expect(three.disposeMaterial).toHaveBeenCalledOnce();
     expect(three.disposeRenderer).toHaveBeenCalledOnce();
     expect(frames.size).toBe(0);
+  });
+
+  it('returns to the poster and releases resources once if a later render throws', async () => {
+    const { container, unmount } = render(<LiquidGradient />);
+    await initialize();
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'webgl');
+    three.render.mockImplementationOnce(() => { throw new Error('Frame rendering failed'); });
+
+    advanceFrame(100);
+
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'fallback');
+    expect(container.querySelector('[data-liquid-poster]')).not.toBeNull();
+    expect(container.querySelector('canvas')!.style.opacity).toBe('0');
+    expect(three.disposeGeometry).toHaveBeenCalledOnce();
+    expect(three.disposeMaterial).toHaveBeenCalledOnce();
+    expect(three.disposeRenderer).toHaveBeenCalledOnce();
+    expect(frames.size).toBe(0);
+    const drawCount = three.render.mock.calls.length;
+    act(() => intersections[0].emit(true));
+    unmount();
+    advanceFrame(300);
+    expect(three.render).toHaveBeenCalledTimes(drawCount);
+    expect(three.createRenderer).toHaveBeenCalledOnce();
+    expect(three.disposeGeometry).toHaveBeenCalledOnce();
+    expect(three.disposeMaterial).toHaveBeenCalledOnce();
+    expect(three.disposeRenderer).toHaveBeenCalledOnce();
   });
 
   it('shows the fallback during context loss and repaints after context restoration', async () => {
@@ -457,6 +662,62 @@ describe('LiquidGradient', () => {
 
     expect(three.createRenderer).not.toHaveBeenCalled();
     expect(frames.size).toBe(0);
+  });
+
+  it('does not allocate resources when reduced motion becomes active during the import', async () => {
+    const { container } = render(<LiquidGradient />);
+    act(() => {
+      intersections[0].emit(true);
+      expect(three.createRenderer).not.toHaveBeenCalled();
+      reducedMotion = true;
+      mediaListeners.forEach((listener) => listener({ matches: true } as MediaQueryListEvent));
+    });
+    await act(async () => { await vi.dynamicImportSettled(); });
+
+    expect(three.createRenderer).not.toHaveBeenCalled();
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'fallback');
+    expect(container.querySelector('[data-liquid-poster]')).not.toBeNull();
+    expect(frames.size).toBe(0);
+
+    await setReducedMotion(false);
+    expect(three.createRenderer).toHaveBeenCalledOnce();
+    expect(frames.size).toBe(1);
+  });
+
+  it('does not allocate resources when the tab becomes hidden during the import', async () => {
+    const { container } = render(<LiquidGradient />);
+    act(() => {
+      intersections[0].emit(true);
+      expect(three.createRenderer).not.toHaveBeenCalled();
+      hidden = true;
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await act(async () => { await vi.dynamicImportSettled(); });
+
+    expect(three.createRenderer).not.toHaveBeenCalled();
+    expect(container.firstElementChild).toHaveAttribute('data-renderer', 'fallback');
+    expect(frames.size).toBe(0);
+
+    setHidden(false);
+    await act(async () => { await vi.dynamicImportSettled(); });
+    expect(three.createRenderer).toHaveBeenCalledOnce();
+    expect(frames.size).toBe(1);
+  });
+
+  it('allocates and disposes a single active surface across a StrictMode effect remount', async () => {
+    const { unmount } = render(<StrictMode><LiquidGradient /></StrictMode>);
+    await initialize();
+    expect(three.createRenderer).toHaveBeenCalledOnce();
+    expect(frames.size).toBe(1);
+
+    unmount();
+    expect(three.disposeGeometry).toHaveBeenCalledOnce();
+    expect(three.disposeMaterial).toHaveBeenCalledOnce();
+    expect(three.disposeRenderer).toHaveBeenCalledOnce();
+    expect(mediaListeners.size).toBe(0);
+    expect(frames.size).toBe(0);
+    intersections.forEach((observer) => expect(observer.disconnect).toHaveBeenCalledOnce());
+    resizes.forEach((observer) => expect(observer.disconnect).toHaveBeenCalledOnce());
   });
 
   it('ignores a queued context restoration after unmount and disposes each resource once', async () => {

@@ -4,9 +4,10 @@
   height: 100%;
   overflow: hidden;
   pointer-events: none;
+  container-type: size;
 }
 
-/* The canvas is the sole colour layer once its first frame is ready. */
+/* Last fallback: also supports a custom palette without a matching capture. */
 .root[data-renderer='fallback'] {
   background: linear-gradient(
     125deg,
@@ -15,6 +16,24 @@
     var(--liquid-blue) 68%,
     var(--liquid-lavender) 100%
   );
+}
+
+/* Both layers are real t=0 shader frames. The tiny inline frame is available
+   with the first HTML/CSS, even before the local WebP has finished downloading.
+   Extreme-aspect captures + centered cover preserve the shader's short axis. */
+.poster {
+  position: absolute;
+  inset: 0;
+  background-image: var(--liquid-poster-landscape), var(--liquid-thumbnail-landscape);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@container (aspect-ratio < 1) {
+  .poster {
+    background-image: var(--liquid-poster-portrait), var(--liquid-thumbnail-portrait);
+  }
 }
 
 .canvas {
