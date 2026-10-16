@@ -4,6 +4,7 @@ import { useEffect, useRef, type CSSProperties } from 'react';
 import type { OrthographicCamera, PlaneGeometry, Scene, ShaderMaterial, WebGLRenderer } from 'three';
 import { cn } from '@/shared/lib/cn';
 import { liquidGradientFragmentShader, liquidGradientVertexShader } from './liquid-gradient-shaders';
+import { liquidGradientPoster } from './liquid-gradient-poster';
 import styles from './liquid-gradient.module.css';
 
 export type LiquidGradientPalette = readonly [pink: string, blue: string, cream: string, lavender: string];
@@ -12,9 +13,17 @@ type LiquidGradientProps = {
   className?: string;
   palette?: LiquidGradientPalette;
   speed?: number;
+  priority?: boolean;
 };
 
-const pastelPalette: LiquidGradientPalette = ['#f7b3d4', '#a1d6e4', '#fff1d7', '#c8b4e5'];
+const pastelPalette: LiquidGradientPalette = liquidGradientPoster.palette;
+
+// Temporary, opt-in audit instrumentation; removed after comparative captures.
+function markPhase(phase: string) {
+  if (typeof window !== 'undefined' && window.location.search.includes('liquid-perf=1')) {
+    performance.mark(`liquid:${phase}`);
+  }
+}
 
 type Surface = {
   renderer: WebGLRenderer;
@@ -25,12 +34,15 @@ type Surface = {
 };
 
 /** A decorative liquid colour field. Its parent supplies the layout dimensions. */
-export function LiquidGradient({ className, palette = pastelPalette, speed = 1 }: LiquidGradientProps) {
+export function LiquidGradient({ className, palette = pastelPalette, speed = 1, priority = false }: LiquidGradientProps) {
+  if (typeof window !== 'undefined' && !performance.getEntriesByName('liquid:client-render').length) markPhase('client-render');
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [pink, blue, cream, lavender] = palette;
+  const hasPoster = palette.every((color, index) => color.toLowerCase() === pastelPalette[index]);
 
   useEffect(() => {
+    markPhase('effect');
     const root = rootRef.current;
     const canvas = canvasRef.current;
     if (!root || !canvas) return;
@@ -43,12 +55,23 @@ export function LiquidGradient({ className, palette = pastelPalette, speed = 1 }
     let failed = false;
     let contextLost = false;
     let visible = typeof IntersectionObserver === 'undefined';
+    if (priority && !visible) {
+      // Start the first viewport without waiting for the observer's next task.
+      // The observer still owns subsequent visibility and offscreen pausing.
+      const bounds = root.getBoundingClientRect();
+      visible = bounds.width > 0 && bounds.height > 0 && bounds.bottom > 0 && bounds.right > 0
+        && bounds.top < window.innerHeight && bounds.left < window.innerWidth;
+    }
     let looping = false;
     let elapsed = 0;
     let previous: number | null = null;
     let lastDraw: number | null = null;
+    let firstRender = true;
+    let showingCanvas = false;
+    let sizeKey = '';
 
     const fallback = () => {
+      showingCanvas = false;
       root.dataset.renderer = 'fallback';
       canvas.style.opacity = '0';
     };
@@ -82,22 +105,34 @@ export function LiquidGradient({ className, palette = pastelPalette, speed = 1 }
     const canAnimate = () => !disposed && !failed && !contextLost && visible && !document.hidden && !motion.matches;
 
     const resize = () => {
-      if (!surface || contextLost) return;
+      if (!surface || contextLost) return false;
       const width = Math.max(1, root.clientWidth);
       const height = Math.max(1, root.clientHeight);
       // This soft field needs no full device resolution. Bound total GPU work too.
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.4, Math.sqrt(1_800_000 / (width * height)));
+      const nextSizeKey = `${width}:${height}:${pixelRatio}`;
+      if (sizeKey === nextSizeKey) return false;
       surface.renderer.setDrawingBufferSize(width, height, pixelRatio);
-      surface.renderer.getDrawingBufferSize(surface.material.uniforms.u_resolution.value);
+      // Match the poster's logical aspect exactly, independently of DPR rounding.
+      surface.material.uniforms.u_resolution.value.set(width, height);
+      sizeKey = nextSizeKey;
+      return true;
     };
 
     const draw = () => {
       if (!surface || !canAnimate()) return;
       try {
         surface.material.uniforms.u_time.value = elapsed;
+        if (firstRender) markPhase('render-start');
         surface.renderer.render(surface.scene, surface.camera);
-        root.dataset.renderer = 'webgl';
-        canvas.style.opacity = '1';
+        if (firstRender) markPhase('render-end');
+        if (!showingCanvas) {
+          root.dataset.renderer = 'webgl';
+          canvas.style.opacity = '1';
+          showingCanvas = true;
+        }
+        if (firstRender) markPhase('visible');
+        firstRender = false;
       } catch (error) {
         reportFailure(error);
       }
@@ -130,9 +165,13 @@ export function LiquidGradient({ className, palette = pastelPalette, speed = 1 }
       let material: ShaderMaterial | undefined;
       try {
         // Keep Three.js out of server execution and reduced-motion downloads.
-        const THREE = await import('three');
+        markPhase('import-start');
+        const THREE = await import('./liquid-gradient-three');
+        markPhase('import-end');
         if (!canAnimate()) return;
+        markPhase('renderer-start');
         renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: false, depth: false, stencil: false, powerPreference: 'low-power' });
+        markPhase('renderer-end');
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.debug.onShaderError = () => { throw new Error('Liquid gradient shader compilation failed'); };
         geometry = new THREE.PlaneGeometry(2, 2);
@@ -184,8 +223,7 @@ export function LiquidGradient({ className, palette = pastelPalette, speed = 1 }
 
     const onResize = () => {
       if (!canAnimate() || !surface) return;
-      resize();
-      draw();
+      if (resize()) draw();
     };
     const intersection = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -199,6 +237,7 @@ export function LiquidGradient({ className, palette = pastelPalette, speed = 1 }
     };
     const onContextRestored = () => {
       contextLost = false;
+      sizeKey = '';
       // Three.js also handles this event; let it rebuild its internal GL state first.
       queueMicrotask(update);
     };
@@ -225,18 +264,31 @@ export function LiquidGradient({ className, palette = pastelPalette, speed = 1 }
       release();
       fallback();
     };
-  }, [pink, blue, cream, lavender, speed]);
+  }, [pink, blue, cream, lavender, speed, priority]);
 
   const colors = {
     '--liquid-pink': pink,
     '--liquid-blue': blue,
     '--liquid-cream': cream,
     '--liquid-lavender': lavender,
+    ...(hasPoster ? {
+      '--liquid-poster-portrait': `url("${liquidGradientPoster.portrait.src}")`,
+      '--liquid-poster-landscape': `url("${liquidGradientPoster.landscape.src}")`,
+      '--liquid-thumbnail-portrait': `url("${liquidGradientPoster.portrait.placeholder}")`,
+      '--liquid-thumbnail-landscape': `url("${liquidGradientPoster.landscape.placeholder}")`,
+    } : {}),
   } as CSSProperties;
 
   return (
-    <div ref={rootRef} className={cn(styles.root, className)} style={colors} data-renderer="fallback" aria-hidden="true">
-      <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
-    </div>
+    <>
+      {priority && hasPoster && <>
+        <link rel="preload" as="image" href={liquidGradientPoster.portrait.src} media="(max-aspect-ratio: 1/1)" fetchPriority="high" />
+        <link rel="preload" as="image" href={liquidGradientPoster.landscape.src} media="(min-aspect-ratio: 1/1)" fetchPriority="high" />
+      </>}
+      <div ref={rootRef} className={cn(styles.root, className)} style={colors} data-renderer="fallback" aria-hidden="true">
+        {hasPoster && <div className={styles.poster} data-liquid-poster aria-hidden="true" />}
+        <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
+      </div>
+    </>
   );
 }
