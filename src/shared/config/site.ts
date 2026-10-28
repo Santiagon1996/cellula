@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: 'CÉLULA',
-  description: 'Un espacio para la creación, el arte y la experimentación.',
+  name: 'CÈL·LULA',
+  description: 'Un espacio de experimentación creativa en Barcelona',
   locale: 'es',
 } as const;

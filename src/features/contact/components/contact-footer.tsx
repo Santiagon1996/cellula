@@ -1,4 +1,5 @@
 import { contactCopy } from '../data/contact-content';
+import { ArrowIcon } from '@/shared/ui/arrow-icon';
 import styles from '../styles/contact.module.css';
 
 export function ContactFooter() {
@@ -8,7 +9,7 @@ export function ContactFooter() {
       <p className={styles.finaleStatement}>{contactCopy.finaleLines[0]}<br />{contactCopy.finaleLines[1]} <em>{contactCopy.finaleEmphasis}</em></p>
       <div className={styles.finaleBottom}>
         <p>{contactCopy.finaleDescription[0]}<br />{contactCopy.finaleDescription[1]}</p>
-        <a href="#inicio" className={styles.backToTop}><span>{contactCopy.backToTop}</span><span aria-hidden="true">↑</span></a>
+        <a href="#inicio" className={styles.backToTop}><span>{contactCopy.backToTop}</span><span><ArrowIcon direction="up" /></span></a>
       </div>
     </div>
   );

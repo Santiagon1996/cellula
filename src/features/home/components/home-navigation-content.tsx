@@ -1,11 +1,12 @@
 import type { MouseEventHandler } from 'react';
-import Image from 'next/image';
 import styles from './home-navigation.module.css';
+import { ArrowIcon } from '@/shared/ui/arrow-icon';
+import { homeCopy } from '../data/home-copy';
 
 // Add a destination here when each pending section exists; no placeholder routes.
 const homeSections = [
   { label: 'HOME', href: '#inicio' },
-  { label: 'QUÉ ES CÉLULA', href: '#laboratorio' },
+  { label: `QUÉ ES ${homeCopy.name}`, href: '#laboratorio' },
   { label: 'EXPOSICIONES', href: '#exposiciones' },
   { label: 'LAB', href: '#laboratorios' },
   { label: 'QUÉ HACEMOS', href: null },
@@ -17,19 +18,7 @@ export function HomeNavigationContent({ onNavigate }: {
 }) {
   return (
     <div className={styles.content}>
-      <div className={styles.introduction} data-nav-reveal>
-        <Image
-          className={styles.symbol}
-          src="/home/celula-symbol.png"
-          alt=""
-          width={378}
-          height={280}
-          sizes="(max-width: 800px) 80px, 272px"
-        />
-        <p className={`${styles.kicker} font-mono font-normal`}>ARTE / CULTURA / EXPERIMENTACIÓN</p>
-        <p className={styles.note}>Una plataforma en movimiento.</p>
-      </div>
-      <nav aria-label="Navegación principal">
+      <nav className={styles.nav} aria-label="Navegación principal">
         <ol className={styles.links}>
           {homeSections.map((item, index) => {
             const label = (
@@ -42,7 +31,7 @@ export function HomeNavigationContent({ onNavigate }: {
               <li key={item.label} className={styles.row} data-nav-row>
                 {item.href ? (
                   <a className={styles.link} href={item.href} onClick={onNavigate}>
-                    {label}<span className={styles.arrow} aria-hidden="true">↗</span>
+                    {label}<span className={styles.arrow}><ArrowIcon direction="up-right" /></span>
                   </a>
                 ) : (
                   <span className={styles.link} aria-disabled="true">
@@ -54,10 +43,6 @@ export function HomeNavigationContent({ onNavigate }: {
           })}
         </ol>
       </nav>
-      <div className={`${styles.footer} font-mono font-normal`} data-nav-reveal>
-        <span>DESDE EL MOVIMIENTO</span>
-        <span>CÉLULA © {new Date().getFullYear()}</span>
-      </div>
     </div>
   );
 }

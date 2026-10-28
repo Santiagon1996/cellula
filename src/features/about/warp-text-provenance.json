@@ -1,0 +1,53 @@
+{
+  "component": "React Bits WarpText (TypeScript + Tailwind)",
+  "retrievedOn": "2026-10-24",
+  "documentation": "https://reactbits.dev/text-animations/warp-text",
+  "registry": "https://reactbits.dev/r/WarpText-TS-TW.json",
+  "source": "https://github.com/DavidHDev/react-bits/blob/14330e6963f6c5ddd773ee2af844d0630c22b958/src/ts-tailwind/TextAnimations/WarpText/WarpText.tsx",
+  "upstreamCommit": "14330e6963f6c5ddd773ee2af844d0630c22b958",
+  "upstreamBlob": "435f7b1178c380d998e3f89a452152a21f452b8e",
+  "upstreamContentSha256": "c474d827f2ea189335f6e9bf3a41f8bfd1976b76adfb50b21bd9290584de5d1f",
+  "registrySnapshot": "warp-text-registry.json",
+  "sourceSnapshot": "warp-text-upstream.json",
+  "installedSource": "components/warp-text/WarpText.tsx",
+  "integration": "components/warp-text/about-warp-title.tsx",
+  "license": "MIT + Commons Clause; REACT-BITS-WARP-TEXT-NOTICE.md",
+  "dependencies": [
+    "ogl@^1.0.11"
+  ],
+  "installation": "Official registry/source copied with content identity checked; dependency installed separately.",
+  "shaderIdentical": true,
+  "localAdaptations": [
+    "Semantic h2 and permanent HTML fallback; canvas enhancement is decorative",
+    "Lazy import only in viewport on fine pointer desktop >=768px without reduced motion in a visible tab",
+    "Resolve actual first --font-acid family and await document.fonts.load + fonts.ready before loading renderer",
+    "Use loaded Acid Bold 700 rather than upstream unavailable weight800",
+    "Root span replaces div so markup remains valid inside h2",
+    "First-frame callback preserves visible HTML until a raster is successfully drawn",
+    "Pause RAF before text readiness and when offscreen, tab-hidden or reduced motion",
+    "Dispose entire renderer on wrapper disable/unmount and retain semantic fallback on initialization/context/render failure",
+    "Reject unavailable Canvas2D rasterization before onReady so a blank texture cannot hide the HTML title"
+  ],
+  "aboutConfiguration": {
+    "warpStrength": 0.055,
+    "warpScale": 1.5,
+    "speed": 0.45,
+    "lens": "bulge",
+    "pointerInfluence": 0.4,
+    "pointerStrength": 0.3,
+    "refraction": 0.012,
+    "chromatic": 0.15,
+    "idleDrift": 0,
+    "ripple": true,
+    "clickRipple": true,
+    "intro": false,
+    "fontWeight": 700,
+    "fontFamily": "Resolved primary --font-acid after successful load",
+    "letterSpacing": "-0.06em",
+    "lineHeight": 0.9
+  },
+  "touchPolicy": "HTML fallback, no canvas/pointer capture on coarse/mobile; scroll gestures stay native",
+  "performance": "Official ambient shader animates while visible; texture rasterization occurs on font/size/text/color changes, not every frame. DPR capped at2. No RAF offscreen, hidden tab or reduced motion.",
+  "prototype": "../verification/about-brand-warp (outside repository; no production route)",
+  "verificationLimit": "Browser prototype and responsive matrix verified in Chrome headless with SwiftShader; DOM tests do not verify visual quality, and this does not measure physical GPU performance."
+}

@@ -1,5 +1,6 @@
 import { contactCopy, getContactActions } from '../data/contact-content';
 import type { ContactChannels, ContactPanelContent } from '../types';
+import { ArrowIcon } from '@/shared/ui/arrow-icon';
 import styles from '../styles/contact.module.css';
 
 export function ContactPanel({ panel, active, channels }: {
@@ -22,7 +23,7 @@ export function ContactPanel({ panel, active, channels }: {
           <a key={action.href} href={action.href} className={styles.contactLink}
             aria-label={action.external ? `${action.label} (abre una pestaña nueva)` : undefined}
             {...(action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-            <span>{action.label}</span><span aria-hidden="true">↗</span>
+            <span>{action.label}</span><span><ArrowIcon direction="up-right" /></span>
           </a>
         )) : (
           <p className={styles.pending}>

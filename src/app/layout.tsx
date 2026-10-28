@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
-import { dmMono, spaceGrotesk } from './fonts/fonts';
+import { acidGrotesk, basisGrotesqueMono } from './fonts/fonts';
+import { homeCopy } from '@/features/home/data/home-copy';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'CÉLULA — Espacio creativo',
-  description: 'Un espacio para la creación, el arte y la experimentación.',
+  title: homeCopy.title,
+  description: homeCopy.description,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="es" className={`${spaceGrotesk.variable} ${dmMono.variable}`}><body>{children}</body></html>;
+  return <html lang="es" className={`${acidGrotesk.variable} ${basisGrotesqueMono.variable}`}><body>{children}</body></html>;
 }

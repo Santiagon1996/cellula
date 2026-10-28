@@ -122,8 +122,8 @@ function Harness() {
       <section ref={rootRef} data-testid="about">
         <div data-about-act="decompose" data-testid="intro">
           <div data-about-wash />
-          <h2 data-about-question>Una pregunta visible</h2>
-          <span data-about-fragment>¿QUÉ</span><span data-about-fragment>ES</span><span data-about-fragment>CÉLULA?</span>
+          <h2 data-about-warp-state="fallback"><span data-about-title-fallback>Una pregunta visible</span></h2>
+          <span data-about-fragment>¿QUÉ</span><span data-about-fragment>ES</span><span data-about-fragment>CÈL·LULA?</span>
           <h3 data-about-declaration style={{ color: 'red' }}>Una declaración visible</h3>
         </div>
         <div data-about-act="transform">
@@ -131,6 +131,7 @@ function Harness() {
           <svg><path data-about-final-connection /></svg>
           <span data-about-orbit />
           <h3 data-about-final-statement>Un encuentro visible</h3>
+          <div data-about-material><figure data-about-material-image="body" /><figure data-about-material-image="matter" /></div>
         </div>
       </section>
     </>
@@ -174,7 +175,7 @@ afterEach(() => {
 });
 
 describe('useAboutScroll lifecycle', () => {
-  it('owns only About targets and removes pointer effects and resources on unmount', () => {
+  it('owns only narrative targets, leaves Warp Text independent and reverts resources on unmount', () => {
     const { unmount } = render(<Harness />);
     const root = screen.getByTestId('about');
     const intro = screen.getByTestId('intro');
@@ -185,6 +186,11 @@ describe('useAboutScroll lifecycle', () => {
       if (resource.trigger) expect(root.contains(resource.trigger)).toBe(true);
     }
     expect(screen.getByTestId('unrelated').querySelector('[style]')).toBeNull();
+    expect(motion.pointers).toHaveLength(0);
+    for (const fragment of root.querySelectorAll('[data-about-fragment]')) {
+      expect(activeResources().some(resource => resource.target === fragment)).toBe(false);
+    }
+    expect(activeResources().some(resource => resource.target?.matches('[data-about-material-image]'))).toBe(true);
 
     pointerMove(intro, 'touch');
     motion.pointers.forEach((follow) => expect(follow).not.toHaveBeenCalled());
@@ -243,16 +249,18 @@ describe('useAboutScroll lifecycle', () => {
     expect(motion.unrelatedKill).not.toHaveBeenCalled();
   });
 
-  it('keeps scroll motion available on compact screens while removing desktop pointer listeners', () => {
+  it('reveals the HTML fallback on compact screens without attaching pointer motion to the title', () => {
     const { unmount } = render(<Harness />);
     const intro = screen.getByTestId('intro');
     const desktopPointers = [...motion.pointers];
     setConditions({ compact: true });
     expect(activeResources().length).toBeGreaterThan(0);
+    expect(activeResources().some(resource => resource.target?.hasAttribute('data-about-title-fallback'))).toBe(true);
     desktopPointers.forEach((follow) => follow.mockClear());
     pointerMove(intro);
     desktopPointers.forEach((follow) => expect(follow).not.toHaveBeenCalled());
     expect(motion.pointers).toEqual(desktopPointers);
+    expect(motion.pointers).toHaveLength(0);
     unmount();
     expect(activeResources()).toHaveLength(0);
   });

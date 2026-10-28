@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useRef, useState } from 'react';
-import { aboutConcepts } from '../data/about-content';
+import { aboutConcepts, aboutCopy } from '../data/about-content';
 import { useEcosystemMotion } from '../hooks/use-ecosystem-motion';
 import type { AboutConceptId } from '../types';
 import styles from '../styles/about.module.css';
@@ -14,19 +14,21 @@ export function AboutEcosystem() {
   const headingId = `${id}-ecosystem-heading`;
   const panelId = `${id}-concept-panel`;
   const titleId = `${id}-concept-title`;
+  const hintId = `${id}-ecosystem-hint`;
   const concept = aboutConcepts.find((item) => item.id === active) ?? aboutConcepts[0];
 
   useEcosystemMotion(rootRef, active);
 
   return (
-    <section ref={rootRef} className={styles.ecosystem} aria-labelledby={headingId} data-about-act="connect">
+    <section ref={rootRef} className={styles.ecosystem} aria-labelledby={headingId} data-about-act="connect" data-active-concept={active}>
       <header className={styles.ecosystemHeader}>
-        <p className={`${styles.actLabel} font-mono font-normal`}>02 / CONECTAR</p>
-        <h2 id={headingId} className={styles.ecosystemHeading}>Crear. Explorar.<br />Conectar.</h2>
-        <p className={styles.ecosystemHint}>Elige una palabra y descubre cómo se relaciona con las demás.</p>
+        <p className={`${styles.actLabel} font-mono font-normal`}>{aboutCopy.ecosystemActLabel}</p>
+        <h2 id={headingId} className={styles.ecosystemHeading}>{aboutCopy.systemTitle}</h2>
+        <p className={styles.ecosystemDescription}>{aboutCopy.introduction}</p>
+        <p id={hintId} className={styles.ecosystemHint}>{aboutCopy.ecosystemHint}</p>
       </header>
 
-      <div className={styles.organism} role="group" aria-label="Explora el ecosistema de Célula" data-about-organism>
+      <div className={styles.organism} role="group" aria-label={aboutCopy.ecosystemAriaLabel} aria-describedby={hintId} data-about-organism>
         <svg className={styles.connectionSvg} viewBox="0 0 400 360" fill="none" aria-hidden="true" focusable="false">
           <path className={styles.connectionPath} data-about-connection="crear-explorar" d="M 100 115 C 150 72 220 70 295 95" />
           <path className={styles.connectionPath} data-about-connection="explorar-conectar" d="M 295 95 C 345 180 288 246 190 275" />
@@ -41,6 +43,12 @@ export function AboutEcosystem() {
         <p className={`${styles.conceptNumber} font-mono font-normal`} aria-hidden="true">{concept.number} / {concept.label}</p>
         <h3 id={titleId} className={styles.conceptTitle}>{concept.title}</h3>
         <p className={styles.conceptDescription}>{concept.description}</p>
+        <div className={styles.conceptValues} data-about-concept-values={concept.id}>
+          <p className={`${styles.conceptValuesLabel} font-mono font-normal`}>{aboutCopy.conceptValuesLabel}</p>
+          <ul className={`${styles.conceptValuesList} font-mono font-normal`} aria-label={aboutCopy.conceptValuesLabel}>
+            {concept.values.map((value) => <li key={value}>{value}</li>)}
+          </ul>
+        </div>
       </div>
     </section>
   );

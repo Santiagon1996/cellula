@@ -1,0 +1,29 @@
+.title {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+}
+
+.fallback {
+  display: block;
+  padding: .27em 7%;
+  text-align: center;
+  white-space: pre-line;
+}
+
+.visual {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+.title[data-about-warp-state='ready'] .fallback { visibility: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .title .fallback { visibility: visible; }
+  .visual { display: none; }
+}

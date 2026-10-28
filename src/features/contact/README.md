@@ -15,10 +15,14 @@ IDs duplicados ni una segunda sección provisional de contacto.
 
 ## Composición e interacción
 
-Titular Space Grotesk revelado por grupos de palabras, sobre Slate. Una ventana
-Cream presenta CONVERSEMOS, COLABOREMOS y CONECTEMOS. Las formas geométricas Pink
-y Blue son decoración propia de esta sección; no sustituyen al símbolo original.
-El cierre editorial continúa hacia el footer existente.
+Titular Acid Grotesk revelado por grupos de palabras, sobre Slate. Una ventana
+Cream presenta CONVERSEMOS, COLABOREMOS y CONECTEMOS. Orange activa la flecha,
+los detalles y las formas geométricas propias de esta sección; una mezcla de
+Orange y Cream diferencia el estado de colaboración. Las formas no sustituyen
+al símbolo original. El cierre editorial continúa hacia el footer existente.
+Las descripciones usan Basis Grotesque Mono Pro Regular y los controles pequeños,
+Medium. La narrativa aprobada dispone de una columna fluida y un interlineado
+de 1,7 para admitir su longitud también en móvil.
 
 En móvil, la ilustración precede al texto. Desde 900 px, ocupa una columna lateral
 y la tipografía crece. El módulo usa una cuadrícula con los tres paneles en la
@@ -28,8 +32,9 @@ El contenido admite más líneas y zoom sin imponer una altura fija.
 Los cambios son explícitos, sin autoplay. Flechas izquierda/derecha y Home/End
 seleccionan y enfocan las pestañas, con recorrido circular; Tab entra al panel
 activo. Los paneles inactivos tienen `aria-hidden` e `inert`. La selección y el
-foco utilizan Cream sobre Slate para mantener contraste; Pink queda en detalles
-decorativos.
+foco utilizan Cream sobre Slate para mantener contraste; Orange queda en detalles
+decorativos y en la línea de la pestaña seleccionada. No se usa Orange como tinta
+para texto pequeño sobre Slate o Cream.
 
 `useContactMotion` separa las entradas de scroll, la transición de paneles y el
 movimiento del gráfico. Reutiliza una timeline de aproximadamente 0,78 s. Una
@@ -44,7 +49,11 @@ a 8 px por eje. No hay animación decorativa continua ni scroll fijado.
 ## Contenido y canales
 
 Todos los textos editoriales, los tres estados y los datos de contacto están en
-`data/contact-content.ts`. Por indicación del usuario, `contactChannels.email`
+`data/contact-content.ts`. Se mantiene «¿HACEMOS ALGO JUNTOS?» y se incorpora la
+narrativa aprobada: «Las ideas crecen cuando se encuentran. Comparte tu propuesta,
+abramos una conversación y descubramos qué podemos crear». La grafía CÈL·LULA
+se conserva en textos, etiqueta accesible de navegación y asunto de colaboración.
+Por indicación del usuario, `contactChannels.email`
 permanece en `null` y `contactChannels.socials` en `[]`. La interfaz muestra un
 aviso editorial de próxima apertura, sin enlaces falsos ni controles deshabilitados
 que parezcan acciones disponibles.
@@ -86,7 +95,8 @@ mantiene su alcance en About y no requiere `matchMedia` real de navegador en jsd
 
 ## Verificación
 
-Comprobaciones realizadas:
+Comprobaciones de la implementación inicial, anteriores a la integración del
+Brandbook descrita arriba:
 
 - `npm run typecheck`: correcto.
 - `npm run lint`: correcto.

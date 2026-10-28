@@ -2,10 +2,10 @@
   "generator": "scripts/generate-liquid-poster.mjs",
   "time": 0,
   "palette": [
-    "#f7b3d4",
-    "#a1d6e4",
-    "#fff1d7",
-    "#c8b4e5"
+    "#ff66cc",
+    "#72a1b2",
+    "#ede8e0",
+    "#7ab596"
   ],
   "threeRevision": "186",
   "colorSpace": "srgb",
@@ -14,18 +14,18 @@
     "src": "/home/liquid-initial-portrait.webp",
     "width": 384,
     "height": 1536,
-    "bytes": 15542,
+    "bytes": 20892,
     "thumbnailWidth": 32,
     "thumbnailHeight": 128,
-    "placeholderBytes": 948
+    "placeholderBytes": 1322
   },
   "landscape": {
     "src": "/home/liquid-initial-landscape.webp",
     "width": 2048,
     "height": 512,
-    "bytes": 21186,
+    "bytes": 28262,
     "thumbnailWidth": 128,
     "thumbnailHeight": 32,
-    "placeholderBytes": 1006
+    "placeholderBytes": 1324
   }
 }

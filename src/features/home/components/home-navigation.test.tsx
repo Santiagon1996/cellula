@@ -35,7 +35,7 @@ function renderHome() {
       <div className="home-identity" aria-hidden="true" />
       <main id="inicio">
         <button type="button">Acción de la home</button>
-        <section id="laboratorio">Sobre Célula</section>
+        <section id="laboratorio">Sobre CÈL·LULA</section>
         <section id="exposiciones">Obras destacadas</section>
         <section id="laboratorios">Laboratorios</section>
         <footer id="contacto">Contacto</footer>
@@ -110,7 +110,7 @@ describe('HomeNavigation', () => {
     expect(panel).toHaveAttribute('inert');
 
     finishMotion('open');
-    const dialog = screen.getByRole('dialog', { name: 'Navegación de Célula' });
+    const dialog = screen.getByRole('dialog', { name: 'Navegación de CÈL·LULA' });
     const navigation = within(dialog).getByRole('navigation', { name: 'Navegación principal' });
 
     expect(dialog).toHaveAttribute('aria-modal', 'true');
@@ -118,7 +118,7 @@ describe('HomeNavigation', () => {
     expect(within(navigation).getAllByRole('link')).toHaveLength(5);
     for (const [label, href] of [
       ['HOME', '#inicio'],
-      ['QUÉ ES CÉLULA', '#laboratorio'],
+      ['QUÉ ES CÈL·LULA', '#laboratorio'],
       ['EXPOSICIONES', '#exposiciones'],
       ['LAB', '#laboratorios'],
       ['CONTACTO', '#contacto'],
@@ -127,6 +127,27 @@ describe('HomeNavigation', () => {
     }
     expect(within(navigation).getByText('QUÉ HACEMOS').closest('[aria-disabled="true"]')).not.toBeNull();
     expect(within(navigation).getAllByText('PRÓXIMAMENTE')).toHaveLength(1);
+    // Arrows are decorative SVGs: they do not change link names nor use Unicode glyphs.
+    for (const link of within(navigation).getAllByRole('link')) {
+      const arrow = link.querySelector('svg[data-arrow="up-right"]');
+      expect(arrow).toHaveAttribute('aria-hidden', 'true');
+      expect(arrow).toHaveAttribute('focusable', 'false');
+      expect(link.textContent).not.toMatch(/[\u2190-\u21FF\uFE0F]/u);
+    }
+    // The open menu contains only the navigation: no logo or descriptive copy.
+    expect(within(dialog).queryByRole('img')).not.toBeInTheDocument();
+    expect(within(dialog).queryByText('ARTE · PROCESO · COMUNIDAD')).not.toBeInTheDocument();
+    expect(within(dialog).queryByText(/experimentación creativa/)).not.toBeInTheDocument();
+    expect(document.documentElement).toHaveAttribute('data-home-menu');
+  });
+
+  it('releases the Home gradient flag once the menu has closed', () => {
+    renderHome();
+    openMenu();
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(document.documentElement).toHaveAttribute('data-home-menu');
+    finishMotion('closed');
+    expect(document.documentElement).not.toHaveAttribute('data-home-menu');
   });
 
   it('moves focus into the links only when the opening animation has finished', () => {
@@ -187,7 +208,7 @@ describe('HomeNavigation', () => {
   it('defers section navigation until the menu has closed and focuses the destination', () => {
     const { container } = renderHome();
     openMenu();
-    fireEvent.click(screen.getByRole('link', { name: 'QUÉ ES CÉLULA' }));
+    fireEvent.click(screen.getByRole('link', { name: 'QUÉ ES CÈL·LULA' }));
 
     expect(window.location.hash).toBe('');
     expect(scrollIntoView).not.toHaveBeenCalled();

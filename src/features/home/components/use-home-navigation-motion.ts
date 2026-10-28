@@ -82,7 +82,7 @@ export function useHomeNavigationMotion({
     if (!panel || !surface || !button || !shape) return;
 
     const rows = panel.querySelectorAll<HTMLElement>('[data-nav-row]');
-    const details = panel.querySelectorAll<HTMLElement>('[data-nav-reveal]');
+    const glass = panel.querySelector<HTMLElement>('[data-nav-glass]');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const coverage = { progress: 0 };
     let origin: Point = [1000, 0];
@@ -103,7 +103,7 @@ export function useHomeNavigationMotion({
     };
 
     gsap.set(rows, { autoAlpha: 0, y: 32 });
-    gsap.set(details, { autoAlpha: 0, y: 14 });
+    if (glass) gsap.set(glass, { '--nav-progress': 0 });
     updateGeometry();
 
     // A single timeline means repeated clicks simply change its direction.
@@ -118,10 +118,12 @@ export function useHomeNavigationMotion({
       },
     });
     timeline
-      .to(coverage, { progress: 0.76, duration: 0.55, ease: 'power2.inOut', onUpdate: drawShape }, 0)
-      .to(coverage, { progress: 1, duration: 0.27, ease: 'power2.out', onUpdate: drawShape }, 0.55)
-      .to(rows, { autoAlpha: 1, y: 0, duration: 0.42, stagger: 0.055, ease: 'power2.out' }, 0.83)
-      .to(details, { autoAlpha: 1, y: 0, duration: 0.34, stagger: 0.045, ease: 'power2.out' }, 1);
+      .to(coverage, { progress: 0.76, duration: 0.5, ease: 'power2.inOut', onUpdate: drawShape }, 0)
+      .to(coverage, { progress: 1, duration: 0.25, ease: 'power2.out', onUpdate: drawShape }, 0.5)
+      .to(rows, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out' }, 0.45);
+    // CSS turns this 0-1 value into the blur radius and tint, so breakpoints
+    // and accessibility media queries own the final values.
+    if (glass) timeline.to(glass, { '--nav-progress': 1, duration: 0.9, ease: 'power1.inOut' }, 0);
 
     const applyTarget = (open: boolean) => {
       // The page lock may have just removed a scrollbar and shifted the

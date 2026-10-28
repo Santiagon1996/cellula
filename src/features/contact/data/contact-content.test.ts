@@ -22,8 +22,10 @@ describe('contact editorial content', () => {
       expect(panel.actionLabel.trim()).not.toBe('');
     }
     expect(contactCopy.introTitle).toBe('¿HACEMOS ALGO JUNTOS?');
-    expect(contactCopy.narrative).toBe('TODA IDEA COMIENZA CON UN CONTACTO.');
-    expect(contactCopy.navigationLabel).not.toBe('');
+    expect(contactCopy.narrative).toBe('Las ideas crecen cuando se encuentran. Comparte tu propuesta, abramos una conversación y descubramos qué podemos crear.');
+    expect(contactCopy.navigationLabel).toBe('Elige una forma de conectar con CÈL·LULA');
+    expect(contactCopy.stageBaseline).toBe('CÈL·LULA / CONEXIONES EN POTENCIA');
+    expect(contactCopy.collaborationSubject).toBe('Propuesta de colaboración — CÈL·LULA');
   });
 
   it('keeps unconfirmed contact details pending without producing placeholder links', () => {

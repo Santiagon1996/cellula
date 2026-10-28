@@ -1,10 +1,10 @@
 'use client';
 
-import type { AboutConceptId } from '../types';
+import type { AboutConcept, AboutConceptId } from '../types';
 import styles from '../styles/about.module.css';
 
 type AboutEcosystemNodeProps = {
-  concept: { id: AboutConceptId; label: string; number: string };
+  concept: Pick<AboutConcept, 'id' | 'label' | 'number'>;
   active: boolean;
   panelId: string;
   onSelect: (id: AboutConceptId) => void;
@@ -22,7 +22,7 @@ export function AboutEcosystemNode({ concept, active, panelId, onSelect }: About
     >
       <span className={styles.nodeShape} data-about-shape aria-hidden="true" />
       <span className={`${styles.nodeNumber} font-mono font-normal`} aria-hidden="true">{concept.number}</span>
-      <span className={`${styles.nodeLabel} font-medium`}>{concept.label}</span>
+      <span className={styles.nodeLabel}>{concept.label}</span>
     </button>
   );
 }

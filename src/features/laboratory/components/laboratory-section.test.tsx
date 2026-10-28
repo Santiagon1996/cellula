@@ -4,13 +4,13 @@ import { describe, expect, it, vi } from 'vitest';
 import { demoLaboratories } from '../data/laboratories';
 import { LaboratorySection } from './laboratory-section';
 
-vi.mock('./laboratory-carousel', () => ({
-  LaboratoryCarousel: ({ laboratories, paused, onSelect }: {
+vi.mock('./laboratory-circular-carousel', () => ({
+  LaboratoryCircularCarousel: ({ laboratories, blocked, onSelect }: {
     laboratories: readonly Laboratory[];
-    paused: boolean;
+    blocked: boolean;
     onSelect: (selection: LaboratorySelection) => void;
   }) => (
-    <div data-testid="carousel" data-paused={paused}>
+    <div data-testid="carousel" data-blocked={blocked}>
       {laboratories.map((laboratory) => (
         <button key={laboratory.id} type="button" onClick={(event) => onSelect({ laboratory, source: event.currentTarget, trigger: event.currentTarget })}>{laboratory.title}</button>
       ))}
@@ -31,22 +31,22 @@ describe('LaboratorySection composition', () => {
     const { container } = render(<LaboratorySection />);
     expect(container.querySelectorAll('#laboratorios')).toHaveLength(1);
     expect(container.querySelector('#laboratorio')).toBeNull();
-    expect(screen.getByRole('heading', { name: 'Laboratorio' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'LUGAR DE PRUEBA, DESARROLLO Y CRUCE.' })).toHaveAttribute('id', 'laboratory-heading');
     expect(screen.getByText('LAB / MUESTRAS TEMPORALES')).toBeInTheDocument();
-    expect(screen.getByTestId('carousel')).toHaveAttribute('data-paused', 'false');
+    expect(screen.getByTestId('carousel')).toHaveAttribute('data-blocked', 'false');
   });
 
-  it('keeps one selection and pauses until the detail finishes closing', () => {
+  it('keeps one selection and blocks the carousel until the detail finishes closing', () => {
     render(<LaboratorySection />);
     fireEvent.click(screen.getByRole('button', { name: demoLaboratories[1].title }));
     expect(screen.getByRole('dialog', { name: demoLaboratories[1].title })).toBeInTheDocument();
-    expect(screen.getByTestId('carousel')).toHaveAttribute('data-paused', 'true');
+    expect(screen.getByTestId('carousel')).toHaveAttribute('data-blocked', 'true');
     fireEvent.click(screen.getByRole('button', { name: demoLaboratories[0].title }));
     expect(screen.getAllByRole('dialog')).toHaveLength(1);
     expect(screen.getByRole('dialog', { name: demoLaboratories[1].title })).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Cerrar muestra' }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    expect(screen.getByTestId('carousel')).toHaveAttribute('data-paused', 'false');
+    expect(screen.getByTestId('carousel')).toHaveAttribute('data-blocked', 'false');
   });
 
   it('accepts replacement data without requiring demo metadata', () => {

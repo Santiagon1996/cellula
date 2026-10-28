@@ -5,14 +5,14 @@ import { HomeLanding } from '@/features/home/components/home-landing';
 import { contactCopy, contactPanels } from '../data/contact-content';
 
 vi.mock('../hooks/use-contact-motion', () => ({ useContactMotion: vi.fn() }));
-vi.mock('@/features/about', () => ({ AboutSection: () => <section id="laboratorio">Sobre Célula</section> }));
+vi.mock('@/features/about', () => ({ AboutSection: () => <section id="laboratorio">Sobre CÈL·LULA</section> }));
 vi.mock('@/features/home/components/home-navigation', async () => {
   const { HomeNavigationContent } = await import('@/features/home/components/home-navigation-content');
   return { HomeNavigation: () => <HomeNavigationContent onNavigate={vi.fn()} /> };
 });
-vi.mock('@/features/home/components/home-identity', () => ({ HomeIdentity: () => <h1>CÉLULA</h1> }));
+vi.mock('@/features/home/components/home-identity', () => ({ HomeIdentity: () => <h1>CÈL·LULA</h1> }));
 vi.mock('@/features/home/components/home-atmosphere', () => ({ HomeAtmosphere: () => <div data-testid="atmosphere" /> }));
-vi.mock('@/features/exhibitions', () => ({ ExhibitionSlider: () => <div data-testid="exhibition-slider" /> }));
+vi.mock('@/features/exhibitions', () => ({ ExhibitionCardSwap: () => <div data-testid="exhibition-card-swap" /> }));
 vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorios">Laboratorios</section> }));
 
 describe('Contact integration in Home', () => {
@@ -35,10 +35,10 @@ describe('Contact integration in Home', () => {
     const footer = children.at(-1)!;
     expect(footer.tagName).toBe('FOOTER');
     expect(footer).not.toHaveAttribute('id', 'contacto');
-    expect(within(footer as HTMLElement).getByRole('link', { name: /ACTIVAR UNA CONEXIÓN/ })).toHaveAttribute('href', '#contacto');
+    expect(within(footer as HTMLElement).getByRole('link', { name: /IR A CONTACTO/ })).toHaveAttribute('href', '#contacto');
     expect(within(contact).getByRole('link', { name: contactCopy.backToTop })).toHaveAttribute('href', '#inicio');
     expect(within(contact).getByRole('tablist', { name: contactCopy.navigationLabel })).toBeInTheDocument();
-    expect(screen.getByTestId('exhibition-slider')).toBeInTheDocument();
+    expect(screen.getByTestId('exhibition-card-swap')).toBeInTheDocument();
     expect(screen.getByTestId('atmosphere')).toBeInTheDocument();
   }, 15_000);
 

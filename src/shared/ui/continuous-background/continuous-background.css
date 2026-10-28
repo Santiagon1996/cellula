@@ -1,0 +1,25 @@
+.continuous-background {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.continuous-background__composition {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(ellipse 88% 58% at 82% 8%, color-mix(in srgb, var(--color-blue) 36%, transparent), transparent 100%),
+    radial-gradient(ellipse 82% 62% at 16% 78%, color-mix(in srgb, var(--color-green) 42%, transparent), transparent 100%),
+    radial-gradient(ellipse 62% 44% at 52% 46%, color-mix(in srgb, var(--color-pink) 8%, transparent), transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .continuous-background__composition {
+    opacity: 1;
+  }
+}

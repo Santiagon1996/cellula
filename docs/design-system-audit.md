@@ -1,9 +1,10 @@
 # CELULA: auditoria del sistema de diseno y tipografia
 
 > Registro histórico de la integración de Acid Grotesk y Basis Grotesque Mono.
-> Desde el 2026-10-16 la configuración activa usa Space Grotesk y DM Mono; las
-> comprobaciones tipográficas de este documento corresponden a la versión
-> anterior. Consulte el [README de fuentes](../src/app/fonts/README.md).
+> La configuración actual carga las familias oficiales mediante `next/font/local`
+> y centraliza los ocho colores del brandbook. Las comprobaciones de este
+> documento corresponden a la versión del 2026-10-12. Consulte el
+> [README de fuentes](../src/app/fonts/README.md) para los archivos y pesos activos.
 
 Fecha: 2026-10-12. Rama de trabajo: `test/integration`.
 

@@ -254,7 +254,7 @@ describe('LiquidGradient', () => {
   });
 
   it('keeps a palette-matched poster when default colours are supplied explicitly', () => {
-    const { container } = render(<LiquidGradient palette={['#f7b3d4', '#a1d6e4', '#fff1d7', '#c8b4e5']} />);
+    const { container } = render(<LiquidGradient palette={['#ff66cc', '#72a1b2', '#ede8e0', '#7ab596']} />);
 
     expect(container.querySelector('[data-liquid-poster]')).not.toBeNull();
   });

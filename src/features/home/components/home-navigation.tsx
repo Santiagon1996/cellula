@@ -10,6 +10,8 @@ function lockPage(root: HTMLElement) {
   const body = document.body;
   const html = document.documentElement;
   const gap = Math.max(0, window.innerWidth - html.clientWidth);
+  const hadMenuFlag = html.hasAttribute('data-home-menu');
+  html.setAttribute('data-home-menu', '');
   const padding = Number.parseFloat(getComputedStyle(body).paddingRight) || 0;
   const changes: [HTMLElement, string, string][] = [
     [body, 'overflow', 'hidden'],
@@ -35,6 +37,7 @@ function lockPage(root: HTMLElement) {
     });
 
   return () => {
+    if (!hadMenuFlag) html.removeAttribute('data-home-menu');
     for (const { element, property, previous, priority } of previousStyles) {
       if (previous) element.style.setProperty(property, previous, priority);
       else element.style.removeProperty(property);
@@ -178,7 +181,7 @@ export function HomeNavigation() {
       data-phase={phase}
       role={modal ? 'dialog' : undefined}
       aria-modal={modal ? true : undefined}
-      aria-label={modal ? 'Navegación de Célula' : undefined}
+      aria-label={modal ? 'Navegación de CÈL·LULA' : undefined}
     >
       <button
         ref={buttonRef}
@@ -209,13 +212,17 @@ export function HomeNavigation() {
         <svg
           ref={surfaceRef}
           className={styles.surface}
-          viewBox="0 0 1000 1000"
-          preserveAspectRatio="none"
           aria-hidden="true"
           focusable="false"
         >
-          <path data-nav-shape d="M 1000 0 Z" />
+          <defs>
+            {/* Path coordinates stay in the 0-1000 space used by the motion hook. */}
+            <clipPath id="home-navigation-clip" clipPathUnits="objectBoundingBox">
+              <path data-nav-shape transform="scale(0.001)" d="M 1000 0 Z" />
+            </clipPath>
+          </defs>
         </svg>
+        <div className={styles.glass} data-nav-glass aria-hidden="true" />
         <HomeNavigationContent onNavigate={onNavigate} />
       </div>
     </div>

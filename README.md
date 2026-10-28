@@ -1,6 +1,6 @@
-# CÉLULA
+# CÈL·LULA
 
-Sitio web para CÉLULA, espacio creativo y de exposición de arte.
+Sitio web para CÈL·LULA, laboratorio cultural de experimentación creativa en Barcelona.
 
 ## Objetivo
 
@@ -21,6 +21,10 @@ validación están en `package.json`.
 
 ## Tipografías
 
-Space Grotesk y DM Mono se integran con `next/font/google`: se descargan durante
-el build y se sirven desde el despliegue. No hacen falta los OTF propietarios
-locales. Consulta la [configuración y licencias](src/app/fonts/README.md).
+Acid Grotesk y Basis Grotesque Mono Pro se integran con `next/font/local` y se
+sirven desde el despliegue. Los siete OTF utilizados están en `src/app/fonts/`;
+la compilación no depende de Google Fonts ni de archivos externos. Consulta la
+[configuración de fuentes](src/app/fonts/README.md).
+
+La integración de marca, el copy aprobado, las comprobaciones y las capturas
+están documentados en el [informe de validación](docs/brand-identity-validation.md).

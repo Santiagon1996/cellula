@@ -8,13 +8,13 @@ import type {
 export const contactCopy = {
   introTitle: '¿HACEMOS ALGO JUNTOS?',
   introLines: ['¿HACEMOS', 'ALGO', 'JUNTOS?'],
-  narrative: 'TODA IDEA COMIENZA CON UN CONTACTO.',
-  navigationLabel: 'Elige una forma de conectar con CÉLULA',
+  narrative: 'Las ideas crecen cuando se encuentran. Comparte tu propuesta, abramos una conversación y descubramos qué podemos crear.',
+  navigationLabel: 'Elige una forma de conectar con CÈL·LULA',
   sectionLabel: '05 / CONTACTO',
   sectionNote: 'EL PUNTO DE ENCUENTRO',
   stageLabel: 'UNA CONEXIÓN, MUCHAS FORMAS.',
   artCaption: 'PUNTOS DE ENCUENTRO',
-  stageBaseline: 'CÉLULA / CONEXIONES EN POTENCIA',
+  stageBaseline: 'CÈL·LULA / CONEXIONES EN POTENCIA',
   moduleNote: 'TRES FORMAS DE EMPEZAR. ELIGE LA TUYA.',
   finaleIndex: 'SIN UN GUIÓN PREVIO.',
   finaleLines: ['LO QUE VIENE', 'AÚN NO TIENE'],
@@ -23,7 +23,7 @@ export const contactCopy = {
   backToTop: 'VOLVER AL PRINCIPIO',
   pendingEmail: 'Pronto abriremos este canal de contacto.',
   pendingSocials: 'Pronto compartiremos nuevas formas de encontrarnos.',
-  collaborationSubject: 'Propuesta de colaboración — CÉLULA',
+  collaborationSubject: 'Propuesta de colaboración — CÈL·LULA',
 } as const;
 
 export const contactPanels = [

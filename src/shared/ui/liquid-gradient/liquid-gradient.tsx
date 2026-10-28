@@ -16,7 +16,7 @@ type LiquidGradientProps = {
   priority?: boolean;
 };
 
-const pastelPalette: LiquidGradientPalette = liquidGradientPoster.palette;
+const posterPalette: LiquidGradientPalette = liquidGradientPoster.palette;
 
 // Temporary, opt-in audit instrumentation; removed after comparative captures.
 function markPhase(phase: string) {
@@ -34,12 +34,12 @@ type Surface = {
 };
 
 /** A decorative liquid colour field. Its parent supplies the layout dimensions. */
-export function LiquidGradient({ className, palette = pastelPalette, speed = 1, priority = false }: LiquidGradientProps) {
+export function LiquidGradient({ className, palette = posterPalette, speed = 1, priority = false }: LiquidGradientProps) {
   if (typeof window !== 'undefined' && !performance.getEntriesByName('liquid:client-render').length) markPhase('client-render');
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [pink, blue, cream, lavender] = palette;
-  const hasPoster = palette.every((color, index) => color.toLowerCase() === pastelPalette[index]);
+  const hasPoster = palette.every((color, index) => color.toLowerCase() === posterPalette[index]);
 
   useEffect(() => {
     markPhase('effect');

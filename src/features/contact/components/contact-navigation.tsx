@@ -1,6 +1,7 @@
 import { useRef, type KeyboardEvent } from 'react';
 import { contactCopy, contactPanels } from '../data/contact-content';
 import type { ContactPanelId } from '../types';
+import { ArrowIcon } from '@/shared/ui/arrow-icon';
 import styles from '../styles/contact.module.css';
 
 export function ContactNavigation({ active, onSelect }: {
@@ -35,7 +36,7 @@ export function ContactNavigation({ active, onSelect }: {
           className={styles.tab}
         >
           <span className={styles.tabNumber} aria-hidden="true">{panel.index}</span>
-          <span>{panel.label}</span><span className={styles.tabMark} aria-hidden="true">↗</span>
+          <span>{panel.label}</span><span className={styles.tabMark}><ArrowIcon direction="up-right" /></span>
         </button>
       ))}
     </div>

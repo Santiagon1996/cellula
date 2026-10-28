@@ -1,4 +1,30 @@
-# About — una identidad en transformación
+# About 2.0 — sistema vivo
+
+Trabajo actual en `feature/about`, actualizada por avance rápido al commit de
+Exhibition `e897155425d96de16d3d145fda8b8c5624e63fde`. No se crea una rama adicional.
+El commit de Exhibition se amplió por indicación del usuario; About permanece
+sin commit ni push hasta su revisión.
+
+La composición mantiene los tres actos y el ecosistema React/GSAP. El título
+usa la adaptación identificada de React Bits Warp Text con OGL 1.0.11, importada
+solo al entrar en pantalla en escritorio. El encabezado HTML permanece en SSR,
+móvil, movimiento reducido y fallo de WebGL. Acid Grotesk Bold real debe estar
+cargada antes de crear su textura; no se rasteriza texto en cada frame.
+
+Los seis valores oficiales y su agrupación editorial se centralizan en
+`data/about-content.ts`, con procedencia y aprobación pendiente explícitas.
+`AboutMaterial` admite tres originales de la diseñadora; mientras sus `src`
+estén vacíos conserva la composición existente, sin figuras vacías.
+
+El informe de esta versión está en
+[About 2.0](../../../docs/about-brand-warp.md).
+La auditoría completa del manual y las evidencias de navegador se conservan en
+`../verification/about-brand-warp/`, fuera del repositorio de producto.
+
+## Archivo histórico: implementación anterior a About 2.0
+
+La documentación siguiente describe la versión previa y sus verificaciones
+históricas; no sustituye los resultados de About 2.0.
 
 Desarrollo local en `feature/about`, desde
 `9b031ce9d579ce39ef362a6af7fc23d81628eefc` de `test/integration`.
@@ -19,9 +45,11 @@ LAB mantiene `#laboratorios`; `#nosotros` continúa en el footer. Se retiraron
   convergencia; scroll reversible sin pin, bloqueo de scroll ni estado por frame.
 - `useEcosystemMotion`: una timeline reutilizable para selección y conexiones;
   el cursor mueve un hijo decorativo separado del transform del botón.
-- `data/about-content.ts` / `types.ts`: contenido provisional y contrato tipado.
+- `data/about-content.ts` / `types.ts`: contenido editorial aprobado, seis valores
+  oficiales y contrato tipado.
 - `styles/about.module.css`: composición mobile first, sin estilos filtrados a
-  otras features, con Space Grotesk y DM Mono globales; la configuración está en
+  otras features, con Acid Grotesk en titulares y Basis Grotesque Mono Pro
+  Regular en descripciones y Medium en controles; la configuración está en
   [el README de fuentes](../../app/fonts/README.md).
 
 ## Accesibilidad y movimiento
@@ -46,14 +74,19 @@ No se afirma un rendimiento de 60 FPS sin mediciones.
 
 ## Contenido y diseño
 
-El copy adicional es provisional y se identifica en pantalla como
-`COPY PENDIENTE DE APROBACIÓN`. No se atribuyen servicios, colaboradores ni
-afirmaciones institucionales definitivas a CÉLULA.
+El copy fue aprobado para la integración del brandbook el 23 de octubre de
+2026. La introducción presenta CÈL·LULA como laboratorio cultural de producción
+artística, experimentación, curaduría y comunidad. Los seis valores oficiales
+aparecen como una lista editorial secundaria; Crear / Explorar / Conectar
+conservan sus tres controles y su comportamiento. Los textos adaptados no se
+presentan como citas literales del manual.
 
-Se reutilizan los cuatro tokens de color y los colores de la transición del
-Home anterior. Las etiquetas sobre formas pink/blue usan un fondo cream para
-mantener contraste slate/cream. El wordmark y el símbolo originales permanecen
-en HomeIdentity; las formas abstractas de About no sustituyen esos assets.
+Los tokens locales enlazan Cream/Black para la base, Slate/Cream para el acto
+final y Pink como activador. Las etiquetas de las formas conservan fondo Cream
+y texto Black. El titular mantiene tres fragmentos para sus hooks de movimiento;
+el texto visible y su alternativa semántica usan la grafía CÈL·LULA. El wordmark
+y el símbolo originales permanecen en HomeIdentity; las formas abstractas de
+About no sustituyen esos assets.
 
 La referencia de Figma no pudo consultarse por el límite del plan conectado.
 El resultado interpreta el brief y el sistema confirmado en código; no afirma

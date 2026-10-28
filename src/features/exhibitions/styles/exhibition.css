@@ -1,10 +1,9 @@
 .exhibition-page {
-  --exhibition-ink: #5b5e74;
-  --exhibition-muted: #78798a;
-  --exhibition-line: rgb(91 94 116 / 18%);
+  --exhibition-ink: var(--color-cream);
+  --exhibition-muted: var(--color-blue);
+  --exhibition-line: var(--color-blue);
   min-height: 100svh;
-  overflow: hidden;
-  background: #ede8e0;
+  background: var(--color-black);
   color: var(--exhibition-ink);
 }
 
@@ -49,8 +48,14 @@
   text-underline-offset: 0.3em;
 }
 
+.exhibition-header a:active {
+  color: var(--color-orange);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
 .exhibition-header__navigation > span[aria-hidden] {
-  color: #b3abb0;
+  color: var(--color-blue);
 }
 
 .exhibition-intro {
@@ -75,7 +80,7 @@
   width: 0.45rem;
   height: 0.45rem;
   border-radius: 50%;
-  background: #bca2bd;
+  background: var(--color-orange);
 }
 
 .exhibition-intro h1 {
@@ -91,10 +96,10 @@
 }
 
 .exhibition-intro__description {
-  max-width: 21rem;
+  max-width: 31rem;
   margin: 0 0 0.15rem;
   color: var(--exhibition-muted);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   line-height: 1.8;
 }
 
@@ -126,7 +131,7 @@
 }
 
 .exhibition-slider__viewport:focus-visible {
-  outline: 2px solid var(--exhibition-ink);
+  outline: 2px solid var(--color-orange);
   outline-offset: -3px;
 }
 
@@ -152,9 +157,8 @@
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: #f3eee5;
-  border: 1px solid rgb(91 94 116 / 9%);
-  box-shadow: 0 6px 20px rgb(76 65 79 / 3%);
+  background: var(--color-cream);
+  border: 1px solid var(--color-blue);
 }
 
 .exhibition-slider__image {
@@ -180,7 +184,8 @@
   justify-content: flex-end;
   align-items: flex-start;
   padding: clamp(1.5rem, 3vw, 2.7rem);
-  background: linear-gradient(transparent 25%, rgb(237 232 224 / 75%) 100%);
+  background: linear-gradient(transparent 10%, var(--surface-veil) 100%);
+  color: var(--color-black);
   opacity: 0;
   transition: opacity 650ms ease;
   pointer-events: none;
@@ -270,8 +275,16 @@
 }
 
 .exhibition-slider__navigation button:hover:not(:disabled) {
-  border-color: #bca2bd;
-  background: #e4dce3;
+  border-color: var(--color-orange);
+  background: var(--color-orange);
+  color: var(--color-black);
+}
+
+.exhibition-slider__navigation button:active:not(:disabled) {
+  border-color: var(--color-cream);
+  background: var(--color-cream);
+  color: var(--color-black);
+  box-shadow: inset 0 0 0 2px var(--color-black);
 }
 
 .exhibition-slider__navigation button:disabled {
@@ -281,7 +294,7 @@
 
 .exhibition-slider__navigation button:focus-visible,
 .exhibition-header a:focus-visible {
-  outline: 2px solid var(--exhibition-ink);
+  outline: 2px solid var(--color-orange);
   outline-offset: 4px;
 }
 
@@ -298,6 +311,7 @@
 }
 
 .exhibition-footer > span:first-child {
+  max-width: 62ch;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -341,7 +355,7 @@
   }
 
   .exhibition-intro__description {
-    font-size: 0.7rem;
+    font-size: 0.875rem;
   }
 
   .exhibition-slider__track {

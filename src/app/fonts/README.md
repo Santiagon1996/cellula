@@ -1,27 +1,28 @@
-# Tipografías de CÉLULA
+# Tipografías oficiales de CÈL·LULA
 
 La configuración activa está en `fonts.ts` y se importa una sola vez desde el
-root layout. Desde el 2026-10-16 se usan **Space Grotesk** y **DM Mono** mediante
-`next/font/google`; la compilación ya no depende de los OTF propietarios de
-Acid Grotesk o Basis Grotesque Mono.
+root layout. **Acid Grotesk** y **Basis Grotesque Mono Pro**, las familias del
+brandbook, se cargan mediante `next/font/local` con los OTF originales
+autorizados por el usuario para uso y alojamiento web.
 
 ## Familias y variantes
 
-| Familia activa | Export | Pesos configurados | Estilos | Variable CSS conservada |
+| Familia | Export | Pesos | Estilos | Variable CSS |
 | --- | --- | --- | --- | --- |
-| Space Grotesk | `spaceGrotesk` | 400, 500, 700 | normal | `--font-acid` |
-| DM Mono | `dmMono` | 400, 500 | normal, italic | `--font-basis-mono` |
+| Acid Grotesk | `acidGrotesk` | 400, 500, 700 | normal | `--font-acid` |
+| Basis Grotesque Mono Pro | `basisGrotesqueMono` | 400, 500 | normal, italic | `--font-basis-mono` |
 
-Space Grotesk cubre el texto proporcional, los titulares y la navegación.
-DM Mono cubre etiquetas, fechas, numeraciones, controles y footer. Cada familia
-usa una sola instancia de `next/font/google`, con `display: 'swap'`,
-`preload: false` y el subconjunto `latin`. Las cursivas de DM Mono son variantes
-reales.
+Se conservan las siete combinaciones de peso y estilo de la configuración
+anterior. Cada archivo se declara con su peso OpenType real; no se asignan
+pesos 600 u 800 ni rangos variables a estos archivos estáticos. Las dos
+cursivas Basis son variantes reales, con ángulo de −11°.
 
-Los nombres de las variables se conservan por compatibilidad con los estilos
-existentes; ahora apuntan a las familias de esta tabla. El layout aplica ambas
-variables al elemento `html`. Tailwind v4 mantiene los alias globales en
-`globals.css`:
+Acid cubre el texto proporcional, los titulares y la navegación. Basis cubre
+etiquetas, fechas, numeraciones, controles y footer. Cada familia usa una sola
+instancia de `next/font/local`, con `display: 'swap'` y `preload: false`.
+
+Las variables se aplican al elemento `html`. Los alias existentes de Tailwind
+en `globals.css` siguen conectados a ellas:
 
 ```css
 @theme inline {
@@ -30,76 +31,53 @@ variables al elemento `html`. Tailwind v4 mantiene los alias globales en
 }
 ```
 
-Así, las referencias existentes a estas variables y las utilidades `font-sans`
-y `font-mono` reciben las familias nuevas sin cambiar los selectores de las
-secciones. Se conservan tamaños, interlineados, tracking, colores y composición.
-Las familias tienen métricas distintas de las anteriores, por lo que los saltos
-de línea y la ocupación del texto requieren revisión visual.
+Los estilos que usan esas variables y las utilidades `font-sans` y `font-mono`
+reciben las fuentes oficiales sin cambiar sus selectores. Acid usa un fallback
+Arial ajustado por Next.js y la pila Arial/Helvetica/sans-serif. Basis conserva
+ui-monospace/SFMono-Regular/Consolas/monospace con `adjustFontFallback: false`
+para mantener un fallback monoespaciado.
 
-Space Grotesk conserva la pila de fallback Arial/Helvetica/sans-serif.
-DM Mono conserva ui-monospace/SFMono-Regular/Consolas/monospace y
-`adjustFontFallback: false` para evitar un fallback proporcional automático.
+## Archivos incluidos
 
-## Compilación y alojamiento
+| Ruta relativa a este directorio | Peso y estilo | Bytes originales |
+| --- | --- | ---: |
+| `acid-grotesk/acid-grotesk-regular.otf` | 400 normal | 125012 |
+| `acid-grotesk/acid-grotesk-medium.otf` | 500 normal | 50275 |
+| `acid-grotesk/acid-grotesk-bold.otf` | 700 normal | 51447 |
+| `basis-grotesque-mono/Basis Grotesque Mono Pro Regular.otf` | 400 normal | 61888 |
+| `basis-grotesque-mono/Basis Grotesque Mono Pro Regular Italic.otf` | 400 italic | 64628 |
+| `basis-grotesque-mono/Basis Grotesque Mono Pro Medium.otf` | 500 normal | 62048 |
+| `basis-grotesque-mono/Basis Grotesque Mono Pro Medium Italic.otf` | 500 italic | 64608 |
 
-`next/font/google` descarga el CSS y los archivos de las fuentes durante la
-compilación y los incorpora como recursos estáticos de Next.js. El entorno de
-build necesita acceso de red a Google Fonts para obtenerlos. La aplicación
-desplegada sirve las fuentes desde su propio dominio; el navegador no necesita
-consultar Google Fonts para cargarlas.
+El `.gitignore` de este directorio permite incluir explícitamente estos siete
+OTF y mantiene excluidos los demás archivos tipográficos. Las copias conservan
+los bytes originales de `C:/Users/Usuario/Downloads/celulaFonts/`; no se han
+convertido, modificado ni renombrado. Un checkout debe incluir esos siete
+archivos para compilar sin depender de una carpeta externa.
 
-No se debe añadir un enlace remoto de Google Fonts al layout ni duplicar las
-declaraciones `@font-face`. Este comportamiento se documenta en la
-[referencia oficial de `next/font`](https://nextjs.org/docs/app/api-reference/components/font).
+### Elección de Acid Regular 400
 
-Un checkout limpio no necesita copiar los OTF originales para ejecutar el build.
-Los comandos de validación siguen siendo los definidos en `package.json`.
+`acid-grotesk-normal.otf` y `acid-grotesk-regular.otf` tienen peso 400, pero son
+variantes distintas: 189 de sus 262 caracteres compartidos tienen avances
+diferentes. Se carga únicamente **Regular**, identificada en la página 28 de
+`CEL-LULA_Brandbook.pdf` como `AcidGrotesk-Regular`.
 
-## Licencias
+El subset embebido del PDF contiene el separador `|`: su avance de 201/1000 em
+y su bounding box global `(-44, -309, 2028, 923)` coinciden con Regular. Normal
+tiene avance 189/1000 em y bounding box `(-50, -306, 2016, 920)`. Esta evidencia
+actualiza la selección técnica de Normal que figura en la
+[auditoría histórica de originales](../../../docs/font-file-audit.md).
 
-Space Grotesk y DM Mono se publican bajo **SIL Open Font License 1.1**. Sus
-licencias permiten usar, incrustar y redistribuir las fuentes conforme a sus
-condiciones, incluyendo conservar los avisos de copyright y la licencia en las
-copias distribuidas. La licencia de las fuentes no cambia la del sitio.
-Las fuentes primarias son los archivos de licencia del repositorio Google Fonts:
+## Compilación y comprobación
 
-- [Space Grotesk — OFL.txt](https://github.com/google/fonts/blob/main/ofl/spacegrotesk/OFL.txt).
-- [DM Mono — OFL.txt](https://github.com/google/fonts/blob/main/ofl/dmmono/OFL.txt).
+Next.js incorpora los OTF como recursos estáticos y los sirve desde el dominio
+de la aplicación. La compilación de estas fuentes no necesita Google Fonts ni
+acceso a los originales de Downloads. No se añaden enlaces remotos ni
+declaraciones `@font-face` manuales.
 
-## Originales propietarios e historial
-
-Los OTF locales de Acid Grotesk y Basis Grotesque Mono permanecen excluidos por
-el `.gitignore` de este directorio. No se cargan, no se distribuyen con esta
-configuración y no son necesarios para compilar. La autorización previa de uso
-y alojamiento web no confirmó permiso de redistribución en Git.
-
-La [auditoría de archivos originales](../../../docs/font-file-audit.md) y la
-[auditoría del sistema visual](../../../docs/design-system-audit.md) se conservan
-como registros históricos de la integración anterior. Sus rutas, inventarios y
-resultados tipográficos no describen la configuración activa.
-
-## Validación de la migración (2026-10-16)
-
-- `npm run typecheck` y `npm run lint`: correctos.
-- `npm run test -- --run --maxWorkers=2`: 21 archivos, 184 pruebas correctas.
-- `npm run build`: correcto con Next.js 16.4.0 y acceso a Google Fonts.
-- Navegador: las siete combinaciones de peso/estilo configuradas cargan sus
-  fuentes reales. Los WOFF2 se sirven desde el propio origen, sin peticiones a
-  Google en ejecución.
-- Comparación antes/después a 320, 390, 768 y 1440 px: sin desbordamientos
-  horizontales en las páginas ni en los titulares revisados. Se usó movimiento
-  reducido para medir el texto en reposo, sin modificar las animaciones.
-
-No fue necesario ajustar tamaños, espaciados ni reglas de composición. Los
-titulares fragmentados de About y Contacto, el menú y `DESTACADO / DEL MES`
-conservan sus saltos. Las diferencias naturales de métricas incluyen:
-
-| Ancho | Texto | Líneas antes → después |
-| --- | --- | --- |
-| 320 px | Dar forma a una idea. | 1 → 2 |
-| 320 px | Procesos abiertos. / Ideas en movimiento. | 2 → 3 |
-| 768 px | Una pausa para mirar. | 1 → 2 |
-
-También pueden cambiar los puntos de corte de los párrafos. El wordmark gráfico
-y el símbolo de Home conservan sus imágenes originales; la marca textual
-`Cél·ula` de `/exposiciones` hereda Space Grotesk como el resto del texto sans.
+La integración cambia las métricas respecto a Space Grotesk y DM Mono. La
+validación de la entrega debe comprobar la carga de las siete variantes, los
+saltos de línea, la ausencia de desbordamientos y el comportamiento responsive,
+además de los comandos definidos en `package.json`. Este documento describe
+la configuración; los resultados de esas comprobaciones se registran en la
+[validación de la entrega](../../../docs/brand-identity-validation.md).

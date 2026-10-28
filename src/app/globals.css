@@ -1,9 +1,29 @@
 @import 'tailwindcss';
 
-:root { --color-slate: #5b5e74; --color-cream: #ede8e0; --color-pink: #ff66cc; --color-blue: #72a1b2; }
+/* Brandbook, pp. 24–26: five structural colors and three activators. */
+@theme static {
+  --color-cream: #ede8e0;
+  --color-green: #7ab596;
+  --color-blue: #72a1b2;
+  --color-slate: #5b5e74;
+  --color-black: #1d1d1d;
+  --color-green-electric: #07f364;
+  --color-orange: #ff9940;
+  --color-pink: #ff66cc;
+}
+
+:root {
+  --surface-page: var(--color-cream);
+  --text-primary: var(--color-black);
+  --surface-inverse: var(--color-black);
+  --surface-veil: color-mix(in srgb, var(--color-cream) 95%, transparent);
+  --text-on-inverse: var(--color-cream);
+  --border-subtle: color-mix(in srgb, var(--color-black) 22%, transparent);
+  --accent-action: var(--color-orange);
+}
 
 @theme inline {
-  /* Compatibility aliases: Space Grotesk (sans) and DM Mono (mono). */
+  /* Official families loaded once with next/font/local in the root layout. */
   --font-sans: var(--font-acid);
   --font-mono: var(--font-basis-mono);
 }
@@ -16,5 +36,5 @@
 }
 
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--color-cream); color: var(--color-slate); }
+body { margin: 0; background: var(--surface-page); color: var(--text-primary); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

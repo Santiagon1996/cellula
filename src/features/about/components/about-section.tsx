@@ -12,10 +12,10 @@ export function AboutSection() {
   useAboutScroll(rootRef);
 
   return (
-    <section ref={rootRef} id="laboratorio" className={styles.section} aria-labelledby="home-about-title" data-about-section>
+    <section ref={rootRef} id="laboratorio" className={styles.section} aria-labelledby="home-about-title" data-about-section data-chromatic-flow data-editorial-status="pending-validation">
       <AboutIntro />
-      <AboutEcosystem />
-      <AboutFinale />
+      {/* <AboutEcosystem />
+      <AboutFinale /> */}
     </section>
   );
 }

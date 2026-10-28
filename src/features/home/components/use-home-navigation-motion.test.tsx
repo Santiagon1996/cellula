@@ -31,8 +31,8 @@ function Harness({ onPhaseChange }: { onPhaseChange: (phase: NavigationPhase) =>
         <svg ref={surfaceRef} viewBox="0 0 1000 1000">
           <path data-nav-shape />
         </svg>
+        <div data-nav-glass data-testid="glass" />
         <div data-nav-row>HOME</div>
-        <div data-nav-reveal>CÉLULA</div>
       </div>
     </div>
   );
@@ -80,9 +80,11 @@ describe('useHomeNavigationMotion with GSAP', () => {
     expect(onPhaseChange).toHaveBeenLastCalledWith('opening');
     act(() => preference.setReduced(true));
     expect(onPhaseChange).toHaveBeenLastCalledWith('open');
+    expect(screen.getByTestId('glass').style.getPropertyValue('--nav-progress')).toBe('1');
 
     fireEvent.click(screen.getByText('Cerrar'));
     expect(onPhaseChange).toHaveBeenLastCalledWith('closed');
+    expect(screen.getByTestId('glass').style.getPropertyValue('--nav-progress')).toBe('0');
     fireEvent.click(screen.getByText('Abrir'));
     expect(onPhaseChange).toHaveBeenLastCalledWith('open');
 

@@ -1,3 +1,4 @@
+import { ArrowIcon } from '@/shared/ui/arrow-icon';
 import { contactCopy } from '../data/contact-content';
 import styles from '../styles/contact.module.css';
 
@@ -12,7 +13,7 @@ export function ContactIntro() {
         <span className={styles.visuallyHidden}>{contactCopy.introTitle}</span>
         <span className={styles.titleLine} aria-hidden="true"><span data-contact-word>{contactCopy.introLines[0]}</span></span>
         <span className={`${styles.titleLine} ${styles.middleLine}`} aria-hidden="true">
-          <span data-contact-word>{contactCopy.introLines[1]}</span><span className={styles.titleArrow}>↘</span>
+          <span data-contact-word>{contactCopy.introLines[1]}</span><span className={styles.titleArrow}><ArrowIcon direction="down-right" /></span>
         </span>
         <span className={styles.titleLine} aria-hidden="true"><span data-contact-word>{contactCopy.introLines[2]}</span></span>
       </h2>

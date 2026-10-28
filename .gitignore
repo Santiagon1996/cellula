@@ -6,3 +6,5 @@ out/
 !.env.example
 *.tsbuildinfo
 .DS_Store
+/CEL-LULA_Brandbook.pdf
+

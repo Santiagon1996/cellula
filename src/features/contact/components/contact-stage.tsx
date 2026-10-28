@@ -2,6 +2,7 @@ import { contactCopy, contactPanels } from '../data/contact-content';
 import type { ContactChannels, ContactPanelId } from '../types';
 import { ContactNavigation } from './contact-navigation';
 import { ContactPanel } from './contact-panel';
+import { ArrowIcon } from '@/shared/ui/arrow-icon';
 import styles from '../styles/contact.module.css';
 
 export function ContactStage({ active, onSelect, channels }: {
@@ -30,7 +31,7 @@ export function ContactStage({ active, onSelect, channels }: {
           {contactPanels.map((panel) => <ContactPanel key={panel.id} panel={panel} active={panel.id === active} channels={channels} />)}
         </div>
         <div className={styles.stageBaseline} aria-hidden="true">
-          <span>{contactCopy.stageBaseline}</span><span>↗</span>
+          <span>{contactCopy.stageBaseline}</span><span><ArrowIcon direction="up-right" /></span>
         </div>
       </div>
       <p className={styles.moduleNote}>{contactCopy.moduleNote}</p>

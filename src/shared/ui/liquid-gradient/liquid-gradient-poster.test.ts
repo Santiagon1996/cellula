@@ -53,9 +53,14 @@ describe('generated liquid gradient reference frame', () => {
     expect(liquidGradientPoster.shaderSha256, 'Run scripts/generate-liquid-poster.mjs after changing the shader').toBe(hash);
   });
 
-  it('records the original initial frame and palette in sRGB', () => {
+  it('records the initial frame with the official CSS palette in sRGB', () => {
     expect(liquidGradientPoster.time).toBe(0);
-    expect(liquidGradientPoster.palette).toEqual(['#f7b3d4', '#a1d6e4', '#fff1d7', '#c8b4e5']);
+    expect(liquidGradientPoster.palette).toEqual(['#ff66cc', '#72a1b2', '#ede8e0', '#7ab596']);
+    const css = readFileSync(path.join(projectRoot, 'src/app/globals.css'), 'utf8');
+    const tokens = ['pink', 'blue', 'cream', 'green'].map((name) =>
+      css.match(new RegExp('--color-' + name + ':\\s*(#[0-9a-f]{6})\\b', 'i'))?.[1].toLowerCase(),
+    );
+    expect(liquidGradientPoster.palette).toEqual(tokens);
     expect(liquidGradientPoster.colorSpace).toBe('srgb');
     expect(liquidGradientPoster.portrait.width / liquidGradientPoster.portrait.height).toBe(1 / 4);
     expect(liquidGradientPoster.landscape.width / liquidGradientPoster.landscape.height).toBe(4);

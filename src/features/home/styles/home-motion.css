@@ -1,17 +1,22 @@
-/* CÉLULA Home — liquid gradient and persistent brand identity.
+/* CÈL·LULA Home — liquid gradient and persistent brand identity.
    Original artwork is used only for the wordmark and compact symbol. */
 /* Stable layout box: center the original image independently of GSAP transforms. */
-.home-identity { position: fixed; inset: 0; z-index: 110; pointer-events: none; }
+.home-identity { position: fixed; inset: 0; z-index: 110; pointer-events: none; transition: opacity .3s ease; }
+/* While the menu is open the identity gives way to the links. The page behind
+   (and the Home gradient, when it is the current section) is left untouched. */
+html[data-home-menu] .home-identity { opacity: 0; }
 .home-identity__wordmark-anchor { position: absolute; inset: 0; display: grid; place-items: center; }
 .home-identity__wordmark { width: min(76vw, 670px); max-width: calc(100vw - 2rem); transform-origin: center; will-change: opacity, transform; }
-.home-identity__heading { margin: 0; line-height: 0; }
-.home-identity__heading img { display: block; width: 100%; height: auto; object-fit: contain; filter: brightness(0) saturate(100%) invert(37%) sepia(8%) saturate(1279%) hue-rotate(194deg) brightness(97%) contrast(90%); }
+.home-identity__heading { margin: 0; line-height: 0; background-color: var(--color-cream); -webkit-mask: url('/home/celula-wordmark.png') center / 100% 100% no-repeat; mask: url('/home/celula-wordmark.png') center / 100% 100% no-repeat; }
+.home-identity__heading img { display: block; width: 100%; height: auto; object-fit: contain; opacity: 0; }
 .home-identity__symbol { position: absolute; top: max(1.2rem, env(safe-area-inset-top)); left: clamp(1rem, 4vw, 3rem); width: clamp(3.25rem, 6.6vw, 5.5rem); opacity: 0; transform-origin: center; will-change: opacity, transform; }
-.home-identity__symbol img { display: block; width: 100%; height: auto; filter: brightness(0) saturate(100%) invert(37%) sepia(8%) saturate(1279%) hue-rotate(194deg) brightness(97%) contrast(90%); }
+.home-identity__symbol::before { content: ''; position: absolute; z-index: -1; inset: -.35rem; background: var(--color-black); }
+.home-identity__symbol-mark { display: block; line-height: 0; background-color: var(--color-cream); -webkit-mask: url('/home/celula-symbol.png') center / 100% 100% no-repeat; mask: url('/home/celula-symbol.png') center / 100% 100% no-repeat; }
+.home-identity__symbol img { display: block; width: 100%; height: auto; opacity: 0; }
 
 /* Only colors: no hand image, image backgrounds, or texture overlays. */
-.home-hero { isolation: isolate; background: #ede8e0; }
-.home-hero__scroll { z-index: 20; color: #5b5e74; text-shadow: 0 1px 12px rgba(255,255,255,.7); }
+.home-hero { isolation: isolate; background: transparent; }
+.home-hero__scroll { z-index: 20; color: var(--color-black); }
 /* The independent LiquidGradient component owns rendering and its fallback. */
 .home-atmosphere {
   position: absolute;

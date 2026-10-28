@@ -48,10 +48,28 @@ describe('ContactSection', () => {
     expect(section).toHaveAttribute('id', 'contacto');
     expect(within(section).getByRole('heading', { name: contactCopy.introTitle, level: 2 })).toBeInTheDocument();
     expect(within(section).getByText(contactCopy.narrative)).toBeInTheDocument();
-    expect(screen.getByRole('tablist', { name: contactCopy.navigationLabel })).toBeInTheDocument();
+    expect(screen.getByRole('tablist', { name: 'Elige una forma de conectar con CÈL·LULA' })).toBeInTheDocument();
     expect(screen.getAllByRole('tab')).toHaveLength(3);
     for (const tab of screen.getAllByRole('tab')) expect(tab).toHaveAttribute('type', 'button');
     expectSelected(0);
+  });
+
+  it('draws every directional mark as a decorative SVG instead of Unicode arrows', () => {
+    render(<ContactSection />);
+    const section = screen.getByRole('region', { name: contactCopy.introTitle });
+    const title = within(section).getByRole('heading', { level: 2 });
+
+    // The title keeps its readable text; its accent arrow is an SVG (title lines are aria-hidden).
+    expect(title.querySelector('svg[data-arrow="down-right"]')).toHaveAttribute('aria-hidden', 'true');
+    expect(title).toHaveAccessibleName(contactCopy.introTitle);
+    expect(section.querySelector('a[href="#inicio"] svg[data-arrow="up"]')).toHaveAttribute('aria-hidden', 'true');
+    expect(within(section).getByRole('link', { name: contactCopy.backToTop })).toBeInTheDocument();
+    expect(section.querySelectorAll('svg[data-arrow]').length).toBeGreaterThanOrEqual(3);
+    for (const svg of section.querySelectorAll('svg[data-arrow]')) {
+      expect(svg).toHaveAttribute('aria-hidden', 'true');
+      expect(svg).toHaveAttribute('focusable', 'false');
+    }
+    expect(section.textContent).not.toMatch(/[\u2190-\u21FF\uFE0F]/u);
   });
 
   it('includes legible active content and native controls in its first server render', () => {

@@ -1,5 +1,12 @@
-# Keep proprietary font files out of Git until their web license is verified.
+# Keep unused font files out of Git; include only the seven official faces in use.
 *.otf
 *.woff
 *.woff2
 *.ttf
+!acid-grotesk/acid-grotesk-regular.otf
+!acid-grotesk/acid-grotesk-medium.otf
+!acid-grotesk/acid-grotesk-bold.otf
+!basis-grotesque-mono/Basis Grotesque Mono Pro Regular.otf
+!basis-grotesque-mono/Basis Grotesque Mono Pro Regular Italic.otf
+!basis-grotesque-mono/Basis Grotesque Mono Pro Medium.otf
+!basis-grotesque-mono/Basis Grotesque Mono Pro Medium Italic.otf

@@ -7,7 +7,7 @@
 - `src/shared/ui`: componentes visuales reutilizables sin lógica de negocio.
 - `src/shared/lib`: funciones puras y utilidades.
 - `src/shared/config`: configuración estática del sitio.
-- `src/shared/motion`: abstracciones compartidas de animación (GSAP).
+- Los hooks de animación GSAP se mantienen junto a los componentes de cada feature.
 - Importaciones absolutas mediante el alias `@/*`.
 - Server Components por defecto; `use client` solo donde haya interacción o APIs del navegador.
 

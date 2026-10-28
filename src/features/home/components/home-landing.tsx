@@ -1,12 +1,16 @@
 import Link from 'next/link';
 import { AboutSection } from '@/features/about';
 import { ContactSection } from '@/features/contact';
-import { ExhibitionSlider } from '@/features/exhibitions';
+import { ExhibitionCardSwap } from '@/features/exhibitions';
 import { demoArtworks } from '@/features/exhibitions/data/demo-artworks';
-import '@/features/exhibitions/styles/exhibition.css';
+import { exhibitionCopy } from '@/features/exhibitions/data/exhibition-copy';
+import { ArrowIcon } from '@/shared/ui/arrow-icon';
+import { ContinuousBackground } from '@/shared/ui/continuous-background/continuous-background';
+import { homeCopy } from '../data/home-copy';
+import '@/features/exhibitions/styles/exhibition-card-swap.css';
 import { LaboratorySection } from '@/features/laboratory';
 import '@/features/laboratory/styles/laboratory.css';
-import '@/features/laboratory/styles/laboratory-carousel.css';
+import '@/features/laboratory/styles/laboratory-circular-carousel.css';
 import '@/features/laboratory/styles/laboratory-detail.css';
 import { HomeNavigation } from './home-navigation';
 import { HomeIdentity } from './home-identity';
@@ -16,24 +20,27 @@ export function HomeLanding() {
     <>
       <HomeNavigation />
       <HomeIdentity />
+      <ContinuousBackground />
       <main id="inicio" className="home-page">
-        <section className="home-hero" aria-label="Portada de Célula">
+        <section className="home-hero" aria-label={`Portada de ${homeCopy.name}`}>
           <HomeAtmosphere />
-          <a href="#laboratorio" className="home-hero__scroll font-mono font-normal">DESLIZA PARA DESCUBRIR <span aria-hidden="true">↓</span></a>
+          <a href="#laboratorio" className="home-hero__scroll font-mono font-medium">{homeCopy.scrollLabel} <span><ArrowIcon direction="down" /></span></a>
         </section>
         <AboutSection />
         <section id="exposiciones" className="home-featured" aria-labelledby="home-featured-title">
-          <p className="home-featured__eyebrow font-mono font-normal">EXPOSICIONES / ARTISTAS</p>
-          <h2 id="home-featured-title">DESTACADO<br />DEL MES</h2>
-          <ExhibitionSlider artworks={demoArtworks} />
-          <Link className="home-link home-link--light font-mono font-normal" href="/exposiciones">VER MÁS <span aria-hidden="true">↗</span></Link>
+          <p className="home-featured__eyebrow font-mono font-normal">{homeCopy.exhibitionsLabel}</p>
+          <h2 id="home-featured-title">{exhibitionCopy.title}</h2>
+          <p className="home-featured__description">{exhibitionCopy.description}</p>
+          <p className="home-featured__notice">{exhibitionCopy.demoLabel}</p>
+          <ExhibitionCardSwap artworks={demoArtworks} headingLevel={3} />
+          <Link className="home-link home-link--light font-mono font-medium" href="/exposiciones">{homeCopy.exhibitionsLink} <span><ArrowIcon direction="up-right" /></span></Link>
         </section>
         <LaboratorySection />
-        <ContactSection />
+        {/* <ContactSection /> */}
         <footer className="home-footer font-mono font-normal">
-          <span>CÉLULA © {new Date().getFullYear()}</span>
-          <a href="#contacto">ACTIVAR UNA CONEXIÓN ↗</a>
-          <span id="nosotros">ARTE / CULTURA / EXPERIMENTACIÓN</span>
+          <span>{homeCopy.name} © {new Date().getFullYear()}</span>
+          <a href="#contacto">{homeCopy.contactLink} <ArrowIcon direction="up-right" /></a>
+          <span id="nosotros">{homeCopy.principles}</span>
         </footer>
       </main>
     </>

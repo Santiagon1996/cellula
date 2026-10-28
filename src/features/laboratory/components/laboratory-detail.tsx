@@ -64,14 +64,14 @@ export function LaboratoryDetail({ selection, onClosed }: LaboratoryDetailProps)
         <div className="laboratory-detail__hero-editorial" data-lab-editorial>
           <p className="laboratory-detail__category font-mono font-normal">{laboratory.category}</p>
           <h2 id={titleId}>{laboratory.title}</h2>
-          <p className="laboratory-detail__standfirst">{laboratory.shortDescription}</p>
+          <p className="laboratory-detail__standfirst font-mono font-normal">{laboratory.shortDescription}</p>
           {laboratory.temporary && <p className="laboratory-detail__temporary font-mono font-normal">ESTUDIO TEMPORAL</p>}
         </div>
       </header>
 
       <div className="laboratory-detail__editorial" data-lab-editorial>
         <section className="laboratory-detail__introduction" aria-label="Sobre el laboratorio">
-          <p className="laboratory-detail__description">{laboratory.description}</p>
+          <p className="laboratory-detail__description font-mono font-normal">{laboratory.description}</p>
           {(laboratory.year || laboratory.credits?.length) && (
             <dl className="laboratory-detail__credits font-mono font-normal">
               {laboratory.year && <div><dt>A&Ntilde;O</dt><dd>{laboratory.year}</dd></div>}
@@ -91,7 +91,7 @@ export function LaboratoryDetail({ selection, onClosed }: LaboratoryDetailProps)
           </section>
         )}
         <footer className="laboratory-detail__footer font-mono font-normal">
-          <span>C&Eacute;LULA / LABORATORIO</span>
+          <span>CÈL·LULA / LABORATORIO</span>
           <span>{laboratory.category}</span>
         </footer>
       </div>
