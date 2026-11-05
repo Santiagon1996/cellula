@@ -82,6 +82,38 @@ export function HomeNavigation() {
   const restoreDestinationRef = useRef<(() => void) | undefined>(undefined);
   const [phase, setPhase] = useState<NavigationPhase>('closed');
   const [expanded, setExpanded] = useState(false);
+  const [symbolsLoaded, setSymbolsLoaded] = useState(false);
+
+  useEffect(() => {
+    const stylesheet = document.getElementById('material-symbols-outlined');
+    if (!(stylesheet instanceof HTMLLinkElement) || !('fonts' in document)) return;
+
+    let active = true;
+    const loadSymbols = () => {
+      void document.fonts.load('400 32px "Material Symbols Outlined"', 'menu close')
+        .then((loadedFonts) => {
+          if (!active) return;
+          if (loadedFonts.length > 0) setSymbolsLoaded(true);
+          else console.error('The Material Symbols Outlined font loaded without the requested icons.');
+        })
+        .catch((error: unknown) => {
+          if (active) console.error('Failed to load the Material Symbols Outlined font.', error);
+        });
+    };
+    const handleStylesheetError = () => {
+      console.error('Failed to load the Google Fonts stylesheet for Material Symbols Outlined.');
+    };
+
+    stylesheet.addEventListener('error', handleStylesheetError, { once: true });
+    if (stylesheet.sheet) loadSymbols();
+    else stylesheet.addEventListener('load', loadSymbols, { once: true });
+
+    return () => {
+      active = false;
+      stylesheet.removeEventListener('load', loadSymbols);
+      stylesheet.removeEventListener('error', handleStylesheetError);
+    };
+  }, []);
 
   const onPhaseChange = useCallback((nextPhase: NavigationPhase) => {
     // An old completion must not unlock a menu that has just reversed direction.
@@ -186,21 +218,16 @@ export function HomeNavigation() {
       <button
         ref={buttonRef}
         type="button"
-        className={`${styles.toggle} font-mono font-medium`}
+        className={styles.toggle}
         data-open={expanded}
+        data-symbols-ready={symbolsLoaded}
         aria-expanded={expanded}
         aria-controls="home-navigation-panel"
         aria-label={expanded ? 'Cerrar menú' : 'Abrir menú'}
         onClick={() => requestOpen(!desiredOpenRef.current)}
       >
-        <span className={styles.toggleLabel} aria-hidden="true">
-          <span data-state="closed">MENÚ</span>
-          <span data-state="open">CERRAR</span>
-        </span>
-        <span className={styles.toggleMark} aria-hidden="true">
-          <span data-nav-toggle-stroke />
-          <span data-nav-toggle-stroke />
-        </span>
+        <span className={styles.toggleIcon} data-nav-icon data-state="closed" aria-hidden="true">menu</span>
+        <span className={styles.toggleIcon} data-nav-icon data-state="open" aria-hidden="true">close</span>
       </button>
       <div
         ref={panelRef}

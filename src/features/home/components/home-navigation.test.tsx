@@ -93,6 +93,22 @@ afterEach(() => {
 });
 
 describe('HomeNavigation', () => {
+  it('renders the Material Symbols labels without changing the accessible button name', () => {
+    const { container } = renderHome();
+    const toggle = screen.getByRole('button', { name: 'Abrir menú' });
+    const icons = Array.from(container.querySelectorAll('[data-nav-icon]'));
+
+    expect(icons.map((icon) => icon.textContent)).toEqual(['menu', 'close']);
+    expect(icons.every((icon) => icon.getAttribute('aria-hidden') === 'true')).toBe(true);
+    expect(toggle).toHaveAttribute('aria-controls', 'home-navigation-panel');
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(toggle).not.toHaveTextContent('MENÚ');
+    expect(toggle).not.toHaveTextContent('CERRAR');
+
+    fireEvent.click(toggle);
+    expect(screen.getByRole('button', { name: 'Cerrar menú' })).toHaveAttribute('aria-expanded', 'true');
+  });
+
   it('keeps the closed menu hidden and exposes the existing destinations when opened', () => {
     const { container } = renderHome();
     const toggle = screen.getByRole('button', { name: 'Abrir menú' });
