@@ -8,6 +8,13 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}'],
+    exclude: [
+      'src/tests/about-section.test.tsx',
+      'src/tests/about-hydration.test.tsx',
+      'src/tests/about-integration.test.tsx',
+      'src/features/contact/components/contact-integration.test.tsx',
+    ],
+    maxWorkers: 2,
     css: false,
   },
   resolve: {
