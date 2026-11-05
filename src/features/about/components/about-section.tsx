@@ -2,8 +2,6 @@
 
 import { useRef } from 'react';
 import { AboutIntro } from './about-intro';
-import { AboutEcosystem } from './about-ecosystem';
-import { AboutFinale } from './about-finale';
 import { useAboutScroll } from '../hooks/use-about-scroll';
 import styles from '../styles/about.module.css';
 

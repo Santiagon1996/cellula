@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { AboutSection } from '@/features/about';
-import { ContactSection } from '@/features/contact';
 import { ExhibitionCardSwap } from '@/features/exhibitions';
 import { demoArtworks } from '@/features/exhibitions/data/demo-artworks';
 import { exhibitionCopy } from '@/features/exhibitions/data/exhibition-copy';
