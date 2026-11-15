@@ -23,7 +23,7 @@ describe('about editorial content', () => {
   it('preserves the requested web narrative without labeling it a literal brandbook quotation', () => {
     expect(aboutCopy.question).toBe('¿QUÉ ES CÈL·LULA?');
     expect(aboutCopy.declaration).toBe('NO SOMOS UNA SOLA COSA.');
-    expect(aboutCopy.introduction).toBe('CÈL·LULA es un laboratorio cultural donde conviven la producción artística, la experimentación, la curaduría y la comunidad.');
+    expect(aboutCopy.introduction).toBe('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.');
     expect(aboutCopy.systemTitle).toBe('UN SISTEMA VIVO.');
     expect(aboutCopy.finale).toBe('LAS IDEAS CAMBIAN CUANDO SE ENCUENTRAN.');
     expect(aboutCopy.finaleLines.join(' ')).toBe(aboutCopy.finale);

@@ -12,6 +12,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="es" className={`${acidGrotesk.variable} ${basisGrotesqueMono.variable}`}>
       <head>
+        {/* Without GSAP, let the cover identity scroll away with the document. */}
+        <noscript>
+          <style>{`.home-identity { position: absolute; bottom: auto; height: 100svh; }`}</style>
+        </noscript>
         {/* eslint-disable-next-line @next/next/google-font-display, @next/next/no-page-custom-font -- Keep the requested Google Fonts URL verbatim in the App Router root layout. */}
         <link
           id="material-symbols-outlined"

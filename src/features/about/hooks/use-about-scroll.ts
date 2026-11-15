@@ -29,12 +29,6 @@ export function useAboutScroll(rootRef: RefObject<HTMLElement | null>) {
       const shapes = root.querySelectorAll<HTMLElement>('[data-about-converge]');
       if (!intro || !declaration || !finale) return;
 
-      const decompose = gsap.timeline({ scrollTrigger: {
-        id: 'about-decompose', trigger: intro, start: 'top 65%', end: 'bottom 30%',
-        scrub: .65, invalidateOnRefresh: true,
-      } });
-      decompose.to(root.querySelector('[data-about-wash]'), { opacity: .12, duration: .65, ease: 'none' }, .35);
-
       // The official Warp Text owns the graphical title. Only its separate
       // HTML fallback receives a small reveal on compact/coarse screens.
       const fallback = root.querySelector('[data-about-title-fallback]');

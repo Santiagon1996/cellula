@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { AboutIntro } from './about-intro';
+import { AboutIdentity } from './about-identity';
 import { useAboutScroll } from '../hooks/use-about-scroll';
 import styles from '../styles/about.module.css';
 
@@ -10,8 +11,9 @@ export function AboutSection() {
   useAboutScroll(rootRef);
 
   return (
-    <section ref={rootRef} id="laboratorio" className={styles.section} aria-labelledby="home-about-title" data-about-section data-chromatic-flow data-editorial-status="pending-validation">
+    <section ref={rootRef} id="laboratorio" className={styles.section} aria-label="Sobre Célula" data-about-section data-chromatic-flow data-editorial-status="pending-validation">
       <AboutIntro />
+      <AboutIdentity />
       {/* <AboutEcosystem />
       <AboutFinale /> */}
     </section>
