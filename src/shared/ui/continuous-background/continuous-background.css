@@ -1,4 +1,5 @@
 .continuous-background {
+  display: none;
   position: fixed;
   z-index: 0;
   inset: 0;
@@ -6,20 +7,71 @@
   pointer-events: none;
 }
 
-.continuous-background__composition {
+/* Keep the static Slate-to-Cream reading surface until the controller is ready. */
+.continuous-background[data-chromatic-motion='true'] {
+  display: block;
+}
+
+.continuous-background[data-chromatic-motion='true'] ~ main [data-chromatic-intro] {
+  background: transparent;
+}
+
+.continuous-background__composition,
+.continuous-background__layer {
   position: absolute;
   inset: 0;
-  background-color: var(--color-cream);
-  background-image:
-    radial-gradient(ellipse 88% 58% at 82% 8%, color-mix(in srgb, var(--color-blue) 36%, transparent), transparent 100%),
-    radial-gradient(ellipse 82% 62% at 16% 78%, color-mix(in srgb, var(--color-green) 42%, transparent), transparent 100%),
-    radial-gradient(ellipse 62% 44% at 52% 46%, color-mix(in srgb, var(--color-pink) 8%, transparent), transparent 100%);
-  opacity: 0;
   pointer-events: none;
 }
 
+.continuous-background__layer {
+  opacity: 0;
+}
+
+.home-atmosphere {
+  --chromatic-edge-fade: 0%;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 calc(100% - var(--chromatic-edge-fade)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 calc(100% - var(--chromatic-edge-fade)),
+    transparent 100%
+  );
+}
+
+.continuous-background__layer--slate {
+  opacity: 1;
+  background-color: #5b5e74;
+}
+
+.continuous-background__layer--hero-overlap {
+  background:
+    radial-gradient(ellipse 120% 105% at 50% 105%, rgba(91, 94, 116, 0.64) 0%, rgba(91, 94, 116, 0.34) 48%, transparent 100%),
+    radial-gradient(ellipse 85% 90% at 0% 42%, rgba(91, 94, 116, 0.24) 0%, transparent 100%),
+    radial-gradient(ellipse 85% 90% at 100% 38%, rgba(91, 94, 116, 0.2) 0%, transparent 100%);
+}
+
+.continuous-background__layer--intro-gradient {
+  background: linear-gradient(
+    180deg,
+    #ede8e0 0%,
+    #ede8e0 24%,
+    rgba(237, 232, 224, 0.72) 52%,
+    rgba(237, 232, 224, 0.24) 74%,
+    #5b5e74 100%
+  );
+}
+
+.continuous-background__layer--cream {
+  background-color: var(--color-cream);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .continuous-background__composition {
-    opacity: 1;
+  .continuous-background {
+    display: none;
   }
 }

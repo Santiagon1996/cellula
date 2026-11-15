@@ -1,15 +1,20 @@
 # About 2.0 — sistema vivo
 
-Trabajo actual en `feature/about`, actualizada por avance rápido al commit de
-Exhibition `e897155425d96de16d3d145fda8b8c5624e63fde`. No se crea una rama adicional.
-El commit de Exhibition se amplió por indicación del usuario; About permanece
-sin commit ni push hasta su revisión.
+En la corrección 02, `AboutSection` presenta la pausa introductoria y la
+composición editorial «¿QUÉ ES CÉLULA?». Esta última reutiliza dos descripciones
+existentes, marcadas para validación editorial; no añade imágenes ni acciones
+sin originales o destinos aprobados.
 
-La composición mantiene los tres actos y el ecosistema React/GSAP. El título
-usa la adaptación identificada de React Bits Warp Text con OGL 1.0.11, importada
-solo al entrar en pantalla en escritorio. El encabezado HTML permanece en SSR,
-móvil, movimiento reducido y fallo de WebGL. Acid Grotesk Bold real debe estar
-cargada antes de crear su textura; no se rasteriza texto en cada frame.
+`ContinuousBackground` coordina el recorrido cromático compartido y
+`AboutIdentity` mantiene la composición tipográfica sobre Cream. `AboutEcosystem`
+y `AboutFinale` se conservan, pero no se montan en esta entrega.
+
+La timeline compartida recibe un progreso manual calculado con la geometría
+del recorrido; no mezcla este control con `scrub` nativo. Solo cuando el
+controlador está listo activa las capas fijas. Sin JavaScript o con movimiento
+reducido, la introducción conserva un gradiente Slate–Cream estático y About
+utiliza la superficie Cream del documento. Sin JavaScript, una regla CSS dentro
+de `noscript` sitúa la identidad en portada y permite leer About sin superposiciones.
 
 Los seis valores oficiales y su agrupación editorial se centralizan en
 `data/about-content.ts`, con procedencia y aprobación pendiente explícitas.

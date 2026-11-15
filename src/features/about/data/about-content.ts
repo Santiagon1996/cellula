@@ -4,6 +4,7 @@ import type { AboutConcept, AboutMaterialItem, AboutValue } from '../types';
 // Editorial approval status is recorded in aboutContentProvenance below.
 export const aboutCopy = {
   question: '¿QUÉ ES CÈL·LULA?',
+  definitionTitle: '¿QUÉ ES CÉLULA?',
   introActLabel: '01 / DESCOMPONER',
   introLabel: 'LA PREGUNTA VIVA',
   introAnnotation: 'UNA PREGUNTA ABIERTA',
@@ -12,7 +13,7 @@ export const aboutCopy = {
   valuesAriaLabel: 'Valores de CÈL·LULA',
   declaration: 'NO SOMOS UNA SOLA COSA.',
   declarationLines: ['NO SOMOS', 'UNA SOLA COSA.'],
-  introduction: 'CÈL·LULA es un laboratorio cultural donde conviven la producción artística, la experimentación, la curaduría y la comunidad.',
+  introduction: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   decomposeTitle: 'UNA IDEA PUEDE TOMAR MUCHAS FORMAS.',
   decomposeDescription: 'Mirar de cerca, separar las partes y encontrar una nueva posibilidad entre ellas.',
   connectTitle: 'CREAR. EXPLORAR. CONECTAR.',
