@@ -9,8 +9,8 @@ vi.mock('@/features/about/hooks/use-ecosystem-motion', () => ({ useEcosystemMoti
 describe('AboutSection', () => {
   it('preserves the about destination and gives each of the three acts an accessible heading', () => {
     const { container } = render(<AboutSection />);
-    const section = container.querySelector<HTMLElement>('#laboratorio');
-    expect(container.querySelectorAll('#laboratorio')).toHaveLength(1);
+    const section = container.querySelector<HTMLElement>('#que-es-celula');
+    expect(container.querySelectorAll('#que-es-celula')).toHaveLength(1);
     expect(section).toHaveAccessibleName(aboutCopy.question);
     expect(container.querySelectorAll('[data-about-act]')).toHaveLength(3);
 

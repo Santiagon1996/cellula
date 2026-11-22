@@ -35,9 +35,9 @@ function renderHome() {
       <div className="home-identity" aria-hidden="true" />
       <main id="inicio">
         <button type="button">Acción de la home</button>
-        <section id="laboratorio">Sobre CÈL·LULA</section>
+        <section id="que-es-celula">Sobre CÈL·LULA</section>
         <section id="exposiciones">Obras destacadas</section>
-        <section id="laboratorios">Laboratorios</section>
+        <section id="laboratorio">Laboratorios</section>
       </main>
     </>,
   );
@@ -133,9 +133,9 @@ describe('HomeNavigation', () => {
     expect(within(navigation).getAllByRole('link')).toHaveLength(4);
     for (const [label, href] of [
       ['HOME', '#inicio'],
-      ['QUÉ ES CÈL·LULA', '#laboratorio'],
+      ['QUÉ ES CÈL·LULA', '#que-es-celula'],
       ['EXPOSICIONES', '#exposiciones'],
-      ['LAB', '#laboratorios'],
+      ['LAB', '#laboratorio'],
     ]) {
       expect(within(navigation).getByRole('link', { name: label })).toHaveAttribute('href', href);
     }
@@ -231,8 +231,8 @@ describe('HomeNavigation', () => {
     expect(document.body.style.overflow).toBe('hidden');
 
     finishMotion('closed');
-    const destination = container.querySelector('#laboratorio');
-    expect(window.location.hash).toBe('#laboratorio');
+    const destination = container.querySelector('#que-es-celula');
+    expect(window.location.hash).toBe('#que-es-celula');
     expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
     expect(destination).toHaveFocus();
     expect(destination).toHaveAttribute('tabindex', '-1');
@@ -252,17 +252,17 @@ describe('HomeNavigation', () => {
     expect(document.body.style.overflow).toBe('hidden');
 
     finishMotion('closed');
-    const destination = container.querySelector('#laboratorios');
-    expect(window.location.hash).toBe('#laboratorios');
+    const destination = container.querySelector('#laboratorio');
+    expect(window.location.hash).toBe('#laboratorio');
     expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
     expect(destination).toHaveFocus();
-    expect(container.querySelector('#laboratorio')).not.toHaveFocus();
+    expect(container.querySelector('#que-es-celula')).not.toHaveFocus();
     expect(document.body.style.overflow).toBe('');
   });
 
   it('preserves a destination’s existing tabindex and permits modified link clicks', () => {
     const { container } = renderHome();
-    const destination = container.querySelector('#laboratorios');
+    const destination = container.querySelector('#laboratorio');
     destination?.setAttribute('tabindex', '2');
     openMenu();
     const link = screen.getByRole('link', { name: 'LAB' });

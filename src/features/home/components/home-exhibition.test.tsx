@@ -4,9 +4,9 @@ import { demoArtworks } from '@/features/exhibitions/data/demo-artworks';
 import { exhibitionCopy } from '@/features/exhibitions/data/exhibition-copy';
 import { HomeLanding } from './home-landing';
 
-vi.mock('@/features/about', () => ({ AboutSection: () => <section id="laboratorio" /> }));
+vi.mock('@/features/about', () => ({ AboutSection: () => <section id="que-es-celula" /> }));
 vi.mock('@/features/contact', () => ({ ContactSection: () => <section id="contacto" /> }));
-vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorios" /> }));
+vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorio" /> }));
 vi.mock('./home-navigation', () => ({ HomeNavigation: () => <nav /> }));
 vi.mock('./home-identity', () => ({ HomeIdentity: () => <h1>CÈL·LULA</h1> }));
 vi.mock('./home-atmosphere', () => ({ HomeAtmosphere: () => <div /> }));

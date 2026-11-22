@@ -5,7 +5,7 @@ import { HomeLanding } from '@/features/home/components/home-landing';
 import { contactCopy, contactPanels } from '../data/contact-content';
 
 vi.mock('../hooks/use-contact-motion', () => ({ useContactMotion: vi.fn() }));
-vi.mock('@/features/about', () => ({ AboutSection: () => <section id="laboratorio">Sobre CÈL·LULA</section> }));
+vi.mock('@/features/about', () => ({ AboutSection: () => <section id="que-es-celula">Sobre CÈL·LULA</section> }));
 vi.mock('@/features/home/components/home-navigation', async () => {
   const { HomeNavigationContent } = await import('@/features/home/components/home-navigation-content');
   return { HomeNavigation: () => <HomeNavigationContent onNavigate={vi.fn()} /> };
@@ -13,12 +13,12 @@ vi.mock('@/features/home/components/home-navigation', async () => {
 vi.mock('@/features/home/components/home-identity', () => ({ HomeIdentity: () => <h1>CÈL·LULA</h1> }));
 vi.mock('@/features/home/components/home-atmosphere', () => ({ HomeAtmosphere: () => <div data-testid="atmosphere" /> }));
 vi.mock('@/features/exhibitions', () => ({ ExhibitionCardSwap: () => <div data-testid="exhibition-card-swap" /> }));
-vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorios">Laboratorios</section> }));
+vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorio">Laboratorios</section> }));
 
 describe('Contact integration in Home', () => {
   it('places one Contact section after Laboratory and before the landing footer', () => {
     const { container } = render(<HomeLanding />);
-    for (const id of ['inicio', 'laboratorio', 'exposiciones', 'laboratorios', 'contacto', 'nosotros']) {
+    for (const id of ['inicio', 'que-es-celula', 'exposiciones', 'laboratorio', 'contacto', 'nosotros']) {
       expect(container.querySelectorAll(`[id="${id}"]`)).toHaveLength(1);
     }
     const ids = Array.from(container.querySelectorAll('[id]'), (element) => element.id);
@@ -27,7 +27,7 @@ describe('Contact integration in Home', () => {
     const main = screen.getByRole('main');
     const children = Array.from(main.children);
     expect(children.map((element) => element.id).filter(Boolean)).toEqual([
-      'laboratorio', 'exposiciones', 'laboratorios', 'contacto',
+      'que-es-celula', 'exposiciones', 'laboratorio', 'contacto',
     ]);
     const contact = screen.getByRole('region', { name: contactCopy.introTitle });
     expect(contact.tagName).toBe('SECTION');

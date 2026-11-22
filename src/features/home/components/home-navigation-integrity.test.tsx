@@ -83,10 +83,13 @@ describe('Navigation integrity of the real landing', () => {
     expectConnectedLinks(container);
     const ids = [...container.querySelectorAll('[id]')].map(element => element.id);
     expect(new Set(ids).size).toBe(ids.length);
-    for (const id of ['inicio', 'laboratorio', 'laboratorios', 'exposiciones']) {
+    for (const id of ['inicio', 'que-es-celula', 'laboratorio', 'exposiciones']) {
       expect(ids).toContain(id);
     }
-    expect(container.querySelector('#contacto, a[href="#contacto"], a[href="/exposiciones"]')).toBeNull();
+    expect(container.querySelector('#contacto, #que-hacemos, #laboratorios, a[href="#contacto"], a[href="/exposiciones"]')).toBeNull();
+    expect(container.querySelector('#que-es-celula')).toHaveAttribute('data-about-section');
+    expect(container.querySelector('#laboratorio [data-image-wheel]')).not.toBeNull();
+    expect(container.querySelector('.home-hero__scroll')).toHaveAttribute('href', '#que-es-celula');
     expect(container.querySelector('[data-featured-exhibition]')).not.toBeNull();
     expect(container.querySelector('.exhibition-card-swap')).not.toBeNull();
     expect(container.querySelector('[data-image-wheel]')).not.toBeNull();
@@ -115,8 +118,8 @@ describe('Navigation integrity of the real landing', () => {
   it('navigates to real sections after closing and restores focus when dismissed', () => {
     const { container } = render(<HomeLanding />);
     for (const [name, hash] of [
-      ['HOME', '#inicio'], ['QUÉ ES CÈL·LULA', '#laboratorio'],
-      ['EXPOSICIONES', '#exposiciones'], ['LAB', '#laboratorios'],
+      ['HOME', '#inicio'], ['QUÉ ES CÈL·LULA', '#que-es-celula'],
+      ['EXPOSICIONES', '#exposiciones'], ['LAB', '#laboratorio'],
     ]) {
       fireEvent.click(screen.getByRole('button', { name: 'Abrir menú' }));
       expect(screen.getByRole('link', { name: 'HOME' })).toHaveFocus();
@@ -132,5 +135,19 @@ describe('Navigation integrity of the real landing', () => {
     fireEvent.keyDown(document, { key: 'Escape' });
     expect(screen.getByRole('button', { name: 'Abrir menú' })).toHaveFocus();
     expect(document.body.style.overflow).not.toBe('hidden');
+  });
+
+  it('does not request scrolling or change the current hash when closing without navigation', () => {
+    render(<HomeLanding />);
+    window.history.replaceState(null, '', '/#exposiciones');
+    for (const close of ['escape', 'toggle']) {
+      fireEvent.click(screen.getByRole('button', { name: 'Abrir menú' }));
+      if (close === 'escape') fireEvent.keyDown(document, { key: 'Escape' });
+      else fireEvent.click(screen.getByRole('button', { name: 'Cerrar menú' }));
+      expect(window.location.hash).toBe('#exposiciones');
+      expect(scrollIntoView).not.toHaveBeenCalled();
+      expect(window.scrollTo).not.toHaveBeenCalled();
+      expect(screen.getByRole('button', { name: 'Abrir menú' })).toHaveFocus();
+    }
   });
 });

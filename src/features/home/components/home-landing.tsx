@@ -23,7 +23,7 @@ export function HomeLanding() {
       <main id="inicio" className="home-page">
         <section className="home-hero" aria-label={`Portada de ${homeCopy.name}`}>
           <HomeAtmosphere />
-          <a href="#laboratorio" className="home-hero__scroll font-mono font-medium">{homeCopy.scrollLabel} <span><ArrowIcon direction="down" /></span></a>
+          <a href="#que-es-celula" className="home-hero__scroll font-mono font-medium">{homeCopy.scrollLabel} <span><ArrowIcon direction="down" /></span></a>
         </section>
         <AboutSection />
         <section id="exposiciones" className="home-featured" aria-labelledby="home-featured-title">

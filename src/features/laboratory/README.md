@@ -1,6 +1,9 @@
 # Laboratory — Spatial Image Wheel
 
-`LaboratorySection` conserva su API pública y el ancla `#laboratorios`.
+`LaboratorySection` conserva su API pública y utiliza el ancla `#laboratorio`.
+About utiliza `#que-es-celula`. El antiguo `#laboratorios` queda obsoleto:
+no se añaden nodos ni redirecciones de compatibilidad. El hash `#laboratorio`
+identifica ahora Laboratory, aunque históricamente identificaba About.
 Monta una única `LaboratoryImageWheel`; la selección y el único detalle
 fullscreen siguen perteneciendo a la sección. Los datos y `LaboratorySelection`
 no cambian. Contact y las fases pospuestas de otras features no se modifican.
