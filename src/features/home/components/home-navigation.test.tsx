@@ -38,7 +38,6 @@ function renderHome() {
         <section id="laboratorio">Sobre CÈL·LULA</section>
         <section id="exposiciones">Obras destacadas</section>
         <section id="laboratorios">Laboratorios</section>
-        <footer id="contacto">Contacto</footer>
       </main>
     </>,
   );
@@ -131,18 +130,19 @@ describe('HomeNavigation', () => {
 
     expect(dialog).toHaveAttribute('aria-modal', 'true');
     expect(dialog).not.toHaveAttribute('inert');
-    expect(within(navigation).getAllByRole('link')).toHaveLength(5);
+    expect(within(navigation).getAllByRole('link')).toHaveLength(4);
     for (const [label, href] of [
       ['HOME', '#inicio'],
       ['QUÉ ES CÈL·LULA', '#laboratorio'],
       ['EXPOSICIONES', '#exposiciones'],
       ['LAB', '#laboratorios'],
-      ['CONTACTO', '#contacto'],
     ]) {
       expect(within(navigation).getByRole('link', { name: label })).toHaveAttribute('href', href);
     }
     expect(within(navigation).getByText('QUÉ HACEMOS').closest('[aria-disabled="true"]')).not.toBeNull();
-    expect(within(navigation).getAllByText('PRÓXIMAMENTE')).toHaveLength(1);
+    expect(within(navigation).getByText('CONTACTO').closest('[aria-disabled="true"]')).not.toBeNull();
+    expect(within(navigation).queryByRole('link', { name: /CONTACTO/ })).not.toBeInTheDocument();
+    expect(within(navigation).getAllByText('PRÓXIMAMENTE')).toHaveLength(2);
     // Arrows are decorative SVGs: they do not change link names nor use Unicode glyphs.
     for (const link of within(navigation).getAllByRole('link')) {
       const arrow = link.querySelector('svg[data-arrow="up-right"]');
@@ -182,7 +182,7 @@ describe('HomeNavigation', () => {
     const { container } = renderHome();
     openMenu();
     const toggle = screen.getByRole('button', { name: 'Cerrar menú' });
-    const lastLink = screen.getByRole('link', { name: 'CONTACTO' });
+    const lastLink = screen.getByRole('link', { name: 'LAB' });
 
     expect(container.querySelector('main')).toHaveAttribute('inert');
     expect(container.querySelector('.home-identity')).toHaveAttribute('inert');
@@ -262,10 +262,10 @@ describe('HomeNavigation', () => {
 
   it('preserves a destination’s existing tabindex and permits modified link clicks', () => {
     const { container } = renderHome();
-    const destination = container.querySelector('#contacto');
+    const destination = container.querySelector('#laboratorios');
     destination?.setAttribute('tabindex', '2');
     openMenu();
-    const link = screen.getByRole('link', { name: 'CONTACTO' });
+    const link = screen.getByRole('link', { name: 'LAB' });
 
     expect(fireEvent.click(link, { ctrlKey: true })).toBe(true);
     expect(motion.setOpen).toHaveBeenCalledTimes(1);
@@ -312,7 +312,7 @@ describe('HomeNavigation', () => {
   it('cancels deferred navigation if the closing menu is reopened', () => {
     renderHome();
     openMenu();
-    fireEvent.click(screen.getByRole('link', { name: 'CONTACTO' }));
+    fireEvent.click(screen.getByRole('link', { name: 'LAB' }));
 
     fireEvent.click(screen.getByRole('button', { name: 'Abrir menú' }));
     finishMotion('open');

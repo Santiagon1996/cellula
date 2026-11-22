@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { AboutSection } from '@/features/about';
 import { ExhibitionCardSwap } from '@/features/exhibitions';
 import { ExhibitionFeatured } from '@/features/exhibitions/components/exhibition-featured';
@@ -35,14 +34,12 @@ export function HomeLanding() {
             <p className="home-featured__description">{exhibitionCopy.description}</p>
             <p className="home-featured__notice">{exhibitionCopy.demoLabel}</p>
             <ExhibitionCardSwap artworks={demoArtworks} headingLevel={3} />
-            <Link className="home-link home-link--light font-mono font-medium" href="/exposiciones">{homeCopy.exhibitionsLink} <span><ArrowIcon direction="up-right" /></span></Link>
           </div>
         </section>
         <LaboratorySection />
         {/* <ContactSection /> */}
         <footer className="home-footer font-mono font-normal">
           <span>{homeCopy.name} © {new Date().getFullYear()}</span>
-          <a href="#contacto">{homeCopy.contactLink} <ArrowIcon direction="up-right" /></a>
           <span id="nosotros">{homeCopy.principles}</span>
         </footer>
       </main>

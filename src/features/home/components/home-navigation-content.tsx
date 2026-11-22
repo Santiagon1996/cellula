@@ -10,7 +10,7 @@ const homeSections = [
   { label: 'EXPOSICIONES', href: '#exposiciones' },
   { label: 'LAB', href: '#laboratorios' },
   { label: 'QUÉ HACEMOS', href: null },
-  { label: 'CONTACTO', href: '#contacto' },
+  { label: 'CONTACTO', href: null },
 ] as const;
 
 export function HomeNavigationContent({ onNavigate }: {
