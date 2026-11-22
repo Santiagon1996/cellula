@@ -42,7 +42,7 @@ async function checkHydration(width: number, reduced: boolean, count: number, st
     await act(async () => { root = hydrateRoot(host, element, { onRecoverableError }); });
     expect([...host.querySelectorAll('*')]).toEqual(nodes);
     [...host.querySelectorAll('img')].forEach((image, index) => expect(image).toBe(images[index]));
-    expect(host.querySelectorAll('#laboratorios')).toHaveLength(1);
+    expect(host.querySelectorAll('#laboratorio')).toHaveLength(1);
     expect(host.querySelectorAll('[data-image-wheel]')).toHaveLength(1);
     if (count) {
       expect(firstMediaSnapshot).toBe(html);

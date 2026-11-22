@@ -6,9 +6,9 @@ import { homeCopy } from '../data/home-copy';
 // Add a destination here when each pending section exists; no placeholder routes.
 const homeSections = [
   { label: 'HOME', href: '#inicio' },
-  { label: `QUÉ ES ${homeCopy.name}`, href: '#laboratorio' },
+  { label: `QUÉ ES ${homeCopy.name}`, href: '#que-es-celula' },
   { label: 'EXPOSICIONES', href: '#exposiciones' },
-  { label: 'LAB', href: '#laboratorios' },
+  { label: 'LAB', href: '#laboratorio' },
   { label: 'QUÉ HACEMOS', href: null },
   { label: 'CONTACTO', href: null },
 ] as const;

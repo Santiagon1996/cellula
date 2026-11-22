@@ -18,7 +18,7 @@ vi.mock('@/shared/ui/continuous-background/continuous-background', () => ({
   ContinuousBackground: () => <div data-testid="continuous-background" aria-hidden="true" />,
 }));
 vi.mock('@/features/exhibitions', () => ({ ExhibitionCardSwap: () => <div data-testid="exhibition-card-swap" /> }));
-vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorios">Laboratorio</section> }));
+vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorio">Laboratorio</section> }));
 
 let hydratedRoot: Root | undefined;
 
@@ -35,7 +35,7 @@ describe('Home introduction', () => {
     const main = screen.getByRole('main');
     const sections = Array.from(main.querySelectorAll<HTMLElement>(':scope > *'));
     const heroIndex = sections.findIndex((section) => section.matches('.home-hero'));
-    const aboutIndex = sections.findIndex((section) => section.id === 'laboratorio');
+    const aboutIndex = sections.findIndex((section) => section.id === 'que-es-celula');
     const exhibitionIndex = sections.findIndex((section) => section.id === 'exposiciones');
     const introduction = sections[aboutIndex]!;
 

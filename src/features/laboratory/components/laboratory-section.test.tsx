@@ -29,8 +29,8 @@ vi.mock('./laboratory-detail', () => ({
 describe('LaboratorySection composition', () => {
   it('has a distinct destination and clearly identifies temporary content', () => {
     const { container } = render(<LaboratorySection />);
-    expect(container.querySelectorAll('#laboratorios')).toHaveLength(1);
-    expect(container.querySelector('#laboratorio')).toBeNull();
+    expect(container.querySelectorAll('#laboratorio')).toHaveLength(1);
+    expect(container.querySelector('#que-es-celula')).toBeNull();
     expect(screen.getByRole('heading', { name: 'LUGAR DE PRUEBA, DESARROLLO Y CRUCE.' })).toHaveAttribute('id', 'laboratory-heading');
     expect(screen.getByText('LAB / MUESTRAS TEMPORALES')).toBeInTheDocument();
     expect(screen.getByTestId('wheel')).toHaveAttribute('data-blocked', 'false');

@@ -9,6 +9,10 @@ sin originales o destinos aprobados.
 `AboutIdentity` mantiene la composición tipográfica sobre Cream. `AboutEcosystem`
 y `AboutFinale` se conservan, pero no se montan en esta entrega.
 
+La sección actual utiliza `#que-es-celula`; menú y CTA del Hero apuntan a ella.
+`#laboratorio` identifica Laboratory y ya no es compatible con su significado
+histórico de About. `#laboratorios` queda obsoleto, sin alias ni redirecciones.
+
 La timeline compartida recibe un progreso manual calculado con la geometría
 del recorrido; no mezcla este control con `scrub` nativo. Solo cuando el
 controlador está listo activa las capas fijas. Sin JavaScript o con movimiento

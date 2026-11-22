@@ -14,7 +14,7 @@ export function LaboratorySection({ laboratories = demoLaboratories }: { laborat
   const temporary = laboratories.length > 0 && laboratories.every((laboratory) => laboratory.temporary);
 
   return (
-    <section id="laboratorios" className="laboratory-section" aria-labelledby="laboratory-heading">
+    <section id="laboratorio" className="laboratory-section" aria-labelledby="laboratory-heading">
       <header className="laboratory-section__header">
         <div>
           <p className="laboratory-section__eyebrow font-mono font-normal">LAB / {temporary ? 'MUESTRAS TEMPORALES' : 'ESTUDIOS ABIERTOS'}</p>

@@ -47,7 +47,7 @@ const viewport = () => screen.getByRole('group', { name: 'Explorar la rueda de i
 describe('Laboratory production image wheel', () => {
   it('mounts exactly one wheel at the existing anchor, without the old carousel or a second detail owner', () => {
     const { container } = render(<LaboratorySection />);
-    expect(container.querySelectorAll('#laboratorios')).toHaveLength(1);
+    expect(container.querySelectorAll('#laboratorio')).toHaveLength(1);
     expect(container.querySelectorAll('[data-image-wheel]')).toHaveLength(1);
     expect(container.querySelectorAll('[data-wheel-viewport]')).toHaveLength(1);
     expect(container.querySelector('.laboratory-circular, [data-spatial-viewport]')).toBeNull();

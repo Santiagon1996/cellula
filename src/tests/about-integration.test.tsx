@@ -11,24 +11,24 @@ vi.mock('@/features/home/components/home-navigation', () => ({ HomeNavigation: (
 vi.mock('@/features/home/components/home-identity', () => ({ HomeIdentity: () => <h1>CÈL·LULA</h1> }));
 vi.mock('@/features/home/components/home-atmosphere', () => ({ HomeAtmosphere: () => <div data-testid="atmosphere" /> }));
 vi.mock('@/features/exhibitions', () => ({ ExhibitionCardSwap: () => <div data-testid="exhibition-card-swap" /> }));
-vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorios">Laboratorios de prueba</section> }));
+vi.mock('@/features/laboratory', () => ({ LaboratorySection: () => <section id="laboratorio">Laboratorios de prueba</section> }));
 
 describe('About integration in Home', () => {
   it('preserves unique destinations and the order of About, Exhibition, Laboratory and Contact', () => {
     const { container } = render(<HomeLanding />);
-    const destinations = ['inicio', 'laboratorio', 'exposiciones', 'laboratorios', 'contacto', 'nosotros'];
+    const destinations = ['inicio', 'que-es-celula', 'exposiciones', 'laboratorio', 'contacto', 'nosotros'];
     for (const id of destinations) expect(container.querySelectorAll(`[id="${id}"]`)).toHaveLength(1);
     const ids = Array.from(container.querySelectorAll('[id]'), (element) => element.id);
     expect(new Set(ids).size).toBe(ids.length);
 
     const main = screen.getByRole('main');
-    const about = container.querySelector<HTMLElement>('#laboratorio')!;
+    const about = container.querySelector<HTMLElement>('#que-es-celula')!;
     expect(about).toHaveAccessibleName(aboutCopy.question);
     expect(within(about).getByRole('heading', { name: aboutCopy.question, level: 2 })).toBeInTheDocument();
     const featureIds = Array.from(main.children, (element) => element.id).filter(Boolean);
-    expect(featureIds).toEqual(['laboratorio', 'exposiciones', 'laboratorios', 'contacto']);
+    expect(featureIds).toEqual(['que-es-celula', 'exposiciones', 'laboratorio', 'contacto']);
     expect(within(container.querySelector<HTMLElement>('#exposiciones')!).getByTestId('exhibition-card-swap')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /DESLIZA PARA DESCUBRIR/ })).toHaveAttribute('href', '#laboratorio');
+    expect(screen.getByRole('link', { name: /DESLIZA PARA DESCUBRIR/ })).toHaveAttribute('href', '#que-es-celula');
     expect(within(about).getByRole('link', { name: aboutCopy.exhibitionLinkLabel })).toHaveAttribute('href', '#exposiciones');
     const exhibition = screen.getByRole('region', { name: 'ARTE EN PROCESO.' });
     expect(within(exhibition).getByRole('link', { name: /EXPLORAR EXPOSICIONES/ })).toHaveAttribute('href', '/exposiciones');
@@ -38,7 +38,7 @@ describe('About integration in Home', () => {
   it('includes About editorial and native controls in the first server rendered markup', () => {
     const markup = renderToString(<HomeLanding />);
     const document = new DOMParser().parseFromString(markup, 'text/html');
-    const about = document.querySelector('#laboratorio')!;
+    const about = document.querySelector('#que-es-celula')!;
     expect(about).not.toBeNull();
     const editorialText = about.textContent?.replace(/\s+/g, ' ');
     for (const copy of [aboutCopy.question, aboutCopy.declaration, aboutCopy.introduction, aboutCopy.finale, ...aboutValues]) {

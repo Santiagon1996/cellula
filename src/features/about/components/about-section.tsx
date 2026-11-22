@@ -11,7 +11,7 @@ export function AboutSection() {
   useAboutScroll(rootRef);
 
   return (
-    <section ref={rootRef} id="laboratorio" className={styles.section} aria-label="Sobre Célula" data-about-section data-chromatic-flow data-editorial-status="pending-validation">
+    <section ref={rootRef} id="que-es-celula" className={styles.section} aria-label="Sobre Célula" data-about-section data-chromatic-flow data-editorial-status="pending-validation">
       <AboutIntro />
       <AboutIdentity />
       {/* <AboutEcosystem />
