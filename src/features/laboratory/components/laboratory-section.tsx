@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { demoLaboratories } from '../data/laboratories';
 import { laboratoryCopy } from '../data/laboratory-copy';
 import type { Laboratory, LaboratorySelection } from '../types';
-import { LaboratoryCircularCarousel } from './laboratory-circular-carousel';
+import { LaboratoryImageWheel } from './laboratory-image-wheel';
 import { LaboratoryDetail } from './laboratory-detail';
 
 export function LaboratorySection({ laboratories = demoLaboratories }: { laboratories?: readonly Laboratory[] }) {
@@ -14,7 +14,7 @@ export function LaboratorySection({ laboratories = demoLaboratories }: { laborat
   const temporary = laboratories.length > 0 && laboratories.every((laboratory) => laboratory.temporary);
 
   return (
-    <section id="laboratorios" className="laboratory-section laboratory-section--circular" aria-labelledby="laboratory-heading">
+    <section id="laboratorios" className="laboratory-section" aria-labelledby="laboratory-heading">
       <header className="laboratory-section__header">
         <div>
           <p className="laboratory-section__eyebrow font-mono font-normal">LAB / {temporary ? 'MUESTRAS TEMPORALES' : 'ESTUDIOS ABIERTOS'}</p>
@@ -28,7 +28,7 @@ export function LaboratorySection({ laboratories = demoLaboratories }: { laborat
           <h3>{laboratoryCopy.statement[0]}<br />{laboratoryCopy.statement[1]}</h3>
           <p className="font-mono font-normal">{laboratoryCopy.invitation}</p>
         </div>
-        <LaboratoryCircularCarousel laboratories={laboratories} blocked={selection !== null} onSelect={select} />
+        <LaboratoryImageWheel laboratories={laboratories} blocked={selection !== null} onSelect={select} />
       </div>
       {selection && <LaboratoryDetail selection={selection} onClosed={close} />}
     </section>

@@ -1,0 +1,42 @@
+.wheel { padding: 3rem 0; background: var(--color-cream); color: var(--color-black); }
+.header { padding-inline: clamp(1.25rem, 5vw, 5rem); }
+.kicker, .hint, .controls, .note, .caption { font-family: var(--font-basis-mono); font-weight: 400; }
+.kicker { font-size: .7rem; letter-spacing: .12em; }
+.header h3 { font-family: var(--font-acid); font-size: clamp(2.75rem, 7vw, 7rem); font-weight: 500; letter-spacing: -.05em; line-height: .95; margin: 1.5rem 0; }
+.hint { font-size: .75rem; line-height: 1.7; max-width: 40rem; min-height: 2.6em; }
+.mobileHint { display: none; }
+.frame { padding-inline: clamp(2rem, 4vw, 4rem); margin-block: 1rem; }
+.clip { position: relative; height: clamp(32rem, 72svh, 47rem); overflow: auto; touch-action: pan-y pinch-zoom; outline-offset: 4px; }
+.clip:focus-visible { outline: 2px solid var(--color-slate); }
+.scene { width: 100%; height: 100%; }
+.ring { display: flex; align-items: center; gap: 1rem; list-style: none; padding: 1.5rem; margin: 0; }
+.card { width: 220px; flex: 0 0 220px; }
+.card button { display: flex; flex-direction: column; width: 100%; height: 100%; border: 0; padding: 0; background: var(--color-cream); color: inherit; text-align: left; cursor: pointer; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.card button:focus-visible { outline: 3px solid var(--color-slate); outline-offset: 4px; }
+.media { position: relative; display: block; width: 100%; aspect-ratio: var(--wheel-ratio); }
+.media img { object-fit: contain; user-select: none; -webkit-user-drag: none; }
+.caption { display: flex; align-items: center; justify-content: space-between; gap: .5rem; height: 44px; padding: .5rem; box-sizing: border-box; font-size: .625rem; line-height: 1.25; }
+.clip[data-enhanced='true'] { overflow: hidden; }
+/* Clip outside the camera. Group opacity/filter/overflow on this chain would flatten the ring. */
+.clip[data-enhanced='true'] .scene { position: relative; perspective-origin: 50% 50%; transform-style: preserve-3d; }
+.clip[data-enhanced='true'] .ring { position: absolute; top: 50%; left: 50%; width: 0; height: 0; padding: 0; display: block; transform-style: preserve-3d; }
+.clip[data-enhanced='true'] .card { position: absolute; top: 0; left: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 8px 20px rgb(29 29 29 / .14); }
+.clip[data-enhanced='true'] .media { flex: 1; min-height: 0; aspect-ratio: auto; }
+.controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-inline: clamp(1.25rem, 5vw, 5rem); font-size: .7rem; line-height: 1.7; }
+.arrows { display: flex; gap: .75rem; }
+.arrows button { width: 48px; height: 48px; border: 1px solid currentColor; border-radius: 50%; font-size: 1.3rem; background: transparent; color: inherit; cursor: pointer; }
+.controls button:focus-visible { outline: 2px solid var(--color-slate); outline-offset: 4px; }
+.explore { display: none; padding: .8rem 1rem; min-height: 48px; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; font: inherit; }
+.explore[aria-pressed='true'] { background: var(--color-black); color: var(--color-cream); }
+.note { font-size: .6875rem; line-height: 1.7; padding-inline: clamp(1.25rem, 5vw, 5rem); max-width: 56rem; margin-top: 1.5rem; }
+.note a { text-decoration: underline; }
+@media (max-width: 767px), (hover: none), (pointer: coarse) {
+  .desktopHint { display: none; }
+  .mobileHint { display: inline; }
+  .explore { display: inline-block; }
+  .clip { height: min(70svh, 44rem); min-height: 29rem; }
+  .clip[data-exploring='true'] { touch-action: pan-x pinch-zoom; }
+  .ring { flex-direction: column; align-items: flex-start; }
+  .clip[data-reduced='true'] { touch-action: pan-y pinch-zoom; }
+  .wheel:has(.clip[data-reduced='true']) .explore { display: none; }
+}

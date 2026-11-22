@@ -11,7 +11,6 @@ import '@/features/exhibitions/styles/exhibition-card-swap.css';
 import '@/features/exhibitions/styles/exhibition-featured.css';
 import { LaboratorySection } from '@/features/laboratory';
 import '@/features/laboratory/styles/laboratory.css';
-import '@/features/laboratory/styles/laboratory-circular-carousel.css';
 import '@/features/laboratory/styles/laboratory-detail.css';
 import { HomeNavigation } from './home-navigation';
 import { HomeIdentity } from './home-identity';

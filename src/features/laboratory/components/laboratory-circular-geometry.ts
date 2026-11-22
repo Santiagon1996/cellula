@@ -41,33 +41,3 @@ export function circularGeometry({ count, cardWidth, cardHeight, gap, orientatio
   const pitch = along + Math.max(0, gap);
   return { step, radius: pitch / (2 * Math.sin(step / 2)) };
 }
-
-export function circularCardPose(index: number, position: number, count: number, geometry: CircularGeometry, orientation: CircularOrientation) {
-  const distance = circularOffset(index, position, count);
-  const angle = distance * geometry.step;
-  const shift = geometry.radius * Math.sin(angle);
-  const depth = geometry.radius * (Math.cos(angle) - 1);
-  const degrees = angle * 180 / Math.PI;
-  const reach = Math.abs(distance);
-  const seam = count / 2;
-  // Fade the furthest card before it crosses the logical wrap seam.
-  const seamFade = count >= 3 ? Math.min(1, Math.max(0, (seam - reach) / .45)) : 1;
-  const facingFade = Math.min(1, Math.max(0, (115 - Math.abs(degrees)) / 30));
-  const opacity = count > 0 ? seamFade * facingFade : 0;
-  return {
-    x: orientation === 'horizontal' ? shift : 0,
-    y: orientation === 'vertical' ? shift : 0,
-    z: depth,
-    rotateX: orientation === 'vertical' ? -degrees * .7 : 0,
-    rotateY: orientation === 'horizontal' ? degrees * .7 : 0,
-    scale: 1 - Math.min(reach, 1) * .045,
-    opacity,
-    zIndex: Math.round(1000 - reach * 100),
-  };
-}
-
-/** Momentum is bounded to less than one additional card after a deliberate drag. */
-export function snapCircularPosition(position: number, velocity = 0) {
-  const momentum = Math.min(.65, Math.max(-.65, velocity * .14));
-  return Math.round(position + momentum);
-}
