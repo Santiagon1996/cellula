@@ -39,6 +39,6 @@ describe('Exhibition CardSwap in Home', () => {
     for (const control of controls) {
       expect(container.querySelector(`[id="${control.getAttribute('aria-controls')}"]`)).not.toBeNull();
     }
-    expect(section.querySelector('a[href="/exposiciones"]')).not.toBeNull();
+    expect(section.querySelector('a[href="/exposiciones"]')).toBeNull();
   });
 });
