@@ -6,11 +6,6 @@ import { HomeLanding } from './home-landing';
 import { aboutCopy } from '@/features/about/data/about-content';
 
 vi.mock('@/features/about/hooks/use-about-scroll', () => ({ useAboutScroll: vi.fn() }));
-vi.mock('@/features/about/components/warp-text/about-warp-title', () => ({
-  AboutWarpTitle: ({ text, id, className }: { text: string; id: string; className: string }) => (
-    <h2 id={id} className={className}>{text}</h2>
-  ),
-}));
 vi.mock('@/features/home/components/home-navigation', () => ({ HomeNavigation: () => <nav aria-label="Navegación de prueba" /> }));
 vi.mock('./home-identity', () => ({ HomeIdentity: () => <div data-testid="home-identity" /> }));
 vi.mock('./home-atmosphere', () => ({ HomeAtmosphere: () => <div data-testid="home-atmosphere" /> }));
