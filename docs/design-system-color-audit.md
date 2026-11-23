@@ -1,5 +1,9 @@
 # CELULA: auditoria cromatica del codigo
 
+> Documento histórico: los valores y consumidores descritos pertenecen a la
+> revisión fechada abajo. No representa necesariamente la implementación vigente.
+> El [README principal](../README.md) documenta el estado actual.
+
 Fecha: 2026-10-12. Rama inspeccionada: `test/integration`.
 
 ## Alcance y procedencia
