@@ -1,5 +1,10 @@
 # Auditoría de dependencias (2026-10-11)
 
+> Documento histórico: los resultados siguientes corresponden al 11 de octubre
+> de 2026 y no acreditan el estado de seguridad actual. Se conservan fechas,
+> alertas y decisiones originales; no se ejecutó una nueva auditoría de paquetes
+> durante Cleanup 04 ni se actualizaron dependencias.
+
 ## Estado comprobado localmente
 
 - `npm audit --omit=dev`: **0 vulnerabilidades reportadas**.

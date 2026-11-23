@@ -1,5 +1,17 @@
 # Contacto — activar una conexión
 
+## Estado actual
+
+Contact está implementado y se conserva completo, incluidos componentes, hooks,
+datos, estilos y tests. Actualmente **no está montado en HomeLanding**.
+CONTACTO aparece como pendiente en el menú, sin enlace activo; el footer tampoco
+ofrece una acción hacia `#contacto`. Su activación corresponde a una fase futura.
+
+## Registro histórico de implementación
+
+Lo que sigue conserva el contexto y las verificaciones de la integración
+original; no describe el montaje vigente de la landing.
+
 Sección integrada después de Laboratory, antes del footer de la landing. El menú
 existente llega a `#contacto`; el footer conserva su destino `#nosotros`. No hay
 IDs duplicados ni una segunda sección provisional de contacto.

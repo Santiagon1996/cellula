@@ -1,5 +1,8 @@
 # CELULA: auditoria del sistema de diseno y tipografia
 
+> Documento histórico: no representa necesariamente la implementación vigente.
+> Para la composición y rutas actuales, consultar el [README principal](../README.md).
+
 > Registro histórico de la integración de Acid Grotesk y Basis Grotesque Mono.
 > La configuración actual carga las familias oficiales mediante `next/font/local`
 > y centraliza los ocho colores del brandbook. Las comprobaciones de este
@@ -215,7 +218,7 @@ italic sin simular el estilo.
 ## B: sistema tipografico
 
 Se localizaron y auditaron los once originales del directorio autorizado
-`C:/Users/Usuario/Downloads/celulaFonts/`. `GlyphTypeface` de Windows y fontkit
+la carpeta local de originales tipográficos `celulaFonts/`. `GlyphTypeface` de Windows y fontkit
 incluido en Next.js confirman Acid 100, 200, 300, 400, 500 y 700 normales, y
 Basis 400/500 normales e italicas. Todos son OpenType OTF con contornos CFF.
 No faltan variantes requeridas para el sistema solicitado.
