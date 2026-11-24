@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { aboutCopy } from '../data/about-content';
+import { aboutContentProvenance, aboutCopy } from '../data/about-content';
 import styles from '../styles/about.module.css';
 
 export function AboutIdentity() {
@@ -10,7 +10,7 @@ export function AboutIdentity() {
       className={styles.identity}
       aria-labelledby={headingId}
       data-about-identity
-      data-editorial-status="pending-validation"
+      data-editorial-status={aboutContentProvenance.activeAboutCopy.approval}
     >
       <h2 id={headingId} className={styles.identityHeading}>{aboutCopy.definitionTitle}</h2>
       <p className={styles.identityParagraph}>{aboutCopy.decomposeDescription}</p>

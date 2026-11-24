@@ -88,7 +88,7 @@ vi.mock('gsap', () => ({
   },
 }));
 
-function renderBackground() {
+function renderBackground(paragraphs = false, identity = false) {
   return render(
     <>
       <section className="home-hero">
@@ -97,8 +97,11 @@ function renderBackground() {
       <ContinuousBackground />
       <section data-about-section data-chromatic-flow>
         <div data-chromatic-intro>
-          <p data-introduction-copy>Lorem ipsum</p>
+          {paragraphs ? <div data-introduction-copy>
+            {Array.from({ length: 5 }, (_, index) => <p key={index} data-introduction-paragraph>Paragraph {index + 1}</p>)}
+          </div> : <p data-introduction-copy>Lorem ipsum</p>}
         </div>
+        {identity && <section data-about-identity><h2>About</h2></section>}
       </section>
     </>,
   );
@@ -137,6 +140,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  vi.restoreAllMocks();
   vi.clearAllMocks();
   if (originalMatchMedia) Object.defineProperty(window, 'matchMedia', originalMatchMedia);
   else Reflect.deleteProperty(window, 'matchMedia');
@@ -145,6 +149,79 @@ afterEach(() => {
 });
 
 describe('ContinuousBackground', () => {
+  it('anchors one shared blend between the measured copy and heading instead of switching section surfaces', () => {
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      let top = 0;
+      let height = 0;
+      if (this.matches('.home-hero')) height = 900;
+      if (this.matches('[data-chromatic-intro]')) { top = 900; height = 1600; }
+      if (this.matches('[data-introduction-copy]')) { top = 1100; height = 1100; }
+      if (this.matches('[data-about-identity] h2')) { top = 2700; height = 100; }
+      return { top, bottom: top + height, height, left: 0, right: 390, width: 390, x: 0, y: top, toJSON: () => ({}) };
+    });
+    const { unmount } = renderBackground(false, true);
+    const gradient = document.querySelector('[data-chromatic-layer="intro-gradient"]');
+    const timeline = motion.timelines[0]!;
+    expect(timeline.set).toHaveBeenCalledWith(gradient, { opacity: 1 }, 0);
+    expect(motion.set).toHaveBeenCalledWith(gradient, {
+      opacity: 1,
+      '--chromatic-transition-start': '2260px',
+      '--chromatic-transition-end': '2640px',
+    });
+    expect(timeline.fromTo).toHaveBeenCalledWith(gradient, {
+      '--chromatic-transition-start': '2260px',
+      '--chromatic-transition-end': '2640px',
+    }, {
+      '--chromatic-transition-start': '-440px',
+      '--chromatic-transition-end': '-60px',
+      duration: 1, immediateRender: false,
+    }, 0);
+    expect(motion.triggers[0]!.options).toMatchObject({ endTrigger: document.querySelector('[data-about-identity] h2'), end: 'top top' });
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 2000 });
+    motion.triggers[0]!.options.onUpdate({ progress: .9 });
+    expect(timeline.progress).toHaveBeenLastCalledWith(2000 / 2700);
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 1000 });
+    motion.triggers[0]!.options.onUpdate({ progress: .1 });
+    expect(timeline.progress).toHaveBeenLastCalledWith(1000 / 2700);
+    expect(motion.triggers).toHaveLength(1);
+    unmount();
+    expect(motion.triggers[0]!.kill).toHaveBeenCalledOnce();
+  });
+
+  it('lets long copy scroll naturally and holds each paragraph until its last line leaves the reading area', () => {
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      let top = 0;
+      let height = 0;
+      if (this.matches('.home-hero')) height = 900;
+      if (this.matches('[data-chromatic-intro]')) { top = 900; height = 2100; }
+      if (this.matches('[data-introduction-copy]')) { top = 1100; height = 1700; }
+      if (this.matches('[data-introduction-paragraph]')) { top = 1100 + Array.from(this.parentElement!.children).indexOf(this) * 340; height = 280; }
+      return { top, bottom: top + height, height, left: 0, right: 390, width: 390, x: 0, y: top, toJSON: () => ({}) };
+    });
+    const { unmount } = renderBackground(true);
+    const viewport = window.innerHeight;
+    const timeline = motion.timelines[0]!;
+    const paragraphs = document.querySelectorAll('[data-introduction-paragraph]');
+    for (const [index, paragraph] of Array.from(paragraphs).entries()) {
+      const top = 1100 + index * 340;
+      const reveal = timeline.fromTo.mock.calls.find(([target]) => target === paragraph)!;
+      const fade = timeline.to.mock.calls.find(([target]) => target === paragraph)!;
+      const revealEnd = reveal[3] + reveal[2].duration;
+      expect(revealEnd * 3000).toBeCloseTo(top - viewport * .78);
+      expect(fade[2] * 3000).toBeCloseTo(top + 280 - viewport * .16);
+      expect(fade[2]).toBeGreaterThan(revealEnd);
+      expect(fade[1].opacity).toBe(0);
+    }
+    expect(timeline.fromTo.mock.calls.some(([target]) => target === document.querySelector('[data-introduction-copy]'))).toBe(false);
+    const refresh = motion.addEventListener.mock.calls[0]![1];
+    refresh();
+    refresh();
+    expect(timeline.clear).toHaveBeenCalledTimes(3);
+    expect(motion.triggers).toHaveLength(1);
+    unmount();
+    expect(motion.triggers[0]!.kill).toHaveBeenCalledOnce();
+  });
+
   it('precomposes the Hero overlap, vertical introduction gradient, and Cream finish', () => {
     renderBackground();
 

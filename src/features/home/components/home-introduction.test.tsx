@@ -3,7 +3,7 @@ import { hydrateRoot, type Root } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { HomeLanding } from './home-landing';
-import { aboutCopy } from '@/features/about/data/about-content';
+import { aboutIntroductionParagraphs } from '@/features/about/data/about-content';
 
 vi.mock('@/features/about/hooks/use-about-scroll', () => ({ useAboutScroll: vi.fn() }));
 vi.mock('@/features/home/components/home-navigation', () => ({ HomeNavigation: () => <nav aria-label="Navegación de prueba" /> }));
@@ -37,7 +37,12 @@ describe('Home introduction', () => {
     expect(screen.getByTestId('continuous-background')).toBeInTheDocument();
     expect(heroIndex).toBeLessThan(aboutIndex);
     expect(aboutIndex).toBeLessThan(exhibitionIndex);
-    expect(within(introduction).getByText(aboutCopy.introduction)).toBeVisible();
+    const copy = introduction.querySelector('[data-introduction-copy]')!;
+    expect(copy.querySelectorAll('p')).toHaveLength(5);
+    for (const paragraph of aboutIntroductionParagraphs) {
+      expect(within(introduction).getByText(paragraph)).toBeVisible();
+    }
+    expect(Array.from(copy.querySelectorAll('p'), paragraph => paragraph.textContent)).toEqual([...aboutIntroductionParagraphs]);
     expect(introduction.querySelector('[data-chromatic-intro]')).toBeInTheDocument();
   });
 
@@ -51,7 +56,7 @@ describe('Home introduction', () => {
       hydratedRoot = hydrateRoot(container, <HomeLanding />, { onRecoverableError });
     });
 
-    expect(container.querySelector('[data-introduction-copy]')?.textContent).toBe(aboutCopy.introduction);
+    expect(Array.from(container.querySelectorAll('[data-introduction-copy] p'), paragraph => paragraph.textContent)).toEqual([...aboutIntroductionParagraphs]);
     expect(onRecoverableError).not.toHaveBeenCalled();
     container.remove();
   });

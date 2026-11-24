@@ -1,7 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { aboutConcepts, aboutContentProvenance, aboutCopy, aboutMaterial, aboutValues } from '@/features/about/data/about-content';
+import { aboutConcepts, aboutContentProvenance, aboutCopy, aboutIntroductionParagraphs, aboutMaterial, aboutValues } from '@/features/about/data/about-content';
 
 describe('about editorial content', () => {
+  it('preserves the complete approved introduction as four paragraphs and an independent closing', () => {
+    expect(aboutIntroductionParagraphs).toEqual([
+      'Nace de la experiencia de transitar distintos ámbitos académicos/creativos- la arquitectura, el tatuaje y las artes visuales- y detectar así necesidades intrínsecas a ellos.',
+      'Desde las artes visuales; la materialidad y la relación directa con el público forman parte natural del hacer.',
+      'Desde la arquitectura, aparece una mirada estructural: la necesidad de pensar cómo se organizan los espacios, cómo se integran las partes y cómo una lógica clara puede sostener un sistema en el tiempo.',
+      'Con el tiempo, se hace evidente que esa integración no sucede de manera aislada. Requiere una estructura que permita articular distintas prácticas sin diluirlas, y una dirección que dé coherencia al conjunto.',
+      'CÈL·LULA surge como la búsqueda de ese equilibrio.',
+    ]);
+    expect(aboutIntroductionParagraphs.join(' ')).toBe(aboutCopy.introduction);
+  });
   it('provides three unique concepts in the order used by the initial experience', () => {
     expect(aboutConcepts.map(({ id, label, number }) => ({ id, label, number }))).toEqual([
       { id: 'crear', label: 'CREAR', number: '01' },
@@ -23,7 +33,13 @@ describe('about editorial content', () => {
   it('preserves the requested web narrative without labeling it a literal brandbook quotation', () => {
     expect(aboutCopy.question).toBe('¿QUÉ ES CÈL·LULA?');
     expect(aboutCopy.declaration).toBe('NO SOMOS UNA SOLA COSA.');
-    expect(aboutCopy.introduction).toBe('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.');
+    expect(aboutCopy.introduction).toMatch(/^Nace de la experiencia de transitar distintos ámbitos/);
+    expect(aboutCopy.introduction.split('CÈL·LULA surge como la búsqueda de ese equilibrio.')).toHaveLength(2);
+    expect(aboutCopy.introduction).not.toMatch(/Lorem ipsum/);
+    expect(aboutCopy.definitionTitle).toBe('¿QUÉ ES CÈL·LULA?');
+    expect(aboutCopy.decomposeDescription).toContain('la producción artística y la experimentación conviven. Un entorno vivo');
+    expect(aboutCopy.connectDescription).toBe('Creemos en el valor del hacer, en la construcción colectiva y en una forma de crear que evoluciona constantemente junto a quienes la habitan.');
+    expect(aboutContentProvenance.activeAboutCopy.approval).toBe('user-approved');
     expect(aboutCopy.systemTitle).toBe('UN SISTEMA VIVO.');
     expect(aboutCopy.finale).toBe('LAS IDEAS CAMBIAN CUANDO SE ENCUENTRAN.');
     expect(aboutCopy.finaleLines.join(' ')).toBe(aboutCopy.finale);

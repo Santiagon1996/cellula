@@ -6,13 +6,13 @@ import { aboutCopy } from '../data/about-content';
 vi.mock('../hooks/use-about-scroll', () => ({ useAboutScroll: vi.fn() }));
 
 describe('About identity composition', () => {
-  it('follows the introduction with the requested heading and existing provisional copy', () => {
+  it('follows the introduction with the approved identity copy without activating future sections', () => {
     const { container } = render(<AboutSection />);
     const introduction = container.querySelector('[data-chromatic-intro]')!;
     const identity = container.querySelector<HTMLElement>('[data-about-identity]')!;
 
     expect(introduction.compareDocumentPosition(identity) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(identity).toHaveAttribute('data-editorial-status', 'pending-validation');
+    expect(identity).toHaveAttribute('data-editorial-status', 'user-approved');
     expect(within(identity).getByRole('heading', { name: aboutCopy.definitionTitle, level: 2 })).toBeInTheDocument();
     expect(within(identity).getByText(aboutCopy.decomposeDescription)).toBeInTheDocument();
     expect(within(identity).getByText(aboutCopy.connectDescription)).toBeInTheDocument();

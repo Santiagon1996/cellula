@@ -16,6 +16,10 @@
   background: transparent;
 }
 
+.continuous-background[data-chromatic-motion='true'] ~ main [data-about-identity] {
+  background: transparent;
+}
+
 .continuous-background__composition,
 .continuous-background__layer {
   position: absolute;
@@ -58,11 +62,8 @@
 .continuous-background__layer--intro-gradient {
   background: linear-gradient(
     180deg,
-    #ede8e0 0%,
-    #ede8e0 24%,
-    rgba(237, 232, 224, 0.72) 52%,
-    rgba(237, 232, 224, 0.24) 74%,
-    #5b5e74 100%
+    rgba(237, 232, 224, 0) var(--chromatic-transition-start, 100vh),
+    var(--color-cream) var(--chromatic-transition-end, 100vh)
   );
 }
 

@@ -17,15 +17,16 @@
 .visuallyHidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 .intro, .ecosystem, .finale { position: relative; isolation: isolate; padding-inline: clamp(1.25rem, 4vw, 4rem); }
-.intro { display: grid; place-items: center; min-height: 180svh; overflow: clip; padding-block: max(5.5rem, 14svh) 4rem; background: var(--about-surface); }
-.intro[data-chromatic-intro] { background: linear-gradient(180deg, var(--color-slate) 0%, var(--color-slate) 76%, var(--color-cream) 100%); }
+.intro { display: grid; place-items: center; min-height: 100svh; padding-block: max(5.5rem, 18svh) 12svh; background: var(--about-surface); }
+.intro[data-chromatic-intro] { background: linear-gradient(180deg, var(--color-slate) 0%, var(--color-slate) calc(100% - 12svh), var(--color-cream) 100%); }
 .actLabel { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .65rem 1.25rem; max-width: 90rem; margin-inline: auto; padding-block: 1rem; border-top: 1px solid currentColor; font-family: var(--font-basis-mono); font-size: .62rem; font-weight: 400; line-height: 1.5; }
 .actLabel > span:last-child { max-width: 18rem; }
 .questionStage { position: relative; display: flex; flex-direction: column; justify-content: center; min-height: 72svh; max-width: 90rem; margin-inline: auto; padding-block: 3.5rem 2rem; }
 .introAnnotation, .scrollNote, .declarationIndex, .valuesLabel, .conceptNumber, .nodeNumber, .organismCaption, .finaleKicker { font-family: var(--font-basis-mono); font-size: .62rem; font-weight: 400; line-height: 1.6; }
 .decomposeDescription, .ecosystemHint, .conceptDescription, .finaleDescription { font-family: var(--font-basis-mono); font-weight: 400; }
-.introParagraph { width: min(100%, 48rem); margin: 0 auto; color: var(--color-cream); font-family: var(--font-acid); font-size: clamp(1.25rem, 5vw, 1.5rem); font-weight: 400; line-height: 1.45; text-align: center; }
-.identity { position: relative; display: grid; align-content: center; min-height: 100svh; padding: clamp(4.5rem, 10svh, 8rem) clamp(1.25rem, 6vw, 5rem); color: var(--color-black); }
+.introParagraph { display: flex; flex-direction: column; gap: 1.2em; width: min(100%, 46ch); margin: 0 auto; color: var(--color-cream); font-family: var(--font-acid); font-size: clamp(1.25rem, 5vw, 1.5rem); font-weight: 400; line-height: 1.55; text-align: center; }
+.introClosing { padding-top: .6em; }
+.identity { position: relative; display: grid; align-content: center; min-height: 100svh; padding: clamp(4.5rem, 10svh, 8rem) clamp(1.25rem, 6vw, 5rem); color: var(--color-black); background: var(--about-surface); }
 .identityHeading { max-width: 16ch; margin: 0 auto clamp(3rem, 9svh, 7rem) !important; color: var(--color-blue); font-family: var(--font-acid); font-size: clamp(3.5rem, 12vw, 9rem); font-weight: 500; letter-spacing: -.06em; line-height: .92; text-align: center; }
 .identityParagraph { width: min(100%, 42rem); margin-inline: auto !important; color: var(--color-black); font-family: var(--font-basis-mono); font-size: clamp(1rem, 1.3vw, 1.125rem); font-weight: 400; line-height: 1.7; text-align: center; text-transform: uppercase; }
 .identityParagraphSecondary { margin-top: clamp(2.5rem, 8svh, 6rem) !important; }

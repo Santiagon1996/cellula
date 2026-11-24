@@ -1,10 +1,18 @@
 import type { AboutConcept, AboutMaterialItem, AboutValue } from '../types';
 
+export const aboutIntroductionParagraphs = [
+  'Nace de la experiencia de transitar distintos ámbitos académicos/creativos- la arquitectura, el tatuaje y las artes visuales- y detectar así necesidades intrínsecas a ellos.',
+  'Desde las artes visuales; la materialidad y la relación directa con el público forman parte natural del hacer.',
+  'Desde la arquitectura, aparece una mirada estructural: la necesidad de pensar cómo se organizan los espacios, cómo se integran las partes y cómo una lógica clara puede sostener un sistema en el tiempo.',
+  'Con el tiempo, se hace evidente que esa integración no sucede de manera aislada. Requiere una estructura que permita articular distintas prácticas sin diluirlas, y una dirección que dé coherencia al conjunto.',
+  'CÈL·LULA surge como la búsqueda de ese equilibrio.',
+] as const;
+
 // Requested web narrative, not a literal transcription of the brandbook.
 // Editorial approval status is recorded in aboutContentProvenance below.
 export const aboutCopy = {
   question: '¿QUÉ ES CÈL·LULA?',
-  definitionTitle: '¿QUÉ ES CÉLULA?',
+  definitionTitle: '¿QUÉ ES CÈL·LULA?',
   introActLabel: '01 / DESCOMPONER',
   introLabel: 'LA PREGUNTA VIVA',
   introAnnotation: 'UNA PREGUNTA ABIERTA',
@@ -13,11 +21,11 @@ export const aboutCopy = {
   valuesAriaLabel: 'Valores de CÈL·LULA',
   declaration: 'NO SOMOS UNA SOLA COSA.',
   declarationLines: ['NO SOMOS', 'UNA SOLA COSA.'],
-  introduction: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  introduction: aboutIntroductionParagraphs.join(' '),
   decomposeTitle: 'UNA IDEA PUEDE TOMAR MUCHAS FORMAS.',
-  decomposeDescription: 'Mirar de cerca, separar las partes y encontrar una nueva posibilidad entre ellas.',
+  decomposeDescription: 'CÈL·LULA es un laboratorio cultural: un espacio híbrido donde la producción artística y la experimentación conviven. Un entorno vivo donde los procesos creativos son visibles, compartidos y parte esencial de la experiencia.',
   connectTitle: 'CREAR. EXPLORAR. CONECTAR.',
-  connectDescription: 'Tres maneras de acercarse a una idea. Un proceso que permanece abierto.',
+  connectDescription: 'Creemos en el valor del hacer, en la construcción colectiva y en una forma de crear que evoluciona constantemente junto a quienes la habitan.',
   ecosystemActLabel: '02 / CONECTAR',
   systemTitle: 'UN SISTEMA VIVO.',
   ecosystemHint: 'Elige una palabra y descubre cómo se relaciona con las demás.',
@@ -99,6 +107,15 @@ export const aboutContentProvenance = {
     classification: 'editorial-adaptation',
     approval: 'pending-editorial-validation',
     basisPages: [6, 8, 9],
+  },
+  activeAboutCopy: {
+    source: 'textos-para-web.pdf',
+    sourcePage: 1,
+    sha256: '81bddaf2b9698ecef5c45077b5fb92a24fda5234bd84ba3a171ebc1610fd8f82',
+    approval: 'user-approved',
+    introduction: 'Repeated passage removed; PDF line wraps joined.',
+    definition: 'Incomplete PDF sentence completed with wording approved by the user.',
+    photography: 'Deferred by the user; independent sculpture original pending.',
   },
   valueGrouping: {
     classification: 'editorial-proposal',
